@@ -785,26 +785,121 @@
     @media (max-width: 500px) { .classes-grid { grid-template-columns: 1fr; } }
 
     .class-card {
-      background: var(--ash-mid); border: 1px solid rgba(201,168,76,0.08);
-      padding: 2rem 1.5rem; text-align: center;
-      transition: transform 0.4s ease, border-color 0.4s ease;
+      position: relative; height: 520px; overflow: hidden;
+      border: 1px solid rgba(201,168,76,0.1);
+      transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), border-color 0.4s ease, box-shadow 0.4s ease;
+      cursor: default;
     }
-    .class-card:hover { transform: translateY(-6px); border-color: rgba(201,168,76,0.25); }
-    .class-icon { font-size: 3rem; margin-bottom: 1.2rem; display: block; }
+    .class-card:hover {
+      transform: translateY(-8px) scale(1.01);
+      border-color: rgba(201,168,76,0.4);
+      box-shadow: 0 25px 70px rgba(0,0,0,0.7);
+    }
+    .class-img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: top center;
+      transition: transform 0.6s ease;
+      filter: brightness(0.55) saturate(0.8);
+    }
+    .class-card:hover .class-img {
+      transform: scale(1.05);
+      filter: brightness(0.7) saturate(0.9);
+    }
+    .class-img-fallback {
+      position: absolute; inset: 0;
+      background: linear-gradient(160deg, var(--ash-dark), var(--ash-mid));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem;
+    }
+    .class-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top,
+        rgba(4,4,6,0.98) 0%, rgba(4,4,6,0.75) 40%, rgba(4,4,6,0.15) 100%);
+      transition: background 0.4s ease;
+    }
+    .class-card:hover .class-overlay {
+      background: linear-gradient(to top,
+        rgba(4,4,6,0.97) 0%, rgba(4,4,6,0.6) 35%, rgba(4,4,6,0.05) 100%);
+    }
+    .class-content {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 2rem 1.8rem; z-index: 2;
+    }
+    .class-icon { font-size: 1.8rem; margin-bottom: 0.6rem; display: block; }
     .class-name {
-      font-family: var(--font-head); font-size: 0.85rem; font-weight: 700;
-      letter-spacing: 0.18em; color: var(--gold); text-transform: uppercase;
-      margin-bottom: 0.4rem;
+      font-family: var(--font-head); font-size: 1rem; font-weight: 700;
+      letter-spacing: 0.15em; color: var(--gold); text-transform: uppercase;
+      margin-bottom: 0.3rem;
     }
     .class-role {
-      font-family: var(--font-body); font-style: italic; font-size: 0.9rem;
+      font-family: var(--font-body); font-style: italic; font-size: 0.95rem;
       color: var(--text-dim); margin-bottom: 1rem;
     }
     .class-special {
-      font-size: 0.85rem; color: var(--text-dim); line-height: 1.6;
-      border-top: 1px solid rgba(201,168,76,0.1); padding-top: 1rem;
+      font-size: 0.9rem; color: var(--text-dim); line-height: 1.7;
+      border-top: 1px solid rgba(201,168,76,0.12); padding-top: 0.9rem;
+      opacity: 0; transform: translateY(8px);
+      transition: opacity 0.4s ease 0.05s, transform 0.4s ease 0.05s;
     }
+    .class-card:hover .class-special { opacity: 1; transform: translateY(0); }
     .class-special strong { color: var(--gold-dim); font-style: italic; }
+
+    /* ═══════════════════════════════════
+       SUPPORT / SPENDEN
+    ═══════════════════════════════════ */
+    #support {
+      background: linear-gradient(to bottom, var(--ash-dark), var(--black));
+      padding: 8rem 2rem; text-align: center;
+    }
+    .support-inner {
+      max-width: 680px; margin: 0 auto;
+      border: 1px solid rgba(201,168,76,0.15);
+      padding: 4rem 3rem; position: relative; overflow: hidden;
+      background: linear-gradient(135deg, rgba(10,8,6,0.9), rgba(18,14,8,0.7));
+    }
+    .support-inner::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(201,168,76,0.04) 0%, transparent 70%);
+    }
+    .support-inner::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .support-icon { font-size: 3rem; margin-bottom: 1.5rem; display: block; }
+    .support-title {
+      font-family: var(--font-head); font-size: clamp(1.4rem, 3vw, 2.2rem);
+      font-weight: 700; color: var(--gold); letter-spacing: 0.06em;
+      margin-bottom: 1.2rem;
+    }
+    .support-text {
+      font-size: 1.1rem; color: var(--text); line-height: 1.9;
+      margin-bottom: 2.5rem; position: relative;
+    }
+    .btn-paypal {
+      display: inline-flex; align-items: center; gap: 0.8rem;
+      font-family: var(--font-head); font-size: 0.8rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--black);
+      background: linear-gradient(135deg, #c9a84c 0%, #f0d878 50%, #c9a84c 100%);
+      padding: 1.1rem 3rem; text-decoration: none;
+      position: relative; overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+    }
+    .btn-paypal:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 50px rgba(201,168,76,0.5), 0 0 30px rgba(201,168,76,0.2);
+    }
+    .btn-paypal::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+      transform: translateX(-100%); transition: transform 0.5s ease;
+    }
+    .btn-paypal:hover::before { transform: translateX(100%); }
+    .support-note {
+      margin-top: 1.5rem; font-family: var(--font-head); font-size: 0.6rem;
+      letter-spacing: 0.25em; color: var(--text-dim); text-transform: uppercase;
+      position: relative;
+    }
 
     /* ═══════════════════════════════════
        DEVELOPER
@@ -925,7 +1020,8 @@
     <li><a href="#bosses">Bosse</a></li>
     <li><a href="#journey">Pfad</a></li>
     <li><a href="#classes">Klassen</a></li>
-    <li><a href="#developer">Dev</a></li>
+      <li><a href="#developer">Dev</a></li>
+      <li><a href="#support" style="color:var(--gold-bright)">♥ Support</a></li>
   </ul>
 </nav>
 
@@ -1481,30 +1577,63 @@
     </div>
 
     <div class="classes-grid">
+
+      <!-- Dunkler Ritter -->
       <div class="class-card reveal">
-        <span class="class-icon">🛡️</span>
-        <div class="class-name">Dunkler Ritter</div>
-        <div class="class-role">Verteidigung &amp; Kontrolle</div>
-        <div class="class-special">Langsam. Präzise. Unaufhaltsam.<br><strong>Schattenblock:</strong> Versetzt Gegner in Dunkelstatus — Fehlschläge und Desorientierung.</div>
+        <img class="class-img" src="images/class-knight.jpg" alt="Dunkler Ritter"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <div class="class-img-fallback" style="display:none">🛡️</div>
+        <div class="class-overlay"></div>
+        <div class="class-content">
+          <span class="class-icon">🛡️</span>
+          <div class="class-name">Dunkler Ritter</div>
+          <div class="class-role">Verteidigung &amp; Kontrolle</div>
+          <div class="class-special">Langsam. Präzise. Unaufhaltsam.<br><strong>Schattenblock:</strong> Versetzt Gegner in Dunkelstatus — Fehlschläge und Desorientierung.</div>
+        </div>
       </div>
+
+      <!-- Barbar -->
       <div class="class-card reveal">
-        <span class="class-icon">🪓</span>
-        <div class="class-name">Barbar</div>
-        <div class="class-role">Burst Damage</div>
-        <div class="class-special">Maximaler Schaden. Minimale Verteidigung.<br><strong>Rage-System:</strong> Je mehr Schaden du nimmst, desto stärker wirst du.</div>
+        <img class="class-img" src="images/class-barbarian.jpg" alt="Barbar"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <div class="class-img-fallback" style="display:none">🪓</div>
+        <div class="class-overlay"></div>
+        <div class="class-content">
+          <span class="class-icon">🪓</span>
+          <div class="class-name">Barbar</div>
+          <div class="class-role">Burst Damage</div>
+          <div class="class-special">Maximaler Schaden. Minimale Verteidigung.<br><strong>Rage-System:</strong> Je mehr Schaden du nimmst, desto stärker wirst du.</div>
+        </div>
       </div>
+
+      <!-- Jäger -->
       <div class="class-card reveal">
-        <span class="class-icon">🏹</span>
-        <div class="class-name">Jäger</div>
-        <div class="class-role">Kontrolle &amp; Präzision</div>
-        <div class="class-special">Entfernung als Schutz. Fallen als Waffe.<br><strong>Kritischer Treffer:</strong> Gezielte Schwachstellen für maximalen Effekt.</div>
+        <img class="class-img" src="images/class-hunter.jpg" alt="Jäger"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <div class="class-img-fallback" style="display:none">🏹</div>
+        <div class="class-overlay"></div>
+        <div class="class-content">
+          <span class="class-icon">🏹</span>
+          <div class="class-name">Jäger</div>
+          <div class="class-role">Kontrolle &amp; Präzision</div>
+          <div class="class-special">Entfernung als Schutz. Fallen als Waffe.<br><strong>Kritischer Treffer:</strong> Gezielte Schwachstellen für maximalen Effekt.</div>
+        </div>
       </div>
+
+      <!-- Magier -->
       <div class="class-card reveal">
-        <span class="class-icon">🔮</span>
-        <div class="class-name">Magier</div>
-        <div class="class-role">Elementkontrolle</div>
-        <div class="class-special">Eis. Feuer. Sturm. Natur. Kombiniere Elemente für vernichtende Effekte.<br><strong>Fokus-System:</strong> Kraft kostet Zeit.</div>
+        <img class="class-img" src="images/class-mage.jpg" alt="Magier"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <div class="class-img-fallback" style="display:none">🔮</div>
+        <div class="class-overlay"></div>
+        <div class="class-content">
+          <span class="class-icon">🔮</span>
+          <div class="class-name">Magier</div>
+          <div class="class-role">Elementkontrolle</div>
+          <div class="class-special">Eis. Feuer. Sturm. Natur. Kombiniere Elemente für vernichtende Effekte.<br><strong>Fokus-System:</strong> Kraft kostet Zeit.</div>
+        </div>
       </div>
+
     </div>
 
     <div class="divider reveal"><div class="divider-gem"></div></div>
@@ -1549,6 +1678,26 @@
         <span class="badge badge-dim">📅 Release: TBA</span>
         <span class="badge badge-dim">🎮 Inspiration: Dark Souls · Hellblade · Valheim</span>
       </div>
+    </div>
+    <div class="divider reveal"><div class="divider-gem"></div></div>
+  </div>
+</section>
+
+<!-- ═══════════ SUPPORT ═══════════ -->
+<section id="support">
+  <div class="container">
+    <div class="support-inner reveal">
+      <span class="support-icon">🔥</span>
+      <h2 class="support-title">Unterstütze Crown of Ashes</h2>
+      <p class="support-text">
+        Wir sind ein 3-köpfiges Indie-Team das dieses Spiel
+        aus reiner Leidenschaft baut — ohne Publisher, ohne Budget.
+        Jede Spende hilft uns, Eldharyn schneller zum Leben zu erwecken.
+      </p>
+      <a href="https://paypal.me/nordicforgestudios" target="_blank" rel="noopener noreferrer" class="btn-paypal">
+        <span>♥</span> Jetzt unterstützen via PayPal
+      </a>
+      <p class="support-note">Nordic Forge Studios · paypal.me/nordicforgestudios</p>
     </div>
     <div class="divider reveal"><div class="divider-gem"></div></div>
   </div>
