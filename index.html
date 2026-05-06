@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crown of Ashes — Der Asche-Zyklus von Eldharyn</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ═══════════════════════════════════════════
+       RESET & BASE
+    ═══════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:       #060608;
+      --ash-dark:    #0f0f12;
+      --ash-mid:     #1a1a20;
+      --ash-light:   #2a2a32;
+      --gold:        #c9a84c;
+      --gold-bright: #e8c96a;
+      --gold-dim:    #6b5420;
+      --blood:       #7a1a1a;
+      --blood-bright:#c0392b;
+      --ice:         #4fc3f7;
+      --forest:      #66bb6a;
+      --fire:        #ef5350;
+      --storm:       #ab47bc;
+      --text:        #c8c4b8;
+      --text-dim:    #7a776e;
+      --font-head:   'Cinzel', serif;
+      --font-body:   'Crimson Text', serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--black);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 18px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Asche-Textur via SVG noise */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.6;
+    }
+
+    /* ═══════════════════════════════════════════
+       BILD-PLATZHALTER SYSTEM
+    ═══════════════════════════════════════════ */
+    .placeholder-img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Wrapper der den Platzhalter rendert wenn Bild fehlt */
+    .img-wrap {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #0a0a0d 0%, #141418 40%, #0f0f13 100%);
+    }
+
+    .img-wrap::before {
+      content: attr(data-description);
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1.5rem;
+      font-family: var(--font-head);
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      color: var(--gold-dim);
+      border: 1px dashed var(--gold-dim);
+      z-index: 1;
+      line-height: 1.5;
+      animation: placeholder-pulse 3s ease-in-out infinite;
+    }
+
+    .img-wrap img {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      transition: opacity 0.6s ease;
+    }
+
+    .img-wrap img.hidden { display: none; }
+
+    @keyframes placeholder-pulse {
+      0%, 100% { opacity: 0.5; border-color: var(--gold-dim); }
+      50%       { opacity: 0.9; border-color: var(--gold); color: var(--gold); }
+    }
+
+    /* ═══════════════════════════════════════════
+       GOLDENE TRENNLINIE
+    ═══════════════════════════════════════════ */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 3rem auto;
+      max-width: 600px;
+    }
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .divider-gem {
+      width: 8px; height: 8px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+      box-shadow: 0 0 8px var(--gold);
+    }
+
+    /* ═══════════════════════════════════════════
+       SCROLL REVEAL
+    ═══════════════════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ═══════════════════════════════════════════
+       NAVIGATION
+    ═══════════════════════════════════════════ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.2rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to bottom, rgba(6,6,8,0.95), transparent);
+      backdrop-filter: blur(2px);
+    }
+
+    .nav-logo {
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-transform: uppercase;
+      text-shadow: 0 0 20px rgba(201,168,76,0.4);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-head);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: var(--text-dim);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.3s ease;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+    }
+
+    /* ═══════════════════════════════════════════
+       1. HERO SECTION
+    ═══════════════════════════════════════════ */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+
+    .hero-bg .img-wrap {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Gradient overlay über dem Hintergrundbild */
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background:
+        linear-gradient(to bottom,
+          rgba(6,6,8,0.5) 0%,
+          rgba(6,6,8,0.2) 40%,
+          rgba(6,6,8,0.7) 80%,
+          rgba(6,6,8,1) 100%),
+        radial-gradient(ellipse at center, transparent 30%, rgba(6,6,8,0.6) 100%);
+    }
+
+    /* Partikel-Canvas */
+    #ash-canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    /* Hero Content */
+    .hero-content {
+      position: relative;
+      z-index: 4;
+      text-align: center;
+      padding: 0 1.5rem;
+      max-width: 900px;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-head);
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      animation: fade-in 1.5s ease forwards;
+    }
+
+    .hero-title {
+      font-family: var(--font-head);
+      font-size: clamp(3rem, 10vw, 7rem);
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 0.95;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-shadow:
+        0 0 40px rgba(201,168,76,0.3),
+        0 0 80px rgba(201,168,76,0.1),
+        2px 2px 0 rgba(0,0,0,0.8);
+      animation: title-reveal 1.8s ease forwards;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-subtitle {
+      font-family: var(--font-head);
+      font-size: clamp(0.9rem, 2vw, 1.2rem);
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+      animation: fade-in 2s ease 0.4s both;
+    }
+
+    .hero-tagline {
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: var(--text);
+      opacity: 0.7;
+      margin-bottom: 3rem;
+      animation: fade-in 2s ease 0.8s both;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      font-family: var(--font-head);
+      font-size: 0.8rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 50%, var(--gold) 100%);
+      padding: 1rem 2.5rem;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fade-in 2s ease 1.2s both;
+      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    }
+    .hero-cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+      transform: translateX(-100%);
+      transition: transform 0.5s ease;
+    }
+    .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(201,168,76,0.4); }
+    .hero-cta:hover::before { transform: translateX(100%); }
+
+    /* Scroll Indikator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      animation: fade-in 3s ease 2s both;
+    }
+    .scroll-indicator span {
+      font-family: var(--font-head);
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+    .scroll-arrow {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scroll-pulse 2s ease-in-out infinite;
+    }
+    @keyframes scroll-pulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
+      50%       { opacity: 1; transform: scaleY(1); }
+    }
+
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes title-reveal {
+      from { opacity: 0; letter-spacing: 0.3em; filter: blur(8px); }
+      to   { opacity: 1; letter-spacing: 0.05em; filter: blur(0); }
+    }
+
+    /* ═══════════════════════════════════════════
+       SECTIONS GEMEINSAM
+    ═══════════════════════════════════════════ */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 6rem 2rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: var(--font-head);
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .section-title {
+      font-family: var(--font-head);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ═══════════════════════════════════════════
+       2. STORY SECTION
+    ═══════════════════════════════════════════ */
+    #story {
+      background: linear-gradient(to bottom, var(--black), var(--ash-dark));
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .story-grid { grid-template-columns: 1fr; gap: 2rem; }
+    }
+
+    .story-text p {
+      font-size: 1.15rem;
+      line-height: 1.9;
+      color: var(--text);
+      margin-bottom: 1.2rem;
+    }
+
+    .story-text .emphasis {
+      font-style: italic;
+      color: var(--gold);
+      font-size: 1.3rem;
+    }
+
+    .story-img {
+      height: 420px;
+      border: 1px solid var(--gold-dim);
+    }
+
+    /* ═══════════════════════════════════════════
+       3. REGIONEN
+    ═══════════════════════════════════════════ */
+    #regions {
+      background: var(--ash-dark);
+    }
+
+    .regions-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .regions-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .regions-grid { grid-template-columns: 1fr; }
+    }
+
+    .region-card {
+      position: relative;
+      height: 380px;
+      overflow: hidden;
+      cursor: default;
+      border: 1px solid rgba(201,168,76,0.15);
+      transition: border-color 0.4s ease, transform 0.4s ease;
+    }
+
+    .region-card:hover {
+      border-color: rgba(201,168,76,0.5);
+      transform: translateY(-4px);
+    }
+
+    .region-card .img-wrap {
+      position: absolute;
+      inset: 0;
+    }
+
+    .region-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      background: linear-gradient(to top,
+        rgba(6,6,8,0.97) 0%,
+        rgba(6,6,8,0.7)  40%,
+        rgba(6,6,8,0.3)  100%);
+      transition: background 0.4s ease;
+    }
+
+    .region-card:hover .region-overlay {
+      background: linear-gradient(to top,
+        rgba(6,6,8,0.95) 0%,
+        rgba(6,6,8,0.55) 40%,
+        rgba(6,6,8,0.15) 100%);
+    }
+
+    .region-content {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      z-index: 4;
+      padding: 2rem;
+    }
+
+    .region-icon {
+      font-size: 1.8rem;
+      margin-bottom: 0.7rem;
+      display: block;
+      filter: drop-shadow(0 0 8px currentColor);
+    }
+
+    .region-element {
+      font-family: var(--font-head);
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+      display: block;
+    }
+
+    .region-name {
+      font-family: var(--font-head);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.05em;
+    }
+
+    .region-desc {
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+      margin-bottom: 0.8rem;
+    }
+
+    .region-boss {
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      border-top: 1px solid rgba(201,168,76,0.2);
+      padding-top: 0.6rem;
+    }
+
+    .region-boss span { color: var(--gold-dim); }
+
+    /* ═══════════════════════════════════════════
+       4. GAMEPLAY SLIDER
+    ═══════════════════════════════════════════ */
+    #gameplay {
+      background: linear-gradient(to bottom, var(--ash-dark), var(--ash-mid));
+    }
+
+    .gameplay-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .slider-wrap {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .slider-track {
+      overflow: hidden;
+    }
+
+    .slide {
+      display: none;
+    }
+    .slide.active { display: block; }
+
+    .slide-img-wrap {
+      height: 480px;
+      border: 1px solid var(--gold-dim);
+    }
+
+    @media (max-width: 600px) {
+      .slide-img-wrap { height: 240px; }
+    }
+
+    .slide-caption {
+      text-align: center;
+      padding: 1.2rem;
+      font-family: var(--font-head);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-60%);
+      background: rgba(6,6,8,0.8);
+      border: 1px solid var(--gold-dim);
+      color: var(--gold);
+      width: 44px; height: 44px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      font-size: 1.2rem;
+      z-index: 10;
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+    .slider-btn:hover { background: rgba(201,168,76,0.15); border-color: var(--gold); }
+    .slider-btn.prev { left: -22px; }
+    .slider-btn.next { right: -22px; }
+
+    @media (max-width: 960px) {
+      .slider-btn.prev { left: 4px; }
+      .slider-btn.next { right: 4px; }
+    }
+
+    .slider-dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .dot {
+      width: 6px; height: 6px;
+      background: var(--ash-light);
+      border: 1px solid var(--gold-dim);
+      transform: rotate(45deg);
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .dot.active { background: var(--gold); }
+
+    /* ═══════════════════════════════════════════
+       5. FEATURES
+    ═══════════════════════════════════════════ */
+    #features {
+      background: var(--ash-mid);
+    }
+
+    .features-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .features-grid { grid-template-columns: 1fr; }
+    }
+
+    .feature-card {
+      background: linear-gradient(135deg, var(--ash-dark), rgba(15,15,18,0.5));
+      border: 1px solid rgba(201,168,76,0.12);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      transition: border-color 0.4s ease, transform 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      transform: scaleX(0);
+      transition: transform 0.5s ease;
+    }
+
+    .feature-card:hover { border-color: rgba(201,168,76,0.35); transform: translateY(-6px); }
+    .feature-card:hover::before { transform: scaleX(1); }
+
+    .feature-icon {
+      font-size: 2.2rem;
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+
+    .feature-title {
+      font-family: var(--font-head);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .feature-text {
+      font-size: 1rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+    }
+
+    /* ═══════════════════════════════════════════
+       6. DEVELOPER SECTION
+    ═══════════════════════════════════════════ */
+    #developer {
+      background: linear-gradient(to bottom, var(--ash-mid), var(--black));
+      text-align: center;
+    }
+
+    .dev-text {
+      font-size: 1.15rem;
+      color: var(--text);
+      max-width: 620px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.9;
+    }
+
+    .dev-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .badge {
+      font-family: var(--font-head);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      padding: 0.6rem 1.4rem;
+      border: 1px solid;
+      text-transform: uppercase;
+    }
+
+    .badge-red  { color: var(--blood-bright); border-color: var(--blood); background: rgba(122,26,26,0.2); }
+    .badge-gold { color: var(--gold);          border-color: var(--gold-dim); background: rgba(107,84,32,0.2); }
+
+    /* ═══════════════════════════════════════════
+       7. FOOTER
+    ═══════════════════════════════════════════ */
+    footer {
+      background: var(--black);
+      border-top: 1px solid rgba(201,168,76,0.1);
+      padding: 3rem 2rem;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-logo {
+      font-family: var(--font-head);
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 20px rgba(201,168,76,0.3);
+    }
+
+    .footer-copy {
+      font-family: var(--font-head);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-family: var(--font-head);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--text-dim);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+    .footer-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0; right: 0;
+      height: 1px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-links a:hover::after { transform: scaleX(1); }
+
+    /* ═══════════════════════════════════════════
+       CURSOR GLOW (dezent)
+    ═══════════════════════════════════════════ */
+    .cursor-glow {
+      position: fixed;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,168,76,0.04) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.05s linear;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cursor Glow -->
+  <div class="cursor-glow" id="cursor-glow"></div>
+
+  <!-- ═══════════ NAVIGATION ═══════════ -->
+  <nav>
+    <div class="nav-logo">Crown of Ashes</div>
+    <ul class="nav-links">
+      <li><a href="#story">Lore</a></li>
+      <li><a href="#regions">Welt</a></li>
+      <li><a href="#gameplay">Gameplay</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#developer">Dev</a></li>
+    </ul>
+  </nav>
+
+  <!-- ═══════════ 1. HERO ═══════════ -->
+  <section id="hero">
+    <div class="hero-bg">
+      <div class="img-wrap" style="width:100%;height:100%;"
+           data-description="EPISCHE ANSICHT VON ELDHARYN&#10;Vier Zonen sichtbar · Düsterer Himmel">
+        <img src="images/hero-background.jpg"
+             class="placeholder-img"
+             alt="Eldharyn Panorama"
+             data-description="Epische Ansicht von Eldharyn, vier Zonen sichtbar, düsterer Himmel" />
+      </div>
+    </div>
+
+    <div class="hero-overlay"></div>
+    <canvas id="ash-canvas"></canvas>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow">Der Asche-Zyklus von Eldharyn</p>
+      <h1 class="hero-title">Crown<br>of Ashes</h1>
+      <p class="hero-subtitle">Das Medaillon der Ewigen Finsternis</p>
+      <p class="hero-tagline">Ein Soulslike Dark Fantasy RPG</p>
+      <a href="#" class="hero-cta">Wishlist auf Steam</a>
+    </div>
+
+    <div class="scroll-indicator">
+      <span>Scrolle</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ 2. STORY ═══════════ -->
+  <section id="story">
+    <div class="container">
+      <div class="story-grid reveal">
+        <div class="story-text">
+          <span class="section-label">Lore &amp; Geschichte</span>
+          <h2 class="section-title">Die Welt stirbt.</h2>
+          <p>
+            Eldharyn war einst eine ungeteilte Welt — ein Reich im Gleichgewicht,
+            gehalten durch das <em>Medaillon der Ewigen Finsternis</em>.
+            Dann zerbrach es. Und mit ihm die Realität selbst.
+          </p>
+          <p>
+            Vier Fragmente. Vier korrumpierte Wächter. Vier Zonen
+            die sich voneinander losgerissen haben und nun langsam
+            ins Chaos sinken.
+          </p>
+          <p class="emphasis">
+            "Du erwachst in der Mondwiese. Ohne Erinnerung. Ohne Namen.
+            Nur eine Gewissheit bleibt."
+          </p>
+        </div>
+        <div class="story-img img-wrap"
+             data-description="OPEN WORLD ANSICHT&#10;Mondwiese · Atmosphärisches Licht">
+          <img src="images/gameplay-world.jpg"
+               class="placeholder-img"
+               alt="Mondwiese — Eldharyn"
+               data-description="Open World Ansicht, Mondwiese, atmosphärisches Licht" />
+        </div>
+      </div>
+
+      <div class="divider reveal">
+        <div class="divider-gem"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ 3. REGIONEN ═══════════ -->
+  <section id="regions">
+    <div class="container">
+      <div class="regions-header reveal">
+        <span class="section-label">Die Welt von Eldharyn</span>
+        <h2 class="section-title">Vier Zonen. Vier Schicksale.</h2>
+      </div>
+
+      <div class="regions-grid">
+
+        <!-- FROSTFALL -->
+        <div class="region-card reveal">
+          <div class="img-wrap"
+               data-description="BURG KALTKRONE&#10;Im Schneesturm · Eisige Ruinen · Blau-weißes Licht">
+            <img src="images/frostfall.jpg"
+                 class="placeholder-img"
+                 alt="Frostfall"
+                 data-description="Burg Kaltkrone im Schneesturm, eisige Ruinen, blau-weißes Licht" />
+          </div>
+          <div class="region-overlay"></div>
+          <div class="region-content">
+            <span class="region-icon">❄️</span>
+            <span class="region-element" style="color: var(--ice);">Element des Eises</span>
+            <h3 class="region-name">Frostfall</h3>
+            <p class="region-desc">
+              Ewig gefrorene Ruinen. Eingefrorene Zeit.
+              Wölfe die im Sturm jagen.
+            </p>
+            <p class="region-boss">Boss: <span>Frostritter Kael</span></p>
+          </div>
+        </div>
+
+        <!-- DUNKELHAIN -->
+        <div class="region-card reveal">
+          <div class="img-wrap"
+               data-description="LEBENDER WALD&#10;Wurzeln überall · Grüner Nebel · Organische Burg">
+            <img src="images/dunkelhain.jpg"
+                 class="placeholder-img"
+                 alt="Dunkelhain"
+                 data-description="Lebender Wald, Wurzeln überall, grüner Nebel, organische Burg" />
+          </div>
+          <div class="region-overlay"></div>
+          <div class="region-content">
+            <span class="region-icon">🌿</span>
+            <span class="region-element" style="color: var(--forest);">Element des Lebens</span>
+            <h3 class="region-name">Dunkelhain</h3>
+            <p class="region-desc">
+              Ein Wald der denkt. Wurzeln die greifen.
+              Nebel der flüstert.
+            </p>
+            <p class="region-boss">Boss: <span>Vaelor</span></p>
+          </div>
+        </div>
+
+        <!-- GLUTMARK -->
+        <div class="region-card reveal">
+          <div class="img-wrap"
+               data-description="ASCHENZITADELLE&#10;Lavaflüsse · Roter Himmel · Ascheregen">
+            <img src="images/glutmark.jpg"
+                 class="placeholder-img"
+                 alt="Glutmark"
+                 data-description="Aschenzitadelle, Lavaflüsse, roter Himmel, Ascheregen" />
+          </div>
+          <div class="region-overlay"></div>
+          <div class="region-content">
+            <span class="region-icon">🔥</span>
+            <span class="region-element" style="color: var(--fire);">Element des Feuers</span>
+            <h3 class="region-name">Glutmark</h3>
+            <p class="region-desc">
+              Ascheregen ohne Ende. Lava die Straßen ersetzt.
+              Krieg der nie endete.
+            </p>
+            <p class="region-boss">Boss: <span>Ragnor</span></p>
+          </div>
+        </div>
+
+        <!-- NEBELKLIPPEN -->
+        <div class="region-card reveal">
+          <div class="img-wrap"
+               data-description="STURMWACHT&#10;Auf Klippe · Blitze · Instabile Plattformen">
+            <img src="images/nebelklippen.jpg"
+                 class="placeholder-img"
+                 alt="Nebelklippen"
+                 data-description="Sturmwacht auf Klippe, Blitze, instabile Plattformen" />
+          </div>
+          <div class="region-overlay"></div>
+          <div class="region-content">
+            <span class="region-icon">🌪️</span>
+            <span class="region-element" style="color: var(--storm);">Element des Sturms</span>
+            <h3 class="region-name">Nebelklippen</h3>
+            <p class="region-desc">
+              Klippen die sich bewegen. Blitze ohne Wolken.
+              Geschwindigkeit als Waffe.
+            </p>
+            <p class="region-boss">Boss: <span>Eryx</span></p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="divider reveal"><div class="divider-gem"></div></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ 4. GAMEPLAY SLIDER ═══════════ -->
+  <section id="gameplay">
+    <div class="container">
+      <div class="gameplay-header reveal">
+        <span class="section-label">In-Game Material</span>
+        <h2 class="section-title">Gameplay</h2>
+      </div>
+
+      <div class="slider-wrap reveal">
+        <div class="slider-track">
+
+          <div class="slide active">
+            <div class="slide-img-wrap img-wrap"
+                 data-description="NAHKAMPF-SCREENSHOT&#10;Spieler gegen Draugr · Düstere Umgebung">
+              <img src="images/gameplay-combat.jpg"
+                   class="placeholder-img"
+                   alt="Kampf gegen Draugr"
+                   data-description="Nahkampf-Screenshot, Spieler gegen Draugr, düstere Umgebung" />
+            </div>
+            <p class="slide-caption">Jeder Treffer hinterlässt Spuren — Parry im richtigen Moment</p>
+          </div>
+
+          <div class="slide">
+            <div class="slide-img-wrap img-wrap"
+                 data-description="OPEN WORLD&#10;Mondwiese · Atmosphärisches Licht">
+              <img src="images/gameplay-world.jpg"
+                   class="placeholder-img"
+                   alt="Open World Eldharyn"
+                   data-description="Open World Ansicht, Mondwiese, atmosphärisches Licht" />
+            </div>
+            <p class="slide-caption">Eldharyn — eine Welt die sich verändert, während du schläfst</p>
+          </div>
+
+        </div>
+
+        <button class="slider-btn prev" aria-label="Vorheriges Bild">&#8592;</button>
+        <button class="slider-btn next" aria-label="Nächstes Bild">&#8594;</button>
+
+        <div class="slider-dots">
+          <div class="dot active" data-index="0"></div>
+          <div class="dot" data-index="1"></div>
+        </div>
+      </div>
+
+      <div class="divider reveal"><div class="divider-gem"></div></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ 5. FEATURES ═══════════ -->
+  <section id="features">
+    <div class="container">
+      <div class="features-header reveal">
+        <span class="section-label">Spielmechaniken</span>
+        <h2 class="section-title">Was Crown of Ashes ausmacht</h2>
+      </div>
+
+      <div class="features-grid">
+
+        <div class="feature-card reveal">
+          <span class="feature-icon">⚔️</span>
+          <h3 class="feature-title">Gewichtiger Kampf</h3>
+          <p class="feature-text">
+            Jeder Treffer zählt. Fehler werden bestraft.
+            Parry, Dodge, Combo — kein Hack&nbsp;&amp;&nbsp;Slash.
+            Jede Begegnung ein Duell.
+          </p>
+        </div>
+
+        <div class="feature-card reveal">
+          <span class="feature-icon">🧿</span>
+          <h3 class="feature-title">Medaillon-System</h3>
+          <p class="feature-text">
+            4&nbsp;Fragmente. 4&nbsp;korrumpierte Wächter.
+            Ein Ritual das alles verändert.
+            Was du sammelst, formt wer du wirst.
+          </p>
+        </div>
+
+        <div class="feature-card reveal">
+          <span class="feature-icon">🌍</span>
+          <h3 class="feature-title">Lebende Welt</h3>
+          <p class="feature-text">
+            Eldharyn verändert sich. Tag&nbsp;&amp;&nbsp;Nacht. Wetter.
+            NPCs die reagieren. Dein Sieg hat Konsequenzen —
+            auch für jene die du nicht siehst.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ 6. DEVELOPER ═══════════ -->
+  <section id="developer">
+    <div class="container">
+      <div class="reveal">
+        <span class="section-label">Über das Projekt</span>
+        <h2 class="section-title" style="text-align:center;">Gemacht von Spielern<br>für Spieler</h2>
+        <p class="dev-text">
+          Crown of Ashes wird von einem 3-köpfigen Indie-Team entwickelt.
+          Keine großen Publisher. Kein Kompromiss beim Stil.
+          Nur ein Spiel das wir selbst spielen wollen —
+          dunkel genug um zu beißen, tief genug um zu fesseln.
+        </p>
+        <div class="dev-badges">
+          <span class="badge badge-red">🔴 In aktiver Entwicklung — Godot 4</span>
+          <span class="badge badge-gold">📅 Release: TBA</span>
+        </div>
+      </div>
+
+      <div class="divider reveal"><div class="divider-gem"></div></div>
+    </div>
+  </section>
+
+  <!-- ═══════════ 7. FOOTER ═══════════ -->
+  <footer>
+    <div class="footer-logo">Crown of Ashes</div>
+    <p class="footer-copy">Crown of Ashes &copy; 2026 — Der Asche-Zyklus von Eldharyn</p>
+    <nav class="footer-links">
+      <a href="#">Steam (bald)</a>
+      <a href="#">Discord</a>
+      <a href="#">GitHub</a>
+    </nav>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════
+       JAVASCRIPT
+  ═══════════════════════════════════════════ -->
+  <script>
+    'use strict';
+
+    /* ── Bild-Fehler Handler: versteckt kaputte Bilder ──────── */
+    document.querySelectorAll('.placeholder-img').forEach(img => {
+      img.addEventListener('error', () => { img.classList.add('hidden'); });
+      img.addEventListener('load', () => {
+        if (img.naturalWidth > 0) img.classList.remove('hidden');
+      });
+      // Sofort prüfen falls schon gecacht
+      if (img.complete && img.naturalWidth === 0) img.classList.add('hidden');
+    });
+
+    /* ── Cursor Glow ────────────────────────────────────────── */
+    const cursorGlow = document.getElementById('cursor-glow');
+    document.addEventListener('mousemove', e => {
+      cursorGlow.style.left = e.clientX + 'px';
+      cursorGlow.style.top  = e.clientY + 'px';
+    });
+
+    /* ── Scroll Reveal ──────────────────────────────────────── */
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          // Gestaffelte Einblendung bei mehreren Elementen
+          const delay = entry.target.closest('.regions-grid, .features-grid')
+            ? Array.from(entry.target.parentElement.children).indexOf(entry.target) * 120
+            : 0;
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, delay);
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    /* ── Asche-Partikel Canvas ──────────────────────────────── */
+    (function initAsh() {
+      const canvas = document.getElementById('ash-canvas');
+      const ctx    = canvas.getContext('2d');
+      let   W, H, particles = [];
+
+      function resize() {
+        W = canvas.width  = canvas.offsetWidth;
+        H = canvas.height = canvas.offsetHeight;
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      const PARTICLE_COUNT = 90;
+
+      function createParticle() {
+        return {
+          x:    Math.random() * W,
+          y:    Math.random() * H + H,          // starten unterhalb
+          size: Math.random() * 2.2 + 0.4,
+          speedX: (Math.random() - 0.5) * 0.5,
+          speedY: -(Math.random() * 0.5 + 0.15),
+          alpha: Math.random() * 0.35 + 0.05,
+          flicker: Math.random() * 0.008 + 0.002,
+          flickerDir: 1,
+        };
+      }
+
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        const p = createParticle();
+        p.y = Math.random() * H;                // gleichmäßig verteilt beim Start
+        particles.push(p);
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+
+        particles.forEach(p => {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(200, 190, 170, ${p.alpha})`;
+          ctx.fill();
+
+          // Bewegung
+          p.x += p.speedX + Math.sin(p.y * 0.02) * 0.3;
+          p.y += p.speedY;
+
+          // Flackern
+          p.alpha += p.flicker * p.flickerDir;
+          if (p.alpha > 0.45 || p.alpha < 0.02) p.flickerDir *= -1;
+
+          // Reset wenn oben raus
+          if (p.y < -10) {
+            const fresh = createParticle();
+            p.x = fresh.x; p.y = H + 5;
+            p.size = fresh.size; p.speedX = fresh.speedX;
+            p.speedY = fresh.speedY; p.alpha = fresh.alpha;
+          }
+        });
+
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+
+    /* ── Gameplay Slider ────────────────────────────────────── */
+    (function initSlider() {
+      const slides = document.querySelectorAll('.slide');
+      const dots   = document.querySelectorAll('.dot');
+      let   current = 0;
+
+      function goTo(index) {
+        slides[current].classList.remove('active');
+        dots[current].classList.remove('active');
+        current = (index + slides.length) % slides.length;
+        slides[current].classList.add('active');
+        dots[current].classList.add('active');
+      }
+
+      document.querySelector('.slider-btn.prev')
+        .addEventListener('click', () => goTo(current - 1));
+      document.querySelector('.slider-btn.next')
+        .addEventListener('click', () => goTo(current + 1));
+
+      dots.forEach(dot => {
+        dot.addEventListener('click', () => goTo(+dot.dataset.index));
+      });
+
+      // Auto-advance alle 6 Sekunden
+      setInterval(() => goTo(current + 1), 6000);
+    })();
+
+    /* ── Nav Highlight on Scroll ────────────────────────────── */
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    const navObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(a => a.style.color = '');
+          const active = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
+          if (active) active.style.color = 'var(--gold)';
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+
+    sections.forEach(s => navObserver.observe(s));
+  </script>
+</body>
+</html>
