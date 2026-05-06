@@ -997,6 +997,179 @@
       color: var(--text-dim); text-transform: uppercase; opacity: 0.5;
     }
 
+    /* ═══════════════════════════════════
+       MOBILE NAV (Hamburger)
+    ═══════════════════════════════════ */
+    .nav-hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px; z-index: 1001;
+    }
+    .nav-hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--gold); transition: all 0.3s ease;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .nav-mobile-menu {
+      display: none; position: fixed; inset: 0; z-index: 999;
+      background: rgba(4,4,6,0.97); backdrop-filter: blur(16px);
+      flex-direction: column; align-items: center; justify-content: center;
+      gap: 2.5rem;
+    }
+    .nav-mobile-menu.open { display: flex; }
+    .nav-mobile-menu a {
+      font-family: var(--font-head); font-size: 1.1rem; letter-spacing: 0.25em;
+      color: var(--text-dim); text-decoration: none; text-transform: uppercase;
+      transition: color 0.3s ease;
+    }
+    .nav-mobile-menu a:hover, .nav-mobile-menu a:active { color: var(--gold); }
+    .nav-mobile-menu .close-btn {
+      position: absolute; top: 1.5rem; right: 1.8rem;
+      font-family: var(--font-head); font-size: 0.7rem; letter-spacing: 0.2em;
+      color: var(--text-dim); background: none; border: none; cursor: pointer;
+      text-transform: uppercase;
+    }
+
+    /* ═══════════════════════════════════
+       TABLET — max 1024px
+    ═══════════════════════════════════ */
+    @media (max-width: 1024px) {
+      section { padding: 6rem 1.8rem; }
+      .dev-stats { gap: 2.5rem; }
+      .bosses-grid { grid-template-columns: repeat(2, 1fr); }
+      .classes-grid { grid-template-columns: repeat(2, 1fr); }
+      .class-card { height: 460px; }
+      .lore-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .medaillon-visual { order: -1; }
+      .regions-grid { gap: 3px; }
+    }
+
+    /* ═══════════════════════════════════
+       TABLET — max 768px
+    ═══════════════════════════════════ */
+    @media (max-width: 768px) {
+      body { font-size: 16px; }
+
+      /* Nav */
+      nav { padding: 1rem 1.4rem; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+
+      /* Hero */
+      #hero { min-height: 100svh; }
+      .hero-content { padding: 0 1.2rem; }
+      .hero-title { font-size: clamp(3.2rem, 16vw, 5.5rem); line-height: 0.88; }
+      .hero-eyebrow { font-size: 0.55rem; letter-spacing: 0.3em; margin-bottom: 1.2rem; }
+      .hero-subtitle { font-size: 0.75rem; letter-spacing: 0.2em; }
+      .hero-tagline { font-size: 1rem; margin-bottom: 2.5rem; }
+      .hero-buttons { gap: 0.8rem; }
+      .btn-primary, .btn-secondary { padding: 0.85rem 1.8rem; font-size: 0.7rem; }
+
+      /* Sections */
+      section { padding: 5rem 1.2rem; }
+      .section-title { font-size: clamp(1.7rem, 7vw, 2.8rem); }
+
+      /* Lore */
+      .lore-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .medaillon-ring { width: 220px; height: 220px; }
+      .lore-text .emphasis { font-size: 1.1rem; padding-left: 1rem; }
+
+      /* Regions */
+      .regions-grid { grid-template-columns: 1fr; gap: 3px; }
+      .region-card { height: 360px; }
+      .region-name { font-size: 1.5rem; }
+
+      /* Bosses */
+      .bosses-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+      .boss-card { padding: 1.5rem 1.2rem; }
+      .boss-portrait { width: 80px; height: 80px; font-size: 2rem; }
+      .boss-name { font-size: 1rem; }
+
+      /* Journey */
+      .journey-line { left: 20px; }
+      .journey-step {
+        padding: 0 0 0 55px !important;
+        text-align: left !important;
+      }
+      .journey-step .journey-dot {
+        left: 6px !important; right: auto !important;
+      }
+      .journey-name { font-size: 1rem; }
+
+      /* Features */
+      .features-grid { grid-template-columns: 1fr; gap: 1.2rem; }
+      .feature-card { padding: 2rem 1.5rem; }
+
+      /* Classes */
+      .classes-grid { grid-template-columns: repeat(2, 1fr); gap: 3px; }
+      .class-card { height: 400px; }
+      .class-content { padding: 1.5rem 1.2rem; }
+      .class-name { font-size: 0.85rem; }
+      .class-special { opacity: 1; transform: none; }
+
+      /* Dev stats */
+      .dev-stats { gap: 2rem; }
+      .dev-stat-number { font-size: 2rem; }
+      .dev-badges { gap: 0.6rem; }
+      .badge { font-size: 0.58rem; padding: 0.5rem 1rem; }
+
+      /* Support */
+      .support-inner { padding: 2.5rem 1.5rem; }
+      .support-title { font-size: 1.6rem; }
+      .btn-paypal { padding: 0.9rem 2rem; font-size: 0.7rem; }
+
+      /* Finale */
+      #finale { padding: 7rem 1.2rem; }
+      .finale-crown { font-size: 3rem; }
+
+      /* Footer */
+      footer { padding: 2.5rem 1.2rem; }
+      .footer-logo { font-size: 1.4rem; }
+      .footer-links { gap: 1.5rem; }
+
+      /* Worldmap */
+      #worldmap { padding: 5rem 1rem; }
+    }
+
+    /* ═══════════════════════════════════
+       MOBILE — max 480px
+    ═══════════════════════════════════ */
+    @media (max-width: 480px) {
+      body { font-size: 15px; }
+
+      .hero-title { font-size: clamp(2.8rem, 18vw, 4.5rem); }
+      .hero-buttons { flex-direction: column; align-items: center; }
+      .btn-primary, .btn-secondary { width: 100%; max-width: 280px; text-align: center; clip-path: none; }
+
+      .bosses-grid { grid-template-columns: 1fr; }
+      .boss-card { padding: 1.8rem 1.5rem; }
+
+      .classes-grid { grid-template-columns: 1fr; }
+      .class-card { height: 380px; }
+
+      .medaillon-ring { width: 200px; height: 200px; }
+      .fragment-orb { width: 44px; height: 44px; font-size: 1.1rem; }
+
+      .region-card { height: 320px; }
+      .region-name { font-size: 1.4rem; }
+
+      .dev-stats { gap: 1.5rem; }
+      .dev-stat-number { font-size: 1.8rem; }
+
+      .support-inner { padding: 2rem 1.2rem; }
+      .support-title { font-size: 1.3rem; }
+      .support-text { font-size: 1rem; }
+
+      .divider { margin: 2.5rem auto; }
+
+      /* Worldmap legend wrap */
+      #worldmap [style*="display:flex;justify-content:center;gap:3rem"] {
+        gap: 1rem !important;
+      }
+    }
+
     /* ═══ CURSOR GLOW ═══ */
     #cursor-glow {
       position: fixed; width: 400px; height: 400px; border-radius: 50%;
@@ -1021,10 +1194,26 @@
     <li><a href="#bosses">Bosse</a></li>
     <li><a href="#journey">Pfad</a></li>
     <li><a href="#classes">Klassen</a></li>
-      <li><a href="#developer">Dev</a></li>
-      <li><a href="#support" style="color:var(--gold-bright)">♥ Support</a></li>
+    <li><a href="#developer">Dev</a></li>
+    <li><a href="#support" style="color:var(--gold-bright)">♥ Support</a></li>
   </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menü öffnen">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- Mobile Menu Overlay -->
+<div class="nav-mobile-menu" id="mobile-menu">
+  <button class="close-btn" id="mobile-close">✕ Schließen</button>
+  <a href="#lore"      onclick="closeMobileMenu()">Lore</a>
+  <a href="#regions"   onclick="closeMobileMenu()">Welt</a>
+  <a href="#worldmap"  onclick="closeMobileMenu()">Karte</a>
+  <a href="#bosses"    onclick="closeMobileMenu()">Bosse</a>
+  <a href="#journey"   onclick="closeMobileMenu()">Pfad</a>
+  <a href="#classes"   onclick="closeMobileMenu()">Klassen</a>
+  <a href="#developer" onclick="closeMobileMenu()">Dev</a>
+  <a href="#support"   onclick="closeMobileMenu()" style="color:var(--gold-bright)">♥ Support</a>
+</div>
 
 <!-- ═══════════ HERO ═══════════ -->
 <section id="hero">
@@ -1817,12 +2006,35 @@
 <script>
 'use strict';
 
-/* ── Cursor Glow ─────────────────────────── */
+/* ── Mobile Menu ────────────────────────── */
+const hamburger   = document.getElementById('hamburger');
+const mobileMenu  = document.getElementById('mobile-menu');
+const mobileClose = document.getElementById('mobile-close');
+
+function openMobileMenu()  {
+  mobileMenu.classList.add('open');
+  hamburger.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeMobileMenu() {
+  mobileMenu.classList.remove('open');
+  hamburger.classList.remove('open');
+  document.body.style.overflow = '';
+}
+hamburger.addEventListener('click', openMobileMenu);
+mobileClose.addEventListener('click', closeMobileMenu);
+mobileMenu.addEventListener('click', e => { if (e.target === mobileMenu) closeMobileMenu(); });
+
+/* ── Cursor Glow (nur Desktop) ──────────── */
 const glow = document.getElementById('cursor-glow');
-document.addEventListener('mousemove', e => {
-  glow.style.left = e.clientX + 'px';
-  glow.style.top  = e.clientY + 'px';
-});
+if (window.matchMedia('(pointer: fine)').matches) {
+  document.addEventListener('mousemove', e => {
+    glow.style.left = e.clientX + 'px';
+    glow.style.top  = e.clientY + 'px';
+  });
+} else {
+  glow.style.display = 'none';
+}
 
 /* ── Nav scroll class ────────────────────── */
 const nav = document.getElementById('main-nav');
