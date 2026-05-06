@@ -9,3 +9,5 @@ desktop.ini
 
 # Node (falls später genutzt)
 node_modules/
+
+.vercel
