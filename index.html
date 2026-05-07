@@ -756,11 +756,10 @@ section { padding: 90px 0; }
   overflow: hidden;
 }
 .studio-logo-box img { width: 100%; height: 100%; object-fit: cover; }
-.studio-logo-box .logo-placeholder-svg { opacity: 0.18; }
-.studio-logo-box .logo-placeholder-label {
-  font-family: var(--font-ui); font-size: 0.55rem;
-  letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--text-dim); text-align: center; line-height: 1.4;
+.studio-logo-mark {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 0.8rem;
 }
 .studio-tags { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 1.4rem; }
 .studio-tag {
@@ -1488,15 +1487,41 @@ footer {
 <section id="studio">
   <div class="container">
     <div class="studio-wrap">
-      <!-- Studio logo placeholder -->
+      <!-- Studio logo — replace img tag below with your real logo file -->
       <div class="studio-logo-box reveal-left">
-        <!-- Replace this with your actual logo: <img src="images/logo.png" alt="Nordic Forge Studios Logo"/> -->
-        <svg class="logo-placeholder-svg" width="64" height="72" viewBox="0 0 30 34" fill="none">
-          <polygon points="15,1.5 28.5,9 28.5,25 15,32.5 1.5,25 1.5,9" fill="none" stroke="#c9a84c" stroke-width="1.5"/>
-          <polygon points="15,6 24,11.5 24,22.5 15,28 6,22.5 6,11.5" fill="none" stroke="rgba(201,168,76,0.3)" stroke-width="1"/>
-          <path d="M15 9 L19 13.5 L17 19.5 L15 21.5 L13 19.5 L11 13.5 Z" fill="rgba(201,168,76,0.18)" stroke="#c9a84c" stroke-width="0.8"/>
-        </svg>
-        <span class="logo-placeholder-label">Studio Logo<br/>Platzhalter</span>
+        <img src="images/logo.png" alt="Nordic Forge Studios Logo"
+             style="width:100%;height:100%;object-fit:cover;border-radius:var(--r-lg);"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <!-- Fallback logo mark shown when no logo.png exists -->
+        <div class="studio-logo-mark" style="display:none;">
+          <svg width="90" height="100" viewBox="0 0 60 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Outer hexagon -->
+            <polygon points="30,3 56,18 56,50 30,65 4,50 4,18"
+                     fill="rgba(201,168,76,0.06)" stroke="#c9a84c" stroke-width="1.8"/>
+            <!-- Inner hexagon -->
+            <polygon points="30,10 49,21 49,47 30,58 11,47 11,21"
+                     fill="none" stroke="rgba(201,168,76,0.28)" stroke-width="1"/>
+            <!-- Crossed hammers / forge symbol -->
+            <!-- Hammer 1 (left diagonal) -->
+            <rect x="19" y="28" width="8" height="3.5" rx="1"
+                  fill="#c9a84c" transform="rotate(-40 23 29.75)"/>
+            <rect x="22" y="31" width="3" height="10" rx="1"
+                  fill="rgba(201,168,76,0.7)" transform="rotate(-40 23.5 36)"/>
+            <!-- Hammer 2 (right diagonal) -->
+            <rect x="33" y="28" width="8" height="3.5" rx="1"
+                  fill="#c9a84c" transform="rotate(40 37 29.75)"/>
+            <rect x="35" y="31" width="3" height="10" rx="1"
+                  fill="rgba(201,168,76,0.7)" transform="rotate(40 36.5 36)"/>
+            <!-- Center flame / spark -->
+            <circle cx="30" cy="30" r="2.5" fill="#c9a84c" opacity="0.9"/>
+            <circle cx="30" cy="30" r="4.5" fill="none" stroke="rgba(201,168,76,0.3)" stroke-width="1"/>
+          </svg>
+          <div style="font-family:'Cinzel',serif;font-size:0.58rem;font-weight:700;
+                      letter-spacing:0.18em;text-transform:uppercase;
+                      color:var(--gold);text-align:center;line-height:1.5;">
+            Nordic Forge<br/>Studios
+          </div>
+        </div>
       </div>
 
       <!-- Text -->
