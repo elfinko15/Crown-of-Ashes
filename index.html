@@ -21,17 +21,6 @@
     html { scroll-behavior: smooth; }
     body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; line-height: 1.6; overflow-x: hidden; }
 
-    /* LANG MODAL */
-    #lang-modal {
-      position: fixed; inset: 0; z-index: 9999; background: #050505;
-      display: none; flex-direction: column; align-items: center; justify-content: center; gap: 48px;
-    }
-    #lang-modal .ml-logo { font-family: 'Cinzel',serif; font-size: clamp(1.2rem,3vw,1.8rem); font-weight: 700; letter-spacing: .15em; color: var(--gold); }
-    #lang-modal h2 { font-family: 'Cinzel',serif; font-size: clamp(.9rem,2vw,1.15rem); font-weight: 400; color: var(--text-muted); letter-spacing: .1em; text-align: center; }
-    .lang-choices { display: flex; gap: 20px; }
-    .lang-choice { padding: 18px 44px; border: 1px solid var(--border-gold); background: transparent; color: var(--gold); font-family: 'Cinzel',serif; font-size: .95rem; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; cursor: pointer; transition: all .3s; }
-    .lang-choice:hover { background: var(--gold); color: #000; }
-
     /* COOKIE */
     #cookie-banner { position: fixed; bottom: 0; left: 0; right: 0; z-index: 1000; background: rgba(10,10,10,.97); border-top: 1px solid var(--border); padding: 18px 40px; display: none; align-items: center; gap: 24px; backdrop-filter: blur(12px); }
     #cookie-banner p { font-size: .83rem; color: var(--text-muted); flex: 1; }
@@ -204,16 +193,6 @@
   </style>
 </head>
 <body>
-
-<!-- Lang Modal -->
-<div id="lang-modal">
-  <div class="ml-logo">&#9874; Nordic Forge Studios</div>
-  <h2>W&#228;hle deine Sprache &nbsp;&middot;&nbsp; Choose your language</h2>
-  <div class="lang-choices">
-    <button class="lang-choice" onclick="pickLang('de')">Deutsch</button>
-    <button class="lang-choice" onclick="pickLang('en')">English</button>
-  </div>
-</div>
 
 <!-- Cookie -->
 <div id="cookie-banner">
@@ -396,6 +375,7 @@
       <p class="about-text" data-i18n-html="about_t1">Wir sind <span class="about-hl">Nordic Forge Studios</span> &mdash; ein 4-k&#246;pfiges Indie-Game-Studio aus Deutschland, das mit Leidenschaft und Hartn&#228;ckigkeit epische Spielwelten erschafft.</p>
       <p class="about-text" data-i18n-html="about_t2">Unser erstes Spiel <strong>Avadon: The Broken Sigils</strong> befindet sich in aktiver Entwicklung. Wir entwickeln in Godot 4 und setzen auf handgemachtes Leveldesign, tiefgreifende Lore und taktisches Kampfgef&#252;hl.</p>
       <p class="about-text" data-i18n="about_t3">Wir haben uns ein Ziel gesetzt: dieses Spiel fertigzustellen &mdash; egal wie lange es dauert.</p>
+      <p class="about-text" data-i18n-html="about_t4"><strong>Jonah</strong> (Lead Developer &amp; Director) &nbsp;&middot;&nbsp; <strong>Andor</strong> (Developer) &nbsp;&middot;&nbsp; <strong>Tobias</strong> (Artist &amp; Designer) &nbsp;&middot;&nbsp; <strong>Moritz</strong> (Audio &amp; QA)</p>
       <div class="values-grid">
         <div class="value-card">
           <div class="value-title" data-i18n="v1t">Craft</div>
@@ -423,22 +403,18 @@
       <div class="member-card reveal">
         <div class="member-avatar">J</div>
         <div class="member-name">Jonah</div>
-        <div class="member-role" data-i18n="role_j">Lead Developer &amp; Director</div>
       </div>
       <div class="member-card reveal">
         <div class="member-avatar">A</div>
         <div class="member-name">Andor</div>
-        <div class="member-role" data-i18n="role_a">Developer</div>
       </div>
       <div class="member-card reveal">
         <div class="member-avatar">T</div>
         <div class="member-name">Tobias</div>
-        <div class="member-role" data-i18n="role_t">Artist &amp; Designer</div>
       </div>
       <div class="member-card reveal">
         <div class="member-avatar">M</div>
         <div class="member-name">Moritz</div>
-        <div class="member-role" data-i18n="role_m">Audio &amp; QA</div>
       </div>
     </div>
   </div>
@@ -506,7 +482,7 @@ const T = {
   de: {
     cookie_text: 'Diese Website speichert deine Sprachpräferenz lokal. Keine Tracking-Cookies.',
     cookie_btn: 'Verstanden',
-    nav_games: 'Spiele', nav_about: 'Über uns', nav_team: 'Team', nav_contact: 'Kontakt',
+    nav_games: 'Unsere Spiele', nav_about: 'Über uns', nav_team: 'Team', nav_contact: 'Kontakt',
     hero_eyebrow: 'Indie Game Studio · Deutschland',
     hero_tagline: 'Wir erschaffen Welten, die man nicht vergisst.',
     hero_cta1: 'Unser Spiel', hero_cta2: 'Über uns',
@@ -527,6 +503,7 @@ const T = {
     about_t1: 'Wir sind <span class="about-hl">Nordic Forge Studios</span> — ein 4-köpfiges Indie-Game-Studio aus Deutschland, das mit Leidenschaft und Hartnäckigkeit epische Spielwelten erschafft.',
     about_t2: 'Unser erstes Spiel <strong>Avadon: The Broken Sigils</strong> befindet sich in aktiver Entwicklung. Wir entwickeln in Godot 4 und setzen auf handgemachtes Leveldesign, tiefgreifende Lore und taktisches Kampfgefühl.',
     about_t3: 'Wir haben uns ein Ziel gesetzt: dieses Spiel fertigzustellen — egal wie lange es dauert.',
+    about_t4: '<strong>Jonah</strong> (Lead Developer & Director) &nbsp;&middot;&nbsp; <strong>Andor</strong> (Developer) &nbsp;&middot;&nbsp; <strong>Tobias</strong> (Artist & Designer) &nbsp;&middot;&nbsp; <strong>Moritz</strong> (Audio & QA)',
     v1t: 'Craft', v1d: 'Jedes Detail zählt. Von der Lore bis zum Kampfsystem.',
     v2t: 'Vision', v2d: 'Spiele, die Geschichten erzählen, die man nicht vergisst.',
     v3t: 'Persistence', v3d: 'Klein anfangen, groß denken — und nie aufgeben.',
@@ -544,7 +521,7 @@ const T = {
   en: {
     cookie_text: 'This website stores your language preference locally. No tracking cookies.',
     cookie_btn: 'Got it',
-    nav_games: 'Games', nav_about: 'About', nav_team: 'Team', nav_contact: 'Contact',
+    nav_games: 'Our Games', nav_about: 'About', nav_team: 'Team', nav_contact: 'Contact',
     hero_eyebrow: 'Indie Game Studio · Germany',
     hero_tagline: 'We create worlds you won\'t forget.',
     hero_cta1: 'Our Game', hero_cta2: 'About Us',
@@ -565,6 +542,7 @@ const T = {
     about_t1: 'We are <span class="about-hl">Nordic Forge Studios</span> — a 4-person indie game studio from Germany, crafting epic game worlds with passion and perseverance.',
     about_t2: 'Our first game <strong>Avadon: The Broken Sigils</strong> is in active development. We build in Godot 4, focusing on handcrafted level design, deep lore, and tactical combat.',
     about_t3: 'We set ourselves one goal: finish this game — no matter how long it takes.',
+    about_t4: '<strong>Jonah</strong> (Lead Developer & Director) &nbsp;&middot;&nbsp; <strong>Andor</strong> (Developer) &nbsp;&middot;&nbsp; <strong>Tobias</strong> (Artist & Designer) &nbsp;&middot;&nbsp; <strong>Moritz</strong> (Audio & QA)',
     v1t: 'Craft', v1d: 'Every detail matters. From lore to combat system.',
     v2t: 'Vision', v2d: 'Games that tell stories you won\'t forget.',
     v3t: 'Persistence', v3d: 'Start small, think big — and never give up.',
@@ -599,12 +577,6 @@ function setLang(lang) {
   document.querySelectorAll('.mobile-lang-btn').forEach(function(b) { b.classList.toggle('active', b.getAttribute('data-lang') === lang); });
 }
 
-function pickLang(lang) {
-  document.getElementById('lang-modal').style.display = 'none';
-  setLang(lang);
-  if (!localStorage.getItem('nfs-cookies')) document.getElementById('cookie-banner').style.display = 'flex';
-}
-
 function acceptCookies() {
   localStorage.setItem('nfs-cookies', '1');
   document.getElementById('cookie-banner').style.display = 'none';
@@ -614,13 +586,9 @@ function openMobileNav() { document.getElementById('mobile-nav').classList.add('
 function closeMobileNav() { document.getElementById('mobile-nav').classList.remove('open'); document.body.style.overflow = ''; }
 
 window.addEventListener('DOMContentLoaded', function() {
-  var saved = localStorage.getItem('nfs-lang');
-  if (saved) {
-    setLang(saved);
-    if (!localStorage.getItem('nfs-cookies')) document.getElementById('cookie-banner').style.display = 'flex';
-  } else {
-    document.getElementById('lang-modal').style.display = 'flex';
-  }
+  var saved = localStorage.getItem('nfs-lang') || 'de';
+  setLang(saved);
+  if (!localStorage.getItem('nfs-cookies')) document.getElementById('cookie-banner').style.display = 'flex';
 
   var nav = document.getElementById('main-nav');
   window.addEventListener('scroll', function() { nav.classList.toggle('scrolled', window.scrollY > 60); }, { passive: true });
