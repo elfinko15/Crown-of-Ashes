@@ -1,867 +1,648 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Avadon: The Broken Sigils — Nordic Forge Studios</title>
-  <meta name="description" content="Avadon: The Broken Sigils — ein Open World Fantasy Action-RPG von Nordic Forge Studios. Entdecke die Geschichte von Kael, den vier zerbrochenen Siegeln und Nerath, dem Ungeborenen."/>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Barlow+Condensed:wght@300;400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+  <meta name="description" content="Avadon: The Broken Sigils — Open World Fantasy Action-RPG von Nordic Forge Studios">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&family=Barlow+Condensed:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #080808; --bg2: #0d0d0d; --bg3: #060d14;
+      --text: #fff; --text-muted: rgba(255,255,255,.58); --text-dim: rgba(255,255,255,.32);
+      --gold: #c4a44a; --gold-light: #e8c96e;
+      --av: #5eb8ff; --av2: #3a9de8; --av-dim: rgba(94,184,255,.12);
+      --frost: #a8d8ff; --forest: #6bd46b; --plains: #ffd166; --peaks: #c77dff;
+      --border: rgba(255,255,255,.07); --border-av: rgba(94,184,255,.28);
+      --nav-h: 72px;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter',sans-serif; line-height: 1.6; overflow-x: hidden; }
 
-:root {
-  --bg:         #0a0a0f;
-  --bg-alt:     #0d1018;
-  --bg-card:    #0b0e16;
-  --border:     rgba(255,255,255,0.07);
-  --border-mid: rgba(255,255,255,0.14);
-  --gold:       #c9a84c;
-  --gold-border:rgba(201,168,76,0.4);
-  --white:      #ffffff;
-  --text:       #d8dce8;
-  --text-mid:   #7a809a;
-  --text-dim:   #3f4055;
-  --sigil:      #5eb8ff;
-  --sigil-dim:  rgba(94,184,255,0.12);
-  --sigil-bdr:  rgba(94,184,255,0.3);
-  --frost:      #7ee8ff;
-  --forest:     #6de88a;
-  --plains:     #ffd166;
-  --peaks:      #c084fc;
-  --font-brand: 'Cinzel', serif;
-  --font-ui:    'Barlow Condensed', sans-serif;
-  --font-body:  'Crimson Text', serif;
-  --r:          6px;
-  --r-lg:       10px;
-  --nav-h:      62px;
-}
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 900; height: var(--nav-h); display: flex; align-items: center; padding: 0 48px; transition: background .4s; }
+    nav.scrolled { background: rgba(8,8,8,.93); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+    .nav-back { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-muted); font-size: .82rem; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; transition: color .3s; }
+    .nav-back:hover { color: var(--text); }
+    .nav-back svg { width: 16px; height: 16px; }
+    .nav-logo-center { position: absolute; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo-center img { height: 30px; }
+    .nav-logo-center span { font-family: 'Cinzel',serif; font-size: .85rem; font-weight: 700; color: var(--gold); letter-spacing: .1em; text-transform: uppercase; }
+    .nav-right { margin-left: auto; display: flex; align-items: center; }
+    .lang-switcher { display: flex; align-items: center; border: 1px solid var(--border); border-radius: 3px; overflow: hidden; }
+    .lang-btn { padding: 6px 12px; background: transparent; border: none; color: var(--text-dim); font-family: 'Inter',sans-serif; font-size: .72rem; font-weight: 700; letter-spacing: .12em; cursor: pointer; transition: all .2s; }
+    .lang-btn.active { background: var(--gold); color: #000; }
+    .lang-btn:not(.active):hover { color: var(--text); }
+    .nav-sep { width: 1px; height: 14px; background: var(--border); }
 
-html { scroll-behavior: smooth; }
-body { background: var(--bg); color: var(--text); font-family: var(--font-ui); font-size: 16px; line-height: 1.6; overflow-x: hidden; }
-img  { display: block; max-width: 100%; }
-a    { text-decoration: none; color: inherit; }
-button { cursor: pointer; border: none; background: none; font-family: inherit; }
+    /* HERO */
+    #hero { position: relative; height: 100vh; min-height: 600px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--bg3); }
+    #hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+    #hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(6,13,20,0) 50%, var(--bg) 100%); pointer-events: none; }
+    .hero-content { position: relative; z-index: 2; text-align: center; padding: 0 24px; }
+    .hero-badge { display: inline-block; padding: 5px 16px; border: 1px solid var(--av); color: var(--av); font-size: .72rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; margin-bottom: 28px; }
+    .hero-title { font-family: 'Cinzel',serif; font-size: clamp(3.5rem,11vw,9rem); font-weight: 900; line-height: .9; background: linear-gradient(160deg,#fff 20%,rgba(255,255,255,.5)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-subtitle { font-family: 'Cinzel',serif; font-size: clamp(1rem,2.5vw,1.8rem); font-weight: 400; color: var(--av); letter-spacing: .15em; margin: 12px 0 24px; }
+    .hero-quote { font-family: 'Cinzel',serif; font-size: clamp(.85rem,1.5vw,1.1rem); font-style: italic; color: rgba(255,255,255,.4); letter-spacing: .05em; }
 
-.reveal       { opacity: 0; transform: translateY(28px); transition: opacity 0.75s ease, transform 0.75s ease; }
-.reveal.visible { opacity: 1; transform: translateY(0); }
-.reveal-left  { opacity: 0; transform: translateX(-36px); transition: opacity 0.75s ease, transform 0.75s ease; }
-.reveal-left.visible { opacity: 1; transform: translateX(0); }
-.reveal-right { opacity: 0; transform: translateX(36px); transition: opacity 0.75s ease, transform 0.75s ease; }
-.reveal-right.visible { opacity: 1; transform: translateX(0); }
+    /* STRIP */
+    .overview-strip { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); display: flex; }
+    .strip-item { flex: 1; padding: 28px 20px; text-align: center; border-right: 1px solid var(--border); }
+    .strip-item:last-child { border-right: none; }
+    .strip-num { font-family: 'Cinzel',serif; font-size: 1.6rem; font-weight: 700; color: var(--av); }
+    .strip-label { font-size: .72rem; color: var(--text-dim); letter-spacing: .12em; text-transform: uppercase; margin-top: 4px; }
 
-.btn { display: inline-flex; align-items: center; gap: 0.45rem; font-family: var(--font-ui); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.7rem 1.8rem; border-radius: var(--r); transition: all 0.22s ease; white-space: nowrap; }
-.btn-primary { background: var(--gold); color: #09090f; border: 1px solid transparent; }
-.btn-primary:hover { background: #d4b45a; transform: translateY(-1px); box-shadow: 0 6px 24px rgba(201,168,76,0.30); }
-.btn-sigil   { background: var(--sigil); color: #04080f; border: 1px solid transparent; }
-.btn-sigil:hover { background: #7ecaff; transform: translateY(-1px); box-shadow: 0 6px 24px rgba(94,184,255,0.30); }
-.btn-outline  { background: transparent; color: var(--white); border: 1px solid rgba(255,255,255,0.28); }
-.btn-outline:hover { border-color: var(--sigil); color: var(--sigil); transform: translateY(-1px); }
-.btn-ghost   { background: transparent; color: var(--text-mid); border: 1px solid var(--border); }
-.btn-ghost:hover { border-color: var(--border-mid); color: var(--text); }
+    /* SECTIONS */
+    .page-section { padding: 100px 80px; }
+    .page-section.alt { background: var(--bg2); }
+    .page-section.dark { background: var(--bg3); }
+    .sec-inner { max-width: 1200px; margin: 0 auto; }
+    .sec-eyebrow { font-family: 'Barlow Condensed',sans-serif; font-size: .83rem; font-weight: 600; letter-spacing: .4em; color: var(--gold); text-transform: uppercase; margin-bottom: 12px; }
+    .sec-title { font-family: 'Cinzel',serif; font-size: clamp(1.8rem,3.5vw,2.6rem); font-weight: 700; margin-bottom: 40px; color: var(--text); }
+    .sec-divider { width: 48px; height: 1px; background: var(--av); margin-bottom: 32px; }
 
-section { padding: 90px 0; }
-.container { max-width: 1240px; margin: 0 auto; padding: 0 2.5rem; }
-@media (max-width: 480px) { .container { padding: 0 1.25rem; } }
+    /* STORY */
+    .story-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 72px; align-items: start; }
+    .story-visual { display: flex; align-items: center; justify-content: center; }
+    .story-text p { font-size: .98rem; color: var(--text-muted); line-height: 1.88; margin-bottom: 16px; }
+    .story-text strong { color: var(--text); }
 
-.sec-label { font-family: var(--font-ui); font-size: 0.67rem; font-weight: 600; letter-spacing: 0.3em; text-transform: uppercase; color: var(--sigil); margin-bottom: 0.6rem; display: block; }
-.sec-label-gold { color: var(--gold) !important; }
-.sec-title  { font-family: var(--font-brand); font-size: clamp(1.7rem,3vw,2.6rem); font-weight: 700; color: var(--white); letter-spacing: 0.05em; text-transform: uppercase; line-height: 1.1; margin-bottom: 0.9rem; }
-.sec-sub    { font-family: var(--font-body); font-size: 1.05rem; color: var(--text-mid); line-height: 1.75; }
-.sec-rule   { width: 44px; height: 2px; background: var(--sigil); margin: 1rem 0 2.2rem; }
-.sec-rule.gold  { background: var(--gold); }
-.sec-rule.center { margin-left: auto; margin-right: auto; }
+    /* TWISTS */
+    .twists-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+    .twist-card { padding: 28px 24px; border: 1px solid var(--border); border-top: 2px solid var(--av); }
+    .twist-num { font-family: 'Cinzel',serif; font-size: .75rem; color: var(--av); letter-spacing: .2em; margin-bottom: 12px; }
+    .twist-title { font-family: 'Cinzel',serif; font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 10px; }
+    .twist-text { font-size: .85rem; color: var(--text-muted); line-height: 1.7; }
 
-/* ── Cookie Banner ── */
-#cookie-banner { position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999; background: rgba(10,10,15,0.97); backdrop-filter: blur(24px); border-top: 1px solid var(--border-mid); padding: 1.1rem 2.5rem; display: flex; align-items: center; gap: 2rem; transform: translateY(100%); transition: transform 0.45s cubic-bezier(0.4,0,0.2,1); }
-#cookie-banner.visible { transform: translateY(0); }
-.cookie-text { flex: 1; }
-.cookie-text h3 { font-family: var(--font-ui); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--white); margin-bottom: 0.25rem; }
-.cookie-text p { font-family: var(--font-body); font-size: 0.9rem; color: var(--text-mid); }
-.cookie-actions { display: flex; gap: 0.7rem; flex-shrink: 0; }
-@media (max-width: 720px) { #cookie-banner { flex-direction: column; align-items: flex-start; gap: 0.9rem; padding: 1.1rem 1.25rem; } .cookie-actions { width: 100%; } .cookie-actions .btn { flex: 1; justify-content: center; } }
+    /* REGIONS */
+    .regions-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 24px; }
+    .region-card { overflow: hidden; border: 1px solid var(--border); }
+    .region-visual { height: 180px; display: flex; align-items: center; justify-content: center; position: relative; }
+    .region-info { padding: 24px; }
+    .region-name { font-family: 'Cinzel',serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; }
+    .region-sigil { font-size: .72rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; margin-bottom: 12px; }
+    .region-text { font-size: .85rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 14px; }
+    .region-meta { display: flex; gap: 16px; flex-wrap: wrap; }
+    .region-meta span { font-size: .75rem; color: var(--text-dim); }
+    .region-meta span strong { color: var(--text-muted); }
 
-/* ── Navigation ── */
-#nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; transition: background 0.3s ease, border-bottom 0.3s ease; }
-#nav.scrolled { background: rgba(10,10,15,0.96); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
-.nav-logo { display: flex; align-items: center; gap: 0.75rem; }
-.nav-logo-icon { width: 30px; height: 34px; flex-shrink: 0; object-fit: contain; border-radius: 4px; }
-.nav-logo-wordmark { font-family: var(--font-brand); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); line-height: 1.2; }
-.nav-logo-wordmark small { display: block; font-size: 0.5rem; letter-spacing: 0.22em; color: var(--text-dim); font-weight: 400; }
-.nav-links { display: flex; align-items: center; list-style: none; }
-.nav-links a { font-family: var(--font-ui); font-size: 0.73rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-mid); padding: 0.45rem 1.1rem; display: block; transition: color 0.2s ease; }
-.nav-links a:hover { color: var(--white); }
-.nav-back { font-family: var(--font-ui); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); padding: 0.38rem 0.9rem; border: 1px solid var(--border); border-radius: var(--r); transition: all 0.2s; }
-.nav-back:hover { color: var(--gold); border-color: var(--gold-border); }
-.nav-right { display: flex; align-items: center; gap: 0.9rem; }
-.hamburger { display: none; flex-direction: column; gap: 5px; padding: 7px; }
-.hamburger span { width: 22px; height: 2px; background: var(--text); display: block; transition: all 0.28s ease; transform-origin: center; }
-.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.hamburger.open span:nth-child(2) { opacity: 0; }
-.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-#mobile-nav { position: fixed; inset: 0; z-index: 998; background: rgba(10,10,15,0.98); backdrop-filter: blur(20px); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.8rem; opacity: 0; pointer-events: none; transition: opacity 0.28s ease; }
-#mobile-nav.open { opacity: 1; pointer-events: all; }
-#mobile-nav a { font-family: var(--font-brand); font-size: 1.3rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-mid); transition: color 0.2s; }
-#mobile-nav a:hover { color: var(--sigil); }
-@media (max-width: 900px) { .nav-links, .nav-right .btn { display: none; } .hamburger { display: flex; } }
-@media (max-width: 480px) { #nav { padding: 0 1.25rem; } }
+    /* CLASSES */
+    .classes-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 18px; }
+    .class-card { padding: 24px 20px; border: 1px solid var(--border); border-top: 2px solid transparent; }
+    .class-icon { font-size: 1.6rem; margin-bottom: 14px; }
+    .class-name { font-family: 'Cinzel',serif; font-size: .95rem; font-weight: 700; margin-bottom: 6px; }
+    .class-sigil { font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 12px; }
+    .class-text { font-size: .82rem; color: var(--text-dim); line-height: 1.6; }
 
-/* ── Hero ── */
-#hero { position: relative; height: 100vh; min-height: 640px; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; padding-bottom: 9vh; }
-.hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 40%, rgba(94,184,255,0.09) 0%, transparent 55%), radial-gradient(ellipse at 70% 70%, rgba(192,132,252,0.06) 0%, transparent 45%), linear-gradient(180deg,#050810 0%,#080c16 50%,#050810 100%); }
-.hero-stars { position: absolute; inset: 0; }
-#hero-canvas { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
-.hero-content { position: relative; z-index: 2; text-align: center; max-width: 900px; padding: 0 2rem; }
-.hero-sigil-badge { display: inline-flex; align-items: center; gap: 0.55rem; background: var(--sigil-dim); border: 1px solid var(--sigil-bdr); color: var(--sigil); font-family: var(--font-ui); font-size: 0.63rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; padding: 0.3rem 1rem; border-radius: 100px; margin-bottom: 1.4rem; }
-.hero-sigil-badge::before { content: '◆'; font-size: 0.45rem; animation: sigil-blink 2.5s ease infinite; }
-@keyframes sigil-blink { 0%,100%{opacity:1;color:var(--sigil)}50%{opacity:0.3} }
-.hero-title { font-family: var(--font-brand); font-size: clamp(2.4rem,7vw,5.8rem); font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; color: var(--white); line-height: 1; margin-bottom: 0.3rem; }
-.hero-title-sub { font-family: var(--font-brand); font-size: clamp(1rem,2.5vw,1.8rem); font-weight: 400; letter-spacing: 0.28em; text-transform: uppercase; color: var(--sigil); opacity: 0.9; margin-bottom: 1.4rem; }
-.hero-quote { font-family: var(--font-body); font-size: clamp(1rem,1.8vw,1.2rem); color: rgba(255,255,255,0.42); font-style: italic; margin-bottom: 2.4rem; line-height: 1.6; }
-.hero-btns { display: flex; gap: 0.9rem; justify-content: center; flex-wrap: wrap; }
-.hero-scroll { position: absolute; bottom: 1.8rem; left: 50%; transform: translateX(-50%); z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 0.45rem; }
-.hero-scroll-arrow { width: 18px; height: 18px; border-right: 1.5px solid var(--text-dim); border-bottom: 1.5px solid var(--text-dim); transform: rotate(45deg); animation: ab 2s ease infinite; }
-@keyframes ab { 0%,100%{transform:rotate(45deg) translateY(0);opacity:0.4}50%{transform:rotate(45deg) translateY(4px);opacity:0.8} }
-.hero-scroll-label { font-family: var(--font-ui); font-size: 0.56rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--text-dim); }
+    /* BOSS */
+    .boss-layout { display: grid; grid-template-columns: 1fr 1.2fr; gap: 64px; align-items: start; }
+    .boss-visual { display: flex; align-items: center; justify-content: center; }
+    .boss-phases { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .phase-card { padding: 20px 16px; border: 1px solid var(--border); }
+    .phase-num { font-size: .7rem; font-weight: 700; letter-spacing: .2em; color: var(--av); text-transform: uppercase; margin-bottom: 6px; }
+    .phase-name { font-family: 'Cinzel',serif; font-size: .9rem; font-weight: 600; margin-bottom: 6px; }
+    .phase-text { font-size: .8rem; color: var(--text-dim); line-height: 1.55; }
+    .boss-desc p { font-size: .97rem; color: var(--text-muted); line-height: 1.85; margin-bottom: 14px; }
 
-/* ── Overview strip ── */
-#overview { background: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 28px 0; }
-.overview-strip { display: flex; align-items: center; justify-content: center; gap: 0; flex-wrap: wrap; }
-.ov-item { display: flex; flex-direction: column; align-items: center; padding: 0.9rem 2.5rem; border-right: 1px solid var(--border); }
-.ov-item:last-child { border-right: none; }
-.ov-val { font-family: var(--font-brand); font-size: 1.6rem; font-weight: 700; color: var(--sigil); line-height: 1; margin-bottom: 0.2rem; }
-.ov-label { font-family: var(--font-ui); font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim); }
-@media (max-width: 720px) { .ov-item { padding: 0.7rem 1.5rem; border-right: none; border-bottom: 1px solid var(--border); } .ov-item:last-child { border-bottom: none; } }
+    /* DEV INFO */
+    .dev-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+    .dev-logo-block { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+    .dev-logo { width: 120px; opacity: .85; }
+    .dev-studio { font-family: 'Cinzel',serif; font-size: .85rem; color: var(--gold); letter-spacing: .15em; text-align: center; }
+    .specs-table { width: 100%; border-collapse: collapse; }
+    .specs-table tr { border-bottom: 1px solid var(--border); }
+    .specs-table td { padding: 10px 0; font-size: .85rem; }
+    .specs-table td:first-child { color: var(--text-dim); letter-spacing: .05em; width: 45%; }
+    .specs-table td:last-child { color: var(--text-muted); }
 
-/* ── Story Akt I ── */
-#story { background: var(--bg); }
-.story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
-.story-body { font-family: var(--font-body); font-size: 1.06rem; color: var(--text-mid); line-height: 1.82; margin-bottom: 1.2rem; }
-.story-quote { font-family: var(--font-body); font-style: italic; font-size: 1.15rem; color: var(--text-mid); line-height: 1.7; border-left: 2px solid var(--sigil); padding-left: 1.3rem; margin-top: 1.8rem; }
-.story-visual { border-radius: var(--r-lg); border: 1px solid var(--sigil-bdr); background: linear-gradient(150deg,#08101a,#0c1524); position: relative; overflow: hidden; aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; }
-.story-visual svg { opacity: 0.55; }
-@media (max-width: 900px) { .story-grid { grid-template-columns: 1fr; gap: 3rem; } }
+    /* SUPPORT */
+    #support { background: var(--bg2); padding: 100px 80px; text-align: center; }
+    .support-inner { max-width: 600px; margin: 0 auto; }
+    .support-text { font-size: .97rem; color: var(--text-muted); line-height: 1.85; margin-bottom: 14px; }
+    .support-note { font-size: .83rem; color: var(--text-dim); margin-bottom: 32px; font-style: italic; }
+    .paypal-btn { display: inline-block; padding: 14px 40px; background: #009cde; color: #fff; font-family: 'Inter',sans-serif; font-size: .88rem; font-weight: 700; letter-spacing: .06em; text-decoration: none; transition: all .3s; }
+    .paypal-btn:hover { background: #007ab8; transform: translateY(-2px); }
 
-/* ── Twists ── */
-#twists { background: var(--bg-alt); border-top: 1px solid var(--border); }
-.twist-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.2rem; margin-top: 3rem; }
-.twist-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 1.8rem 1.6rem; position: relative; overflow: hidden; transition: border-color 0.3s, transform 0.3s; }
-.twist-card:hover { border-color: var(--sigil-bdr); transform: translateY(-2px); }
-.twist-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--sigil), transparent); opacity: 0; transition: opacity 0.3s; }
-.twist-card:hover::before { opacity: 1; }
-.twist-num { font-family: var(--font-brand); font-size: 2.2rem; font-weight: 900; color: rgba(94,184,255,0.08); line-height: 1; margin-bottom: 0.8rem; }
-.twist-title { font-family: var(--font-brand); font-size: 0.9rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--white); margin-bottom: 0.6rem; }
-.twist-desc { font-family: var(--font-body); font-size: 0.98rem; color: var(--text-mid); line-height: 1.65; }
-@media (max-width: 900px) { .twist-cards { grid-template-columns: 1fr; } }
+    /* FOOTER */
+    footer { background: var(--bg); border-top: 1px solid var(--border); padding: 28px 80px; display: flex; align-items: center; justify-content: space-between; }
+    .footer-logo { font-family: 'Cinzel',serif; font-size: .82rem; font-weight: 700; color: var(--gold); letter-spacing: .15em; text-transform: uppercase; }
+    .footer-rights { font-size: .76rem; color: var(--text-dim); }
 
-/* ── Regions ── */
-#regions { background: var(--bg); }
-.regions-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.3rem; margin-top: 3rem; }
-.region-card { border-radius: var(--r-lg); border: 1px solid var(--border); overflow: hidden; position: relative; transition: transform 0.3s, border-color 0.3s; }
-.region-card:hover { transform: translateY(-4px); border-color: var(--border-mid); }
-.region-art { position: relative; height: 200px; overflow: hidden; }
-.r-frost { background: linear-gradient(150deg,#061525,#0c2540,#0a1e38); }
-.r-forest { background: linear-gradient(150deg,#040f08,#081808,#061410); }
-.r-plains { background: linear-gradient(150deg,#120d02,#1e1402,#160f04); }
-.r-peaks  { background: linear-gradient(150deg,#0d0814,#180c24,#140a1c); }
-.region-art svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-.region-grad { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,10,15,0.98) 0%, rgba(10,10,15,0.2) 55%, transparent 100%); }
-.region-body { padding: 1.6rem; }
-.region-sigil-tag { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-ui); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.2rem 0.65rem; border-radius: 100px; margin-bottom: 0.9rem; }
-.region-name { font-family: var(--font-brand); font-size: 1.1rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--white); margin-bottom: 0.3rem; }
-.region-subtitle { font-family: var(--font-ui); font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.8rem; }
-.region-desc { font-family: var(--font-body); font-size: 0.98rem; color: var(--text-mid); line-height: 1.65; margin-bottom: 1rem; }
-.region-meta { display: flex; gap: 1.5rem; padding-top: 0.9rem; border-top: 1px solid var(--border); }
-.region-meta-item { }
-.region-meta-label { font-family: var(--font-ui); font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.2rem; }
-.region-meta-val { font-family: var(--font-body); font-size: 0.92rem; color: var(--text-mid); }
-.region-boss { font-family: var(--font-brand); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.04em; color: var(--white); }
-@media (max-width: 720px) { .regions-grid { grid-template-columns: 1fr; } }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
 
-/* ── Classes ── */
-#classes { background: var(--bg-alt); border-top: 1px solid var(--border); }
-.classes-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.1rem; margin-top: 3rem; }
-.class-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 1.8rem 1.4rem; position: relative; overflow: hidden; transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s; }
-.class-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
-.class-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
-.class-frost::before  { background: linear-gradient(90deg, transparent, var(--frost),  transparent); }
-.class-forest::before { background: linear-gradient(90deg, transparent, var(--forest), transparent); }
-.class-plains::before { background: linear-gradient(90deg, transparent, var(--plains), transparent); }
-.class-peaks::before  { background: linear-gradient(90deg, transparent, var(--peaks),  transparent); }
-.class-frost:hover  { border-color: rgba(126,232,255,0.3); }
-.class-forest:hover { border-color: rgba(109,232,138,0.3); }
-.class-plains:hover { border-color: rgba(255,209,102,0.3); }
-.class-peaks:hover  { border-color: rgba(192,132,252,0.3); }
-.class-icon-big { font-size: 2rem; margin-bottom: 1rem; display: block; }
-.class-name  { font-family: var(--font-brand); font-size: 1rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--white); margin-bottom: 0.2rem; }
-.class-role  { font-family: var(--font-ui); font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 0.9rem; }
-.class-desc  { font-family: var(--font-body); font-size: 0.95rem; color: var(--text-mid); line-height: 1.6; margin-bottom: 1rem; }
-.class-sigil-link { font-family: var(--font-ui); font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; }
-@media (max-width: 900px) { .classes-grid { grid-template-columns: repeat(2,1fr); } }
-@media (max-width: 480px) { .classes-grid { grid-template-columns: 1fr; } }
-
-/* ── Features ── */
-#features { background: var(--bg); border-top: 1px solid var(--border); }
-.features-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.2rem; margin-top: 3rem; }
-.feat-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 1.8rem 1.6rem; transition: border-color 0.3s, transform 0.3s; }
-.feat-card:hover { border-color: var(--border-mid); transform: translateY(-2px); }
-.feat-icon { font-size: 1.5rem; margin-bottom: 0.8rem; display: block; }
-.feat-name  { font-family: var(--font-brand); font-size: 0.84rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--white); margin-bottom: 0.5rem; }
-.feat-desc  { font-family: var(--font-body); font-size: 0.96rem; color: var(--text-mid); line-height: 1.62; }
-@media (max-width: 900px) { .features-grid { grid-template-columns: repeat(2,1fr); } }
-@media (max-width: 480px) { .features-grid { grid-template-columns: 1fr; } }
-
-/* ── Final Boss ── */
-#boss { background: linear-gradient(180deg,var(--bg-alt) 0%,#0a0510 100%); border-top: 1px solid var(--border); }
-.boss-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
-.boss-visual { border-radius: var(--r-lg); border: 1px solid rgba(192,57,43,0.25); background: linear-gradient(150deg,#100505,#180808,#100505); position: relative; overflow: hidden; aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; }
-.boss-phases { display: grid; grid-template-columns: repeat(2,1fr); gap: 1rem; margin-top: 3rem; }
-.boss-phase { background: rgba(20,5,5,0.6); border: 1px solid rgba(192,57,43,0.2); border-radius: var(--r-lg); padding: 1.4rem 1.3rem; transition: border-color 0.3s, transform 0.3s; }
-.boss-phase:hover { border-color: rgba(192,57,43,0.4); transform: translateY(-2px); }
-.phase-num { font-family: var(--font-brand); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(192,57,43,0.7); margin-bottom: 0.4rem; }
-.phase-name { font-family: var(--font-brand); font-size: 0.92rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--white); margin-bottom: 0.5rem; }
-.phase-desc { font-family: var(--font-body); font-size: 0.94rem; color: var(--text-mid); line-height: 1.6; }
-@media (max-width: 900px) { .boss-intro { grid-template-columns: 1fr; gap: 2.5rem; } .boss-phases { grid-template-columns: 1fr; } }
-
-/* ── Dev Info ── */
-#devinfo { background: var(--bg); border-top: 1px solid var(--border); }
-.devinfo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
-.devinfo-logo { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
-.devinfo-logo img { width: 56px; height: 56px; object-fit: contain; border-radius: 8px; filter: drop-shadow(0 0 12px rgba(201,168,76,0.35)); }
-.devinfo-logo-text { font-family: var(--font-brand); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); }
-.devinfo-body { font-family: var(--font-body); font-size: 1.02rem; color: var(--text-mid); line-height: 1.78; margin-bottom: 1.2rem; }
-.devinfo-specs { display: flex; flex-direction: column; gap: 0.65rem; }
-.spec-row { display: flex; align-items: baseline; gap: 0.8rem; font-family: var(--font-body); font-size: 0.95rem; }
-.spec-key { font-family: var(--font-ui); font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim); min-width: 130px; }
-.spec-val { color: var(--text-mid); }
-.spec-val strong { color: var(--white); font-weight: 600; }
-@media (max-width: 900px) { .devinfo-grid { grid-template-columns: 1fr; gap: 3rem; } }
-
-/* ── Footer ── */
-footer { background: var(--bg); border-top: 1px solid var(--border); padding: 2.8rem 0; }
-.footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.4rem; }
-.footer-brand { display: flex; align-items: center; gap: 0.75rem; }
-.footer-brand-logo { width: 26px; height: 26px; object-fit: contain; border-radius: 4px; }
-.footer-logo { font-family: var(--font-brand); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); }
-.footer-links { display: flex; gap: 1.6rem; flex-wrap: wrap; }
-.footer-links a { font-family: var(--font-ui); font-size: 0.67rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); transition: color 0.2s; }
-.footer-links a:hover { color: var(--text-mid); }
-.footer-copy { font-family: var(--font-ui); font-size: 0.67rem; letter-spacing: 0.07em; color: var(--text-dim); }
-@media (max-width: 720px) { .footer-inner { flex-direction: column; align-items: flex-start; gap: 1rem; } }
+    @media (max-width: 1024px) {
+      .story-grid, .boss-layout, .dev-grid { grid-template-columns: 1fr; }
+      .classes-grid { grid-template-columns: repeat(2,1fr); }
+      .regions-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .page-section { padding: 72px 24px; }
+      nav { padding: 0 24px; }
+      .nav-logo-center span { display: none; }
+      .overview-strip { flex-wrap: wrap; }
+      .strip-item { min-width: 33%; }
+      .twists-grid { grid-template-columns: 1fr; }
+      .classes-grid { grid-template-columns: 1fr 1fr; }
+      .boss-phases { grid-template-columns: 1fr; }
+      footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
+    }
   </style>
 </head>
 <body>
 
-<div id="cookie-banner">
-  <div class="cookie-text">
-    <h3>Cookies &amp; Datenschutz</h3>
-    <p>Wir verwenden Cookies zur Speicherung deiner Einstellungen.</p>
-  </div>
-  <div class="cookie-actions">
-    <button class="btn btn-ghost" id="cookie-decline">Nur notwendige</button>
-    <button class="btn btn-primary" id="cookie-accept">Alle akzeptieren</button>
-  </div>
-</div>
-
-<div id="mobile-nav">
-  <a href="index.html"><img src="images/logo.png" style="width:48px;height:48px;object-fit:contain;margin-bottom:0.5rem;border-radius:8px;" alt="NFS"/></a>
-  <a href="index.html"    onclick="closeMobileNav()">← Studio</a>
-  <a href="#story"        onclick="closeMobileNav()">Story</a>
-  <a href="#regions"      onclick="closeMobileNav()">Regionen</a>
-  <a href="#classes"      onclick="closeMobileNav()">Klassen</a>
-  <a href="#boss"         onclick="closeMobileNav()">Nerath</a>
-</div>
-
-<nav id="nav">
-  <a href="index.html" class="nav-logo">
-    <img src="images/logo.png" alt="Nordic Forge Studios" class="nav-logo-icon"/>
-    <div class="nav-logo-wordmark">Nordic Forge Studios<small>Avadon: The Broken Sigils</small></div>
+<nav id="main-nav">
+  <a href="index.html" class="nav-back">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    <span data-i18n="back">Studio</span>
   </a>
-  <ul class="nav-links">
-    <li><a href="#story">Story</a></li>
-    <li><a href="#regions">Regionen</a></li>
-    <li><a href="#classes">Klassen</a></li>
-    <li><a href="#features">Features</a></li>
-    <li><a href="#boss">Nerath</a></li>
-  </ul>
+  <a href="index.html" class="nav-logo-center">
+    <img src="logo.png" alt="Nordic Forge Studios">
+    <span>Nordic Forge Studios</span>
+  </a>
   <div class="nav-right">
-    <a href="index.html" class="nav-back">← Zurück zum Studio</a>
-    <button class="hamburger" id="hamburger" onclick="toggleMobileNav()" aria-label="Menü"><span></span><span></span><span></span></button>
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="de" onclick="setLang('de')">DE</button>
+      <div class="nav-sep"></div>
+      <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+    </div>
   </div>
 </nav>
 
-<!-- ══ HERO ══ -->
 <section id="hero">
-  <div class="hero-bg"></div>
   <canvas id="hero-canvas"></canvas>
   <div class="hero-content">
-    <div class="hero-sigil-badge">Nordic Forge Studios · In Entwicklung · Godot 4</div>
-    <h1 class="hero-title">Avadon</h1>
-    <div class="hero-title-sub">The Broken Sigils</div>
-    <p class="hero-quote">„Before you were born, the world was already dying."</p>
-    <div class="hero-btns">
-      <a href="#story"   class="btn btn-sigil">Story entdecken</a>
-      <a href="#regions" class="btn btn-outline">Die vier Regionen</a>
-    </div>
+    <div class="hero-badge" data-i18n="hero_badge">In Entwicklung &middot; Godot 4</div>
+    <h1 class="hero-title">AVADON</h1>
+    <div class="hero-subtitle">The Broken Sigils</div>
+    <div class="hero-quote" data-i18n="hero_quote">&ldquo;Before you were born, the world was already dying.&rdquo;</div>
   </div>
-  <div class="hero-scroll"><div class="hero-scroll-arrow"></div><span class="hero-scroll-label">Scroll</span></div>
 </section>
 
-<!-- ══ OVERVIEW STRIP ══ -->
-<div id="overview">
-  <div class="container">
-    <div class="overview-strip">
-      <div class="ov-item"><div class="ov-val">4</div><div class="ov-label">Regionen</div></div>
-      <div class="ov-item"><div class="ov-val">4</div><div class="ov-label">Klassen</div></div>
-      <div class="ov-item"><div class="ov-val">4</div><div class="ov-label">Bosse</div></div>
-      <div class="ov-item"><div class="ov-val">4</div><div class="ov-label">Nerath-Phasen</div></div>
-      <div class="ov-item"><div class="ov-val">PC</div><div class="ov-label">Plattform</div></div>
-      <div class="ov-item"><div class="ov-val">Steam</div><div class="ov-label">Store</div></div>
-    </div>
-  </div>
+<div class="overview-strip">
+  <div class="strip-item"><div class="strip-num">4</div><div class="strip-label" data-i18n="strip_regions">Regionen</div></div>
+  <div class="strip-item"><div class="strip-num">4</div><div class="strip-label" data-i18n="strip_classes">Klassen</div></div>
+  <div class="strip-item"><div class="strip-num">4</div><div class="strip-label" data-i18n="strip_boss_phases">Boss-Phasen</div></div>
+  <div class="strip-item"><div class="strip-num">PC</div><div class="strip-label">Steam</div></div>
+  <div class="strip-item"><div class="strip-num">18–20</div><div class="strip-label" data-i18n="strip_months">Monate Entwicklung</div></div>
 </div>
 
-<!-- ══ STORY ══ -->
-<section id="story">
-  <div class="container">
+<!-- Story -->
+<section class="page-section">
+  <div class="sec-inner">
     <div class="story-grid">
-      <div class="reveal-left">
-        <span class="sec-label">Prolog</span>
-        <h2 class="sec-title">Der Tag ohne Namen</h2>
-        <div class="sec-rule"></div>
-        <p class="story-body">
-          Vor 1.000 Jahren versiegelte ein sterbender König namens Avadon das uralte Wesen
-          Nerath mit seinem eigenen Leben. Er wurde zur Legende. Sein Name wurde zur Welt.
-          Doch niemand wusste: Er hat nicht gesiegt. Er hat nur Zeit gekauft.
-        </p>
-        <p class="story-body">
-          Die Siegel, die er hinterließ, waren kein Triumph — sie waren ein Vertrag. Und Verträge laufen ab.
-          Du bist <strong style="color:var(--white);">Kael</strong> — ein junger Söldner ohne Erinnerungen an seine Kindheit.
-          Als das erste Siegel bricht, überlebst du als einziger — nicht durch Können. Die Magie hat dich erkannt.
-          Du bist der letzte <strong style="color:var(--sigil);">Sigilborn</strong>.
-        </p>
-        <blockquote class="story-quote">
-          „Ein alter Ordenspriester namens Valdric findet dich bewusstlos in den Ruinen
-          und sagt dir die Wahrheit. Aber Valdric hat ein Geheimnis — und es wird alles verändern."
-        </blockquote>
-      </div>
-      <div class="story-visual reveal-right">
-        <svg width="280" height="280" viewBox="0 0 280 280" fill="none">
-          <circle cx="140" cy="140" r="120" stroke="rgba(94,184,255,0.2)" stroke-width="1" stroke-dasharray="8 4"/>
-          <circle cx="140" cy="140" r="90"  stroke="rgba(94,184,255,0.15)" stroke-width="1"/>
-          <circle cx="140" cy="140" r="60"  stroke="rgba(94,184,255,0.25)" stroke-width="1.5" stroke-dasharray="4 4"/>
-          <polygon points="140,30 228,82 228,198 140,250 52,198 52,82" fill="none" stroke="rgba(94,184,255,0.3)" stroke-width="1.5"/>
-          <line x1="140" y1="30"  x2="140" y2="250" stroke="rgba(94,184,255,0.08)" stroke-width="1"/>
-          <line x1="52"  y1="82"  x2="228" y2="198" stroke="rgba(94,184,255,0.08)" stroke-width="1"/>
-          <line x1="228" y1="82"  x2="52"  y2="198" stroke="rgba(94,184,255,0.08)" stroke-width="1"/>
-          <circle cx="140" cy="140" r="22" fill="rgba(94,184,255,0.08)" stroke="rgba(94,184,255,0.5)" stroke-width="2"/>
-          <circle cx="140" cy="140" r="8"  fill="rgba(94,184,255,0.4)"/>
-          <!-- 4 Siegel-Punkte -->
-          <circle cx="140" cy="30"  r="5" fill="rgba(126,232,255,0.5)"/>
-          <circle cx="228" cy="82"  r="5" fill="rgba(109,232,138,0.5)"/>
-          <circle cx="228" cy="198" r="5" fill="rgba(255,209,102,0.5)"/>
-          <circle cx="52"  cy="198" r="5" fill="rgba(192,132,252,0.5)"/>
-          <!-- Broken cracks -->
-          <path d="M140 118 L128 100 L144 88" fill="none" stroke="rgba(94,184,255,0.15)" stroke-width="1"/>
-          <path d="M158 140 L172 148 L168 164" fill="none" stroke="rgba(94,184,255,0.15)" stroke-width="1"/>
+      <div class="story-visual reveal">
+        <svg viewBox="0 0 360 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:340px;">
+          <circle cx="180" cy="190" r="170" fill="none" stroke="rgba(94,184,255,.07)" stroke-width="1.5"/>
+          <circle cx="180" cy="190" r="138" fill="none" stroke="rgba(94,184,255,.16)" stroke-width="1"/>
+          <circle cx="180" cy="190" r="160" fill="none" stroke="rgba(94,184,255,.05)" stroke-width="2" stroke-dasharray="5 9"/>
+          <polygon points="180,28 308,258 52,258" fill="none" stroke="rgba(94,184,255,.26)" stroke-width="1"/>
+          <polygon points="180,352 52,122 308,122" fill="none" stroke="rgba(94,184,255,.26)" stroke-width="1"/>
+          <polygon points="180,118 242,180 180,242 118,180" fill="rgba(94,184,255,.04)" stroke="rgba(94,184,255,.52)" stroke-width="1.5"/>
+          <circle cx="180" cy="40" r="6" fill="#a8d8ff" opacity=".75"/>
+          <circle cx="180" cy="340" r="6" fill="#6bd46b" opacity=".75"/>
+          <circle cx="40" cy="190" r="6" fill="#ffd166" opacity=".75"/>
+          <circle cx="320" cy="190" r="6" fill="#c77dff" opacity=".75"/>
+          <circle cx="180" cy="180" r="16" fill="rgba(94,184,255,.07)" stroke="rgba(94,184,255,.38)" stroke-width="1.5"/>
+          <circle cx="180" cy="180" r="5" fill="#5eb8ff" opacity=".9"/>
+          <line x1="180" y1="46" x2="180" y2="164" stroke="rgba(94,184,255,.14)" stroke-width=".8"/>
+          <line x1="180" y1="334" x2="180" y2="196" stroke="rgba(94,184,255,.14)" stroke-width=".8"/>
+          <line x1="46" y1="190" x2="164" y2="190" stroke="rgba(94,184,255,.14)" stroke-width=".8"/>
+          <line x1="314" y1="190" x2="196" y2="190" stroke="rgba(94,184,255,.14)" stroke-width=".8"/>
+          <text x="180" y="18" text-anchor="middle" fill="rgba(168,216,255,.5)" font-size="9" font-family="serif">EIS</text>
+          <text x="180" y="364" text-anchor="middle" fill="rgba(107,212,107,.5)" font-size="9" font-family="serif">LEBEN</text>
+          <text x="28" y="194" text-anchor="middle" fill="rgba(255,209,102,.5)" font-size="9" font-family="serif">ORDNUNG</text>
+          <text x="332" y="194" text-anchor="middle" fill="rgba(199,125,255,.5)" font-size="9" font-family="serif">REALIT&#196;T</text>
         </svg>
       </div>
-    </div>
-
-    <!-- Akt II -->
-    <div style="margin-top:5rem;">
-      <div class="reveal" style="max-width:700px;margin:0 auto;text-align:center;">
-        <span class="sec-label">Akt II — Die vier Wunden</span>
-        <h2 class="sec-title">Jedes Siegel ist eine Narbe der Welt</h2>
-        <div class="sec-rule center"></div>
-        <p class="sec-sub">
-          Kael reist durch alle vier Gebiete der Welt von Avadon. In jedem trifft er einen gefallenen
-          Ordenshüter — Menschen, die einst die Siegel beschützten, jetzt aber von Nerath korrumpiert wurden.
-          Jeder hat eine persönliche Geschichte. Jeder glaubt, er tue das Richtige.
-          Keiner ist ein einfacher Bösewicht.
-        </p>
+      <div class="story-text reveal">
+        <div class="sec-eyebrow" data-i18n="story_eyebrow">Die Geschichte</div>
+        <h2 class="sec-title" data-i18n="story_title">Der Sigilborn</h2>
+        <div class="sec-divider"></div>
+        <p data-i18n="story_p1">Kael erwacht ohne Erinnerungen — nur mit einer Gabe, die ihn zur Zielscheibe macht: Er kann die alten Siegel der Welt Avadon berühren und ihr Gl&#252;hen sp&#252;ren. Die Sigilborns sind selten, gef&#252;rchtet und politisch brisanter als jede Waffe.</p>
+        <p data-i18n="story_p2">Sein Mentor Valdric f&#252;hrt ihn durch die vier gro&#223;en Regionen — Frostmark, Sylvaris, die Aldmere-Ebenen und die Gravemire-Gipfel — immer auf der Jagd nach Kaels gestohlenen Erinnerungen und den Scherben eines alten Pakts.</p>
+        <p data-i18n="story_p3">Was Kael nicht wei&#223;: Avadon hat keinen Krieg gewonnen. Es hat einen Deal gemacht. Alle 1000 Jahre muss ein Sigilborn sich opfern, damit das Ungeboren nicht erwacht. Und dieser Zyklus endet jetzt.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══ TWISTS ══ -->
-<section id="twists">
-  <div class="container">
-    <div class="reveal" style="text-align:center;max-width:560px;margin:0 auto;">
-      <span class="sec-label">Story · Wendepunkte</span>
-      <h2 class="sec-title">Die großen Enthüllungen</h2>
-      <div class="sec-rule center"></div>
-    </div>
-    <div class="twist-cards">
-      <div class="twist-card reveal" style="transition-delay:0s;">
-        <div class="twist-num">I</div>
-        <div class="twist-title">Die gestohlenen Erinnerungen</div>
-        <p class="twist-desc">Kael hat keine Kindheitserinnerungen, weil sie ihm gestohlen wurden — von jemandem, der nicht wollte, dass er seine Bestimmung findet. Kaels Vergangenheit ist der Schlüssel zu allem.</p>
+<!-- Twists -->
+<section class="page-section alt">
+  <div class="sec-inner">
+    <div class="sec-eyebrow" data-i18n="twists_eyebrow">Story-Twists</div>
+    <h2 class="sec-title" data-i18n="twists_title">Drei Wahrheiten, die alles ver&#228;ndern</h2>
+    <div class="twists-grid">
+      <div class="twist-card reveal">
+        <div class="twist-num">01</div>
+        <div class="twist-title" data-i18n="tw1_title">Die gestohlenen Erinnerungen</div>
+        <div class="twist-text" data-i18n="tw1_text">Kaels Erinnerungen wurden nicht gestohlen — sie wurden gel&#246;scht. Von Valdric. Damit er willig in die Rolle des Opfers schl&#252;pft, ohne zu fragen.</div>
       </div>
-      <div class="twist-card reveal" style="transition-delay:0.1s;">
-        <div class="twist-num">II</div>
-        <div class="twist-title">Valdrics Verrat</div>
-        <p class="twist-desc">Der alte Ordenspriester Valdric, der Kael führt, ist selbst ein ehemaliger Ordenshüter — und er hat Kaels Erinnerungen gestohlen. Kaels Vater war der letzte Ordensführer. Und dieser Ordensführer hat Nerath absichtlich freigelassen.</p>
+      <div class="twist-card reveal">
+        <div class="twist-num">02</div>
+        <div class="twist-title" data-i18n="tw2_title">Valdrics Verrat</div>
+        <div class="twist-text" data-i18n="tw2_text">Der Mentor ist kein Held. Er ist der H&#252;ter des Zyklus — und hat schon fr&#252;here Sigilborns in den Tod gef&#252;hrt. Er glaubt, dass er die Welt rettet. Kael glaubt das nicht mehr.</div>
       </div>
-      <div class="twist-card reveal" style="transition-delay:0.2s;">
-        <div class="twist-num">III</div>
-        <div class="twist-title">Avadon war kein Held</div>
-        <p class="twist-desc">König Avadon hat Nerath nicht besiegt. Er hat einen Deal gemacht — Nerath schläft nur, solange alle 1.000 Jahre ein Sigilborn sich selbst opfert. Die Orden wussten das immer. Kael ist das nächste Opfer.</p>
+      <div class="twist-card reveal">
+        <div class="twist-num">03</div>
+        <div class="twist-title" data-i18n="tw3_title">Der Pakt mit Avadon</div>
+        <div class="twist-text" data-i18n="tw3_text">Die Welt selbst ist nicht unschuldig. Avadon hat den Pakt unterzeichnet — ein ewiges Leben auf Kosten eines einzigen. Kael bricht den Zyklus, zerst&#246;rt Nerath und schreibt eine neue Geschichte.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══ REGIONS ══ -->
-<section id="regions">
-  <div class="container">
-    <div class="reveal" style="text-align:center;max-width:580px;margin:0 auto;">
-      <span class="sec-label">Die Welt von Avadon</span>
-      <h2 class="sec-title">Die vier Gebiete</h2>
-      <div class="sec-rule center"></div>
-      <p class="sec-sub">Vier Regionen, vier zerbrochene Siegel, vier korrumpierte Ordenshüter. Jedes Gebiet hat ein Hauptdorf, einen Dungeon, einen Boss und ein Siegel, das es zu reaktivieren gilt.</p>
-    </div>
-
+<!-- Regions -->
+<section class="page-section dark">
+  <div class="sec-inner">
+    <div class="sec-eyebrow" data-i18n="regions_eyebrow">Die Welt</div>
+    <h2 class="sec-title" data-i18n="regions_title">Vier Regionen, vier Siegel</h2>
     <div class="regions-grid">
-
-      <!-- FROSTMARK -->
-      <div class="region-card reveal" style="transition-delay:0s;">
-        <div class="region-art r-frost">
-          <svg viewBox="0 0 360 200" fill="none">
-            <rect x="148" y="60"  width="64" height="90"  fill="none" stroke="rgba(126,232,255,0.3)" stroke-width="1.2"/>
-            <rect x="162" y="40"  width="36" height="30"  fill="none" stroke="rgba(126,232,255,0.25)" stroke-width="1"/>
-            <polygon points="180,22 162,42 198,42" fill="rgba(126,232,255,0.12)" stroke="rgba(126,232,255,0.3)" stroke-width="1"/>
-            <polyline points="0,170 40,130 80,155 120,110 160,145 200,115 240,145 280,115 320,145 360,170" fill="none" stroke="rgba(126,232,255,0.2)" stroke-width="1.5"/>
-            <circle cx="40"  cy="20" r="1.4" fill="#7ee8ff" opacity="0.7"/>
-            <circle cx="100" cy="12" r="1"   fill="#7ee8ff" opacity="0.5"/>
-            <circle cx="260" cy="18" r="1.5" fill="#7ee8ff" opacity="0.8"/>
-            <circle cx="310" cy="10" r="1"   fill="#7ee8ff" opacity="0.6"/>
-            <circle cx="180" cy="8"  r="1.2" fill="#7ee8ff" opacity="0.6"/>
-            <!-- Snowflake hints -->
-            <path d="M30,50 L30,70 M20,55 L40,65 M20,65 L40,55" stroke="rgba(126,232,255,0.15)" stroke-width="0.8"/>
-            <path d="M320,40 L320,60 M310,45 L330,55 M310,55 L330,45" stroke="rgba(126,232,255,0.12)" stroke-width="0.8"/>
+      <!-- Frostmark -->
+      <div class="region-card reveal">
+        <div class="region-visual" style="background:linear-gradient(135deg,#040d18,#07162a);">
+          <svg width="200" height="160" viewBox="0 0 200 160">
+            <rect x="60" y="20" width="80" height="100" fill="none" stroke="rgba(168,216,255,.3)" stroke-width="1"/>
+            <polygon points="100,8 52,22 148,22" fill="none" stroke="rgba(168,216,255,.4)" stroke-width="1.2"/>
+            <rect x="80" y="80" width="40" height="40" fill="rgba(168,216,255,.05)" stroke="rgba(168,216,255,.2)" stroke-width="1"/>
+            <line x1="100" y1="20" x2="100" y2="8" stroke="rgba(168,216,255,.4)" stroke-width="1"/>
+            <circle cx="30" cy="30" r="2" fill="rgba(168,216,255,.5)"/>
+            <circle cx="50" cy="15" r="1.5" fill="rgba(168,216,255,.4)"/>
+            <circle cx="160" cy="25" r="2" fill="rgba(168,216,255,.5)"/>
+            <circle cx="170" cy="10" r="1.5" fill="rgba(168,216,255,.3)"/>
+            <circle cx="80" cy="5" r="1.5" fill="rgba(168,216,255,.4)"/>
+            <ellipse cx="100" cy="148" rx="50" ry="6" fill="rgba(168,216,255,.07)"/>
           </svg>
-          <div class="region-grad"></div>
         </div>
-        <div class="region-body">
-          <span class="region-sigil-tag" style="background:rgba(126,232,255,0.1);border:1px solid rgba(126,232,255,0.3);color:#7ee8ff;">❄ Siegel der Zeit</span>
-          <div class="region-name">Frostmark</div>
-          <div class="region-subtitle">Hrimhold · Frostbund-Orden · Nordgebiet</div>
-          <p class="region-desc">Schneebedeckte Wälder, uralte Ruinen, raues Überleben. Heimat der kriegerischen Frostzwerge, die in Bergfestungen leben und Eiswaffen schmieden. Das Siegel der Zeit ist gebrochen — hier hält ein Mann die Zeit selbst an, weil er den Tod seiner Familie nicht akzeptieren kann.</p>
+        <div class="region-info">
+          <div class="region-name" style="color:var(--frost)">Frostmark</div>
+          <div class="region-sigil" style="color:var(--frost)" data-i18n="r1_sigil">Siegel der Zeit</div>
+          <div class="region-text" data-i18n="r1_text">Ewiger Winter, zerbrochene Burgen. Die Zeit selbst gefriert hier — manche Schlachten werden noch heute gek&#228;mpft, obwohl die K&#228;mpfer l&#228;ngst tot sind.</div>
           <div class="region-meta">
-            <div class="region-meta-item">
-              <div class="region-meta-label">Hauptdorf</div>
-              <div class="region-meta-val">Hrimhold</div>
-            </div>
-            <div class="region-meta-item">
-              <div class="region-meta-label">Boss</div>
-              <div class="region-boss">Eisgebrochener Wächter</div>
-            </div>
+            <span><strong data-i18n="meta_village">Siedlung:</strong> Eisenholm</span>
+            <span><strong data-i18n="meta_boss">Boss:</strong> Varek, der Zeitbrecher</span>
           </div>
         </div>
       </div>
-
-      <!-- SYLVARIS -->
-      <div class="region-card reveal" style="transition-delay:0.08s;">
-        <div class="region-art r-forest">
-          <svg viewBox="0 0 360 200" fill="none">
-            <ellipse cx="180" cy="80" rx="80" ry="55" fill="rgba(109,232,138,0.07)" stroke="rgba(109,232,138,0.25)" stroke-width="1"/>
-            <ellipse cx="180" cy="60" rx="55" ry="36" fill="rgba(109,232,138,0.06)" stroke="rgba(109,232,138,0.2)" stroke-width="0.8"/>
-            <rect x="173" y="132" width="14" height="55" fill="none" stroke="rgba(109,232,138,0.3)" stroke-width="1.2"/>
-            <path d="M173 180 Q145 192 120 200" fill="none" stroke="rgba(109,232,138,0.2)" stroke-width="1"/>
-            <path d="M187 180 Q215 192 240 200" fill="none" stroke="rgba(109,232,138,0.2)" stroke-width="1"/>
-            <circle cx="180" cy="80" r="90" fill="none" stroke="rgba(109,232,138,0.08)" stroke-width="1" stroke-dasharray="5 5"/>
-            <circle cx="60"  cy="100" r="2" fill="#6de88a" opacity="0.6"/>
-            <circle cx="290" cy="90"  r="1.5" fill="#6de88a" opacity="0.5"/>
-            <circle cx="100" cy="140" r="1.5" fill="#6de88a" opacity="0.4"/>
-            <circle cx="260" cy="130" r="2"   fill="#6de88a" opacity="0.5"/>
-            <!-- Stone circles -->
-            <circle cx="180" cy="160" r="20" fill="none" stroke="rgba(109,232,138,0.12)" stroke-width="1" stroke-dasharray="3 3"/>
+      <!-- Sylvaris -->
+      <div class="region-card reveal">
+        <div class="region-visual" style="background:linear-gradient(135deg,#020d03,#051408);">
+          <svg width="200" height="160" viewBox="0 0 200 160">
+            <line x1="100" y1="150" x2="100" y2="60" stroke="rgba(107,212,107,.35)" stroke-width="4"/>
+            <line x1="100" y1="60" x2="70" y2="30" stroke="rgba(107,212,107,.3)" stroke-width="2"/>
+            <line x1="100" y1="60" x2="130" y2="30" stroke="rgba(107,212,107,.3)" stroke-width="2"/>
+            <line x1="100" y1="85" x2="60" y2="62" stroke="rgba(107,212,107,.22)" stroke-width="1.5"/>
+            <line x1="100" y1="85" x2="140" y2="62" stroke="rgba(107,212,107,.22)" stroke-width="1.5"/>
+            <circle cx="100" cy="18" r="12" fill="rgba(107,212,107,.12)" stroke="rgba(107,212,107,.35)" stroke-width="1"/>
+            <circle cx="70" cy="18" r="7" fill="rgba(107,212,107,.1)" stroke="rgba(107,212,107,.25)" stroke-width="1"/>
+            <circle cx="130" cy="18" r="7" fill="rgba(107,212,107,.1)" stroke="rgba(107,212,107,.25)" stroke-width="1"/>
+            <ellipse cx="100" cy="148" rx="18" ry="5" fill="rgba(107,212,107,.15)"/>
           </svg>
-          <div class="region-grad"></div>
         </div>
-        <div class="region-body">
-          <span class="region-sigil-tag" style="background:rgba(109,232,138,0.1);border:1px solid rgba(109,232,138,0.3);color:#6de88a;">🌿 Siegel des Lebens</span>
-          <div class="region-name">Sylvaris</div>
-          <div class="region-subtitle">Lumenwood · Kreis des Lebens · Ostgebiet</div>
-          <p class="region-desc">Magischer Urwald mit leuchtenden Pflanzen und alten Steinkreisen. Heimat der Waldelfen und Naturgeister, teilweise halb-geistförmig. Der Hainhüter liebte die Natur so sehr, dass er bereit war, alles andere zu zerstören, um sie zu retten.</p>
+        <div class="region-info">
+          <div class="region-name" style="color:var(--forest)">Sylvaris</div>
+          <div class="region-sigil" style="color:var(--forest)" data-i18n="r2_sigil">Siegel des Lebens</div>
+          <div class="region-text" data-i18n="r2_text">Ein Wald, der fl&#252;stert. Die B&#228;ume erinnern sich an jeden, der sie ber&#252;hrt hat. Das Leben w&#252;chert unkontrolliert — und das Siegel des Lebens h&#228;lt die Welt davon ab, sich selbst zu verschlingen.</div>
           <div class="region-meta">
-            <div class="region-meta-item">
-              <div class="region-meta-label">Hauptdorf</div>
-              <div class="region-meta-val">Lumenwood</div>
-            </div>
-            <div class="region-meta-item">
-              <div class="region-meta-label">Boss</div>
-              <div class="region-boss">Verdorbener Hainhüter</div>
-            </div>
+            <span><strong data-i18n="meta_village">Siedlung:</strong> Gr&#252;nwurzel</span>
+            <span><strong data-i18n="meta_boss">Boss:</strong> Myrena, die Wurzelm&#252;tter</span>
           </div>
         </div>
       </div>
-
-      <!-- ALDMERE PLAINS -->
-      <div class="region-card reveal" style="transition-delay:0.16s;">
-        <div class="region-art r-plains">
-          <svg viewBox="0 0 360 200" fill="none">
-            <!-- City skyline -->
-            <rect x="60"  y="100" width="30" height="70" fill="none" stroke="rgba(255,209,102,0.25)" stroke-width="1"/>
-            <rect x="95"  y="80"  width="40" height="90" fill="none" stroke="rgba(255,209,102,0.3)"  stroke-width="1.2"/>
-            <rect x="140" y="90"  width="25" height="80" fill="none" stroke="rgba(255,209,102,0.2)"  stroke-width="1"/>
-            <rect x="230" y="85"  width="35" height="85" fill="none" stroke="rgba(255,209,102,0.3)"  stroke-width="1.2"/>
-            <rect x="270" y="100" width="28" height="70" fill="none" stroke="rgba(255,209,102,0.2)"  stroke-width="1"/>
-            <!-- Tower -->
-            <rect x="165" y="55"  width="30" height="115" fill="none" stroke="rgba(255,209,102,0.4)" stroke-width="1.5"/>
-            <polygon points="180,35 165,58 195,58" fill="rgba(255,209,102,0.15)" stroke="rgba(255,209,102,0.4)" stroke-width="1.2"/>
-            <!-- Plains horizon -->
-            <path d="M0,170 Q90,155 180,165 Q270,155 360,170" fill="none" stroke="rgba(255,209,102,0.12)" stroke-width="1"/>
-            <!-- Stars -->
-            <circle cx="40"  cy="20" r="1"   fill="#ffd166" opacity="0.5"/>
-            <circle cx="310" cy="15" r="1.3" fill="#ffd166" opacity="0.6"/>
-            <circle cx="200" cy="8"  r="1"   fill="#ffd166" opacity="0.4"/>
+      <!-- Aldmere -->
+      <div class="region-card reveal">
+        <div class="region-visual" style="background:linear-gradient(135deg,#0d0a02,#1a1403);">
+          <svg width="200" height="160" viewBox="0 0 200 160">
+            <rect x="20" y="80" width="160" height="4" fill="rgba(255,209,102,.2)"/>
+            <rect x="60" y="50" width="80" height="34" fill="rgba(255,209,102,.05)" stroke="rgba(255,209,102,.25)" stroke-width="1"/>
+            <rect x="80" y="30" width="40" height="24" fill="rgba(255,209,102,.06)" stroke="rgba(255,209,102,.22)" stroke-width="1"/>
+            <rect x="40" y="60" width="20" height="24" fill="rgba(255,209,102,.05)" stroke="rgba(255,209,102,.18)" stroke-width="1"/>
+            <rect x="140" y="60" width="20" height="24" fill="rgba(255,209,102,.05)" stroke="rgba(255,209,102,.18)" stroke-width="1"/>
+            <circle cx="100" cy="22" r="8" fill="none" stroke="rgba(255,209,102,.3)" stroke-width="1"/>
+            <line x1="100" y1="14" x2="100" y2="6" stroke="rgba(255,209,102,.4)" stroke-width="1"/>
+            <ellipse cx="100" cy="148" rx="60" ry="6" fill="rgba(255,209,102,.06)"/>
           </svg>
-          <div class="region-grad"></div>
         </div>
-        <div class="region-body">
-          <span class="region-sigil-tag" style="background:rgba(255,209,102,0.1);border:1px solid rgba(255,209,102,0.3);color:#ffd166;">⚖ Siegel der Ordnung</span>
-          <div class="region-name">Aldmere Plains</div>
-          <div class="region-subtitle">Stonefield · Orden der Krone · Zentralgebiet</div>
-          <p class="region-desc">Große Felder, Dörfer, Handelswege. Klassische Fantasy-Zivilisation der Menschenreiche, politisch zersplittert. Hier lebt Kael. Der gefallene Paladin glaubte an Ordnung — und erschuf daraus ein Regime aus Angst.</p>
+        <div class="region-info">
+          <div class="region-name" style="color:var(--plains)">Aldmere-Ebenen</div>
+          <div class="region-sigil" style="color:var(--plains)" data-i18n="r3_sigil">Siegel der Ordnung</div>
+          <div class="region-text" data-i18n="r3_text">Das politische Herz Avadons. Goldene Stadtstaaten, rivalisierende H&#228;user, zerbrochene Gesetze. Das Siegel der Ordnung h&#228;lt die Zivilisation vor ihrem eigenen Kollaps.</div>
           <div class="region-meta">
-            <div class="region-meta-item">
-              <div class="region-meta-label">Hauptdorf</div>
-              <div class="region-meta-val">Stonefield</div>
-            </div>
-            <div class="region-meta-item">
-              <div class="region-meta-label">Boss</div>
-              <div class="region-boss">Gefallener Paladin</div>
-            </div>
+            <span><strong data-i18n="meta_village">Stadt:</strong> Aldmere Prime</span>
+            <span><strong data-i18n="meta_boss">Boss:</strong> Arbiter Solan</span>
           </div>
         </div>
       </div>
-
-      <!-- GRAVEMIRE PEAKS -->
-      <div class="region-card reveal" style="transition-delay:0.24s;">
-        <div class="region-art r-peaks">
-          <svg viewBox="0 0 360 200" fill="none">
-            <!-- Clifftop fortress -->
-            <rect x="200" y="70"  width="50" height="75" fill="none" stroke="rgba(192,132,252,0.28)" stroke-width="1.2"/>
-            <rect x="212" y="52"  width="26" height="24" fill="none" stroke="rgba(192,132,252,0.22)" stroke-width="1"/>
-            <polygon points="225,34 212,54 238,54" fill="rgba(192,132,252,0.12)" stroke="rgba(192,132,252,0.28)" stroke-width="1"/>
-            <!-- Cliff/Mountain -->
-            <path d="M0,200 L0,165 L30,130 L60,150 L90,105 L130,135 L165,120 L200,145 L225,145 L250,145 L360,175 L360,200Z" fill="rgba(25,10,45,0.7)" stroke="rgba(192,132,252,0.22)" stroke-width="1"/>
-            <!-- Fog wisps -->
-            <ellipse cx="80"  cy="95"  rx="40" ry="12" fill="rgba(192,132,252,0.04)" stroke="rgba(192,132,252,0.1)" stroke-width="0.8"/>
-            <ellipse cx="160" cy="110" rx="55" ry="10" fill="rgba(192,132,252,0.03)" stroke="rgba(192,132,252,0.08)" stroke-width="0.8"/>
-            <!-- Lightning -->
-            <polyline points="50,10 42,38 52,38 44,66" fill="none" stroke="rgba(192,132,252,0.4)" stroke-width="1.5"/>
-            <polyline points="80,5  74,28 82,28 76,50" fill="none" stroke="rgba(192,132,252,0.28)" stroke-width="1"/>
-            <!-- Stars -->
-            <circle cx="300" cy="20" r="1.3" fill="#c084fc" opacity="0.7"/>
-            <circle cx="260" cy="12" r="1"   fill="#c084fc" opacity="0.5"/>
-            <circle cx="340" cy="8"  r="1.2" fill="#c084fc" opacity="0.6"/>
+      <!-- Gravemire -->
+      <div class="region-card reveal">
+        <div class="region-visual" style="background:linear-gradient(135deg,#0a0214,#110320);">
+          <svg width="200" height="160" viewBox="0 0 200 160">
+            <polygon points="100,10 60,80 140,80" fill="rgba(199,125,255,.06)" stroke="rgba(199,125,255,.3)" stroke-width="1.2"/>
+            <rect x="75" y="80" width="50" height="60" fill="rgba(199,125,255,.05)" stroke="rgba(199,125,255,.2)" stroke-width="1"/>
+            <rect x="90" y="100" width="20" height="40" fill="rgba(199,125,255,.07)"/>
+            <line x1="40" y1="120" x2="75" y2="95" stroke="rgba(199,125,255,.15)" stroke-width="1"/>
+            <line x1="160" y1="120" x2="125" y2="95" stroke="rgba(199,125,255,.15)" stroke-width="1"/>
+            <circle cx="100" cy="10" r="5" fill="rgba(199,125,255,.5)"/>
+            <circle cx="25" cy="40" r="2" fill="rgba(199,125,255,.3)"/>
+            <circle cx="175" cy="40" r="2" fill="rgba(199,125,255,.3)"/>
+            <ellipse cx="100" cy="148" rx="40" ry="7" fill="rgba(199,125,255,.06)"/>
           </svg>
-          <div class="region-grad"></div>
         </div>
-        <div class="region-body">
-          <span class="region-sigil-tag" style="background:rgba(192,132,252,0.1);border:1px solid rgba(192,132,252,0.3);color:#c084fc;">◈ Siegel der Realität</span>
-          <div class="region-name">Gravemire Peaks</div>
-          <div class="region-subtitle">Greyhaven · Steinzirkel · Westgebiet</div>
-          <p class="region-desc">Steile Klippen, dichter Nebel, Steinruinen und instabile Realität. Heimat der Steinwächter — alte steinerne Krieger, halb lebendig, halb Magie. Der Steinvater wollte die Realität selbst umschreiben, um eine bessere Welt zu erschaffen.</p>
+        <div class="region-info">
+          <div class="region-name" style="color:var(--peaks)">Gravemire-Gipfel</div>
+          <div class="region-sigil" style="color:var(--peaks)" data-i18n="r4_sigil">Siegel der Realit&#228;t</div>
+          <div class="region-text" data-i18n="r4_text">Nebel, der L&#252;gen fl&#252;stert. In den Gravemire-Gipfeln verschwimmt die Realit&#228;t — Tote sprechen, Festungen erscheinen und verschwinden, und das Siegel der Realit&#228;t bricht langsam entzwei.</div>
           <div class="region-meta">
-            <div class="region-meta-item">
-              <div class="region-meta-label">Hauptdorf</div>
-              <div class="region-meta-val">Greyhaven</div>
-            </div>
-            <div class="region-meta-item">
-              <div class="region-meta-label">Boss</div>
-              <div class="region-boss">Steinvater der Brüche</div>
-            </div>
+            <span><strong data-i18n="meta_village">Festung:</strong> Gravenspire</span>
+            <span><strong data-i18n="meta_boss">Boss:</strong> Die Ungebundene</span>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ══ CLASSES ══ -->
-<section id="classes">
-  <div class="container">
-    <div class="reveal" style="text-align:center;max-width:580px;margin:0 auto;">
-      <span class="sec-label">Spielbare Charakterklassen</span>
-      <h2 class="sec-title">Wähle dein Siegel</h2>
-      <div class="sec-rule center"></div>
-      <p class="sec-sub">Vier Klassen — jede verbunden mit einem der vier Siegel. Jede mit eigenem Kampfstil, eigenen Fähigkeiten und eigener Siegel-Magie.</p>
-    </div>
+<!-- Classes -->
+<section class="page-section alt">
+  <div class="sec-inner">
+    <div class="sec-eyebrow" data-i18n="classes_eyebrow">Spielsystem</div>
+    <h2 class="sec-title" data-i18n="classes_title">W&#228;hle deine Klasse</h2>
     <div class="classes-grid">
-
-      <div class="class-card class-plains reveal" style="transition-delay:0s;">
-        <span class="class-icon-big">🛡</span>
-        <div class="class-name">Sigilknight</div>
-        <div class="class-role" style="color:var(--plains);">Ordnungssiegel · Tank</div>
-        <p class="class-desc">Nahkampf-Krieger mit Schild und Schwert. Stark, langsam, unzerstörbar. Verbunden mit dem Siegel der Ordnung — kann Feinde verlangsamen und unzerbrechliche Barrieren errichten.</p>
-        <div class="class-sigil-link" style="color:rgba(255,209,102,0.5);">⚖ Siegel der Ordnung · Aldmere Plains</div>
+      <div class="class-card reveal" style="border-top-color:var(--plains)">
+        <div class="class-icon">&#9876;</div>
+        <div class="class-name" style="color:var(--plains)">Sigilknight</div>
+        <div class="class-sigil" style="color:var(--plains)" data-i18n="c1_sigil">Siegel der Ordnung</div>
+        <div class="class-text" data-i18n="c1_text">Schwert und Schild, verst&#228;rkt durch Sigelmagie. Tank-Krieger f&#252;r Spieler, die erst Schutz, dann Schaden bevorzugen.</div>
       </div>
-
-      <div class="class-card class-peaks reveal" style="transition-delay:0.08s;">
-        <span class="class-icon-big">🌀</span>
-        <div class="class-name">Voidweaver</div>
-        <div class="class-role" style="color:var(--peaks);">Realitätssiegel · Magier</div>
-        <p class="class-desc">Magier des Realitätssiegels. Kämpft aus der Distanz, verzerrt den Raum, öffnet kurze Portale. Fragil aber verheerend. Die Klasse mit dem höchsten Schadenspotenzial.</p>
-        <div class="class-sigil-link" style="color:rgba(192,132,252,0.5);">◈ Siegel der Realität · Gravemire Peaks</div>
+      <div class="class-card reveal" style="border-top-color:var(--peaks)">
+        <div class="class-icon">&#9680;</div>
+        <div class="class-name" style="color:var(--peaks)">Voidweaver</div>
+        <div class="class-sigil" style="color:var(--peaks)" data-i18n="c2_sigil">Siegel der Realit&#228;t</div>
+        <div class="class-text" data-i18n="c2_text">Manipulation von Raum und Realit&#228;t. Teleport, Zeitverlangsamung, Illusionen — eine Klasse f&#252;r taktische Spieler.</div>
       </div>
-
-      <div class="class-card class-forest reveal" style="transition-delay:0.16s;">
-        <span class="class-icon-big">🌿</span>
-        <div class="class-name">Thornwarden</div>
-        <div class="class-role" style="color:var(--forest);">Lebenssiegel · Heiler</div>
-        <p class="class-desc">Naturbasierter Heiler-Kämpfer. Kann sich und Verbündete heilen, Pflanzen beschwören, Gift einsetzen. Vielseitig und einzigartig — aber nie allein wirklich stark.</p>
-        <div class="class-sigil-link" style="color:rgba(109,232,138,0.5);">🌿 Siegel des Lebens · Sylvaris</div>
+      <div class="class-card reveal" style="border-top-color:var(--forest)">
+        <div class="class-icon">&#9752;</div>
+        <div class="class-name" style="color:var(--forest)">Thornwarden</div>
+        <div class="class-sigil" style="color:var(--forest)" data-i18n="c3_sigil">Siegel des Lebens</div>
+        <div class="class-text" data-i18n="c3_text">Natur und Heilung kombiniert mit giftigen Ranken und Fallen. Hybrid aus Support und Damage Dealer.</div>
       </div>
-
-      <div class="class-card class-frost reveal" style="transition-delay:0.24s;">
-        <span class="class-icon-big">❄</span>
-        <div class="class-name">Frostblade</div>
-        <div class="class-role" style="color:var(--frost);">Zeitsiegel · Duellant</div>
-        <p class="class-desc">Schneller Duellant des Zeitsiegels. Höchste Beweglichkeit, perfekte Ausweichrollen, kann kurze Zeitverlangsamungen wirken. Glas-Kanone auf zwei Beinen — tod in falschen Händen.</p>
-        <div class="class-sigil-link" style="color:rgba(126,232,255,0.5);">❄ Siegel der Zeit · Frostmark</div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ══ FEATURES ══ -->
-<section id="features">
-  <div class="container">
-    <div class="reveal">
-      <span class="sec-label">Gameplay</span>
-      <h2 class="sec-title">Features</h2>
-      <div class="sec-rule"></div>
-    </div>
-    <div class="features-grid">
-      <div class="feat-card reveal" style="transition-delay:0s;">
-        <span class="feat-icon">🌍</span>
-        <div class="feat-name">Offene Welt</div>
-        <p class="feat-desc">Vier riesige, verbundene Regionen zum Erkunden. Nebenquests, versteckte Geheimnisse und optionale Dungeons warten auf dich — Erkundung wird belohnt.</p>
-      </div>
-      <div class="feat-card reveal" style="transition-delay:0.06s;">
-        <span class="feat-icon">⚔</span>
-        <div class="feat-name">Action-Kampfsystem</div>
-        <p class="feat-desc">Präzises, reaktionsbasiertes Kampfsystem mit Ausweichrollen, Parieren und Klassen-Fähigkeiten. Jede Klasse spielt sich vollständig anders.</p>
-      </div>
-      <div class="feat-card reveal" style="transition-delay:0.12s;">
-        <span class="feat-icon">◆</span>
-        <div class="feat-name">Siegel-Progression</div>
-        <p class="feat-desc">Jedes reaktivierte Siegel schaltet neue Klassen-Fähigkeiten frei. Die Macht wächst mit deiner Reise — bis zur finalen Entscheidung gegen Nerath.</p>
-      </div>
-      <div class="feat-card reveal" style="transition-delay:0.18s;">
-        <span class="feat-icon">📖</span>
-        <div class="feat-name">Tiefe Story</div>
-        <p class="feat-desc">Drei Akte, mehrere echte Wendepunkte und ein Finale, das du so nicht kommen siehst. Eine Geschichte über Opfer, Lügen und die Frage, ob manche Systeme es wert sind, erhalten zu werden.</p>
-      </div>
-      <div class="feat-card reveal" style="transition-delay:0.24s;">
-        <span class="feat-icon">🗣</span>
-        <div class="feat-name">NPC-Quest-System</div>
-        <p class="feat-desc">Jedes der vier Hauptdörfer hat eigene NPCs mit Quests, Geschichten und Verbindungen zur Hauptstory. Beziehungen zu Charakteren beeinflussen den Verlauf.</p>
-      </div>
-      <div class="feat-card reveal" style="transition-delay:0.30s;">
-        <span class="feat-icon">🎨</span>
-        <div class="feat-name">Stylized Art</div>
-        <p class="feat-desc">Cel-Shading im Stil von Kingdoms of Amalur und Zelda: Breath of the Wild. Bunte, stilisierte Fantasy-Welt — optimiert für Laptop-Hardware mit Intel UHD Graphics.</p>
+      <div class="class-card reveal" style="border-top-color:var(--frost)">
+        <div class="class-icon">&#10052;</div>
+        <div class="class-name" style="color:var(--frost)">Frostblade</div>
+        <div class="class-sigil" style="color:var(--frost)" data-i18n="c4_sigil">Siegel der Zeit</div>
+        <div class="class-text" data-i18n="c4_text">Geschwindigkeit und Zeitmanipulation. Friert Gegner ein, dreht Momente zur&#252;ck, tr&#228;gt Klingen aus gefrorenem Moment.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══ FINAL BOSS ══ -->
-<section id="boss">
-  <div class="container">
-    <div class="boss-intro">
-      <div class="reveal-left">
-        <span class="sec-label" style="color:rgba(192,57,43,0.8);">Finaler Boss</span>
-        <h2 class="sec-title">Nerath, das Ungeborene</h2>
-        <div class="sec-rule" style="background:rgba(192,57,43,0.6);"></div>
-        <p class="sec-sub" style="margin-bottom:1.4rem;">
-          Nerath ist kein simpler Bösewicht. Er ist ein uraltes Wesen, das nie geboren werden wollte —
-          in eine Existenz gezwungen, die er nie gewählt hat. Er kämpft nicht aus Bösartigkeit.
-          Er kämpft, um zu enden.
-        </p>
-        <p style="font-family:var(--font-body);font-size:1.02rem;color:var(--text-mid);line-height:1.78;">
-          Um ihn zu besiegen, muss Kael etwas tun, das physisch unmöglich sein sollte:
-          alle vier Siegelkräfte gleichzeitig entfesseln. Nicht um Nerath einzusperren —
-          sondern um den Vertrag zu brechen. Die 1.000-Jahre-Lüge zu beenden. Für immer.
-        </p>
-        <blockquote style="font-family:var(--font-body);font-style:italic;font-size:1.1rem;color:var(--text-mid);border-left:2px solid rgba(192,57,43,0.5);padding-left:1.3rem;margin-top:1.8rem;line-height:1.7;">
-          „Kael weigert sich zu sterben. Nicht aus Feigheit — aus Wut. Aus dem tiefen Verständnis,
-          dass ein System, das Unschuldige opfert, kein schützenswertes System ist."
-        </blockquote>
+<!-- Final Boss -->
+<section class="page-section dark">
+  <div class="sec-inner">
+    <div class="boss-layout">
+      <div class="boss-desc reveal">
+        <div class="sec-eyebrow" data-i18n="boss_eyebrow">Finaler Antagonist</div>
+        <h2 class="sec-title" data-i18n="boss_title">Nerath, das Ungeborene</h2>
+        <div class="sec-divider"></div>
+        <p data-i18n="boss_p1">Nerath ist keine Person — es ist ein Konzept, das Fleisch geworden ist. Vor 1000 Jahren bei einem katastrophalen Ritual erzeugt, konnte es nicht vollst&#228;ndig manifestieren. Seitdem wartet es. Und sammelt.</p>
+        <p data-i18n="boss_p2">Wenn Kael es nicht stoppt, &#252;bernimmt Nerath jedes Siegel und zerst&#246;rt die Trennung zwischen den Welten. Was folgt, l&#228;sst sich nicht in Worte fassen.</p>
+        <div class="boss-phases">
+          <div class="phase-card">
+            <div class="phase-num" data-i18n="ph">Phase 1</div>
+            <div class="phase-name" style="color:var(--frost)" data-i18n="p1_name">Frostform</div>
+            <div class="phase-text" data-i18n="p1_text">Reine Kraft. Nerath manifestiert als Eiskolosss — langsam, aber zerst&#246;rerisch.</div>
+          </div>
+          <div class="phase-card">
+            <div class="phase-num" data-i18n="ph2">Phase 2</div>
+            <div class="phase-name" style="color:var(--forest)" data-i18n="p2_name">Naturform</div>
+            <div class="phase-text" data-i18n="p2_text">Tentakel aus Wurzeln und Knochen. Der Boden selbst wird zur Waffe.</div>
+          </div>
+          <div class="phase-card">
+            <div class="phase-num" data-i18n="ph3">Phase 3</div>
+            <div class="phase-name" style="color:var(--plains)" data-i18n="p3_name">Kriegsform</div>
+            <div class="phase-text" data-i18n="p3_text">Nerath imitiert einen Ritter — alle Waffen, keine Gnade. Sein schnellster Zustand.</div>
+          </div>
+          <div class="phase-card">
+            <div class="phase-num" data-i18n="ph4">Phase 4</div>
+            <div class="phase-name" style="color:var(--peaks)" data-i18n="p4_name">Realit&#228;tsform</div>
+            <div class="phase-text" data-i18n="p4_text">Die Welt bricht. Kael k&#228;mpft auf zerbrechendem Boden, w&#228;hrend Nerath die Regeln neu schreibt.</div>
+          </div>
+        </div>
       </div>
-      <div class="boss-visual reveal-right">
-        <svg width="260" height="260" viewBox="0 0 260 260" fill="none">
-          <!-- Nerath form -->
-          <circle cx="130" cy="130" r="100" stroke="rgba(192,57,43,0.15)" stroke-width="1" stroke-dasharray="6 4"/>
-          <circle cx="130" cy="130" r="75"  stroke="rgba(192,57,43,0.25)" stroke-width="1.5"/>
-          <circle cx="130" cy="130" r="50"  stroke="rgba(192,57,43,0.4)"  stroke-width="2" stroke-dasharray="4 4"/>
-          <!-- Shattered sigil -->
-          <path d="M130 55  L170 90  L155 140 L130 155 L105 140 L90 90  Z" fill="none" stroke="rgba(192,57,43,0.35)" stroke-width="1.5"/>
-          <path d="M130 55  L115 75"  stroke="rgba(192,57,43,0.5)" stroke-width="1"/>
-          <path d="M170 90  L148 100" stroke="rgba(192,57,43,0.5)" stroke-width="1"/>
-          <path d="M105 140 L120 120" stroke="rgba(192,57,43,0.5)" stroke-width="1"/>
-          <!-- Eye -->
-          <circle cx="130" cy="118" r="16" fill="rgba(192,57,43,0.08)" stroke="rgba(192,57,43,0.5)" stroke-width="1.5"/>
-          <circle cx="130" cy="118" r="6"  fill="rgba(192,57,43,0.5)"/>
-          <!-- Phase indicators -->
-          <circle cx="130" cy="30"  r="4" fill="rgba(126,232,255,0.6)"/>
-          <circle cx="230" cy="130" r="4" fill="rgba(109,232,138,0.6)"/>
-          <circle cx="130" cy="230" r="4" fill="rgba(255,209,102,0.6)"/>
-          <circle cx="30"  cy="130" r="4" fill="rgba(192,132,252,0.6)"/>
+      <div class="boss-visual reveal">
+        <svg viewBox="0 0 340 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:320px;">
+          <defs>
+            <radialGradient id="ng" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="rgba(94,184,255,.12)"/>
+              <stop offset="100%" stop-color="rgba(94,184,255,0)"/>
+            </radialGradient>
+          </defs>
+          <circle cx="170" cy="190" r="160" fill="url(#ng)"/>
+          <polygon points="170,30 280,220 60,220" fill="rgba(94,184,255,.05)" stroke="rgba(94,184,255,.2)" stroke-width="1.5"/>
+          <polygon points="170,350 60,160 280,160" fill="rgba(94,184,255,.05)" stroke="rgba(94,184,255,.2)" stroke-width="1.5"/>
+          <circle cx="170" cy="190" r="60" fill="none" stroke="rgba(94,184,255,.12)" stroke-width="30"/>
+          <circle cx="170" cy="190" r="40" fill="rgba(5,10,20,.8)" stroke="rgba(94,184,255,.4)" stroke-width="1.5"/>
+          <circle cx="170" cy="190" r="10" fill="rgba(94,184,255,.15)" stroke="rgba(94,184,255,.7)" stroke-width="1"/>
+          <line x1="170" y1="150" x2="170" y2="100" stroke="rgba(94,184,255,.25)" stroke-width="1"/>
+          <line x1="170" y1="230" x2="170" y2="280" stroke="rgba(94,184,255,.25)" stroke-width="1"/>
+          <line x1="130" y1="190" x2="80" y2="190" stroke="rgba(94,184,255,.25)" stroke-width="1"/>
+          <line x1="210" y1="190" x2="260" y2="190" stroke="rgba(94,184,255,.25)" stroke-width="1"/>
+          <circle cx="170" cy="90" r="6" fill="var(--frost)" opacity=".7"/>
+          <circle cx="170" cy="290" r="6" fill="var(--forest)" opacity=".7"/>
+          <circle cx="70" cy="190" r="6" fill="var(--plains)" opacity=".7"/>
+          <circle cx="270" cy="190" r="6" fill="var(--peaks)" opacity=".7"/>
         </svg>
       </div>
     </div>
+  </div>
+</section>
 
-    <div class="boss-phases reveal">
-      <div class="boss-phase">
-        <div class="phase-num">Phase I</div>
-        <div class="phase-name">Frostform — Zeitbruch</div>
-        <p class="phase-desc">Nerath greift durch die Zeit. Kael kämpft gegen Kopien seiner selbst aus verschiedenen Zeitlinien. Die Arena zeigt Vergangenheit und Zukunft gleichzeitig.</p>
+<!-- Dev Info -->
+<section class="page-section">
+  <div class="sec-inner">
+    <div class="dev-grid">
+      <div class="dev-logo-block reveal">
+        <img src="logo.png" alt="Nordic Forge Studios" class="dev-logo">
+        <div class="dev-studio">Nordic Forge Studios</div>
+        <p style="font-size:.85rem;color:var(--text-dim);text-align:center;line-height:1.7;margin-top:8px" data-i18n="dev_desc">4-k&#246;pfiges Indie-Team aus Deutschland. Wir bauen Avadon Schritt f&#252;r Schritt — mit dem, was wir haben.</p>
       </div>
-      <div class="boss-phase">
-        <div class="phase-num">Phase II</div>
-        <div class="phase-name">Naturform — Wuchernde Magie</div>
-        <p class="phase-desc">Neraths Körper verschmilzt mit der Umgebung. Die Arena selbst wird zur lebendigen Falle — Wurzeln, Gift, wachsende Strukturen die Kaels Bewegung einschränken.</p>
-      </div>
-      <div class="boss-phase">
-        <div class="phase-num">Phase III</div>
-        <div class="phase-name">Kriegsform — Schattenritter</div>
-        <p class="phase-desc">Die Silhouetten aller vier gefallenen Ordenshüter kehren zurück als Schattenritter. Kael muss sie erneut besiegen — diesmal alle gleichzeitig.</p>
-      </div>
-      <div class="boss-phase">
-        <div class="phase-num">Phase IV</div>
-        <div class="phase-name">Realitätsform — Die Welt bricht</div>
-        <p class="phase-desc">Die Welt bricht auseinander. Plattformen kollabieren, Raum und Zeit lösen sich auf. Nur alle vier Siegelkräfte gleichzeitig können Nerath — und den ewigen Vertrag — endgültig vernichten.</p>
+      <div class="reveal">
+        <div class="sec-eyebrow" data-i18n="dev_eyebrow">Entwicklung</div>
+        <h2 class="sec-title" data-i18n="dev_title">Tech &amp; Specs</h2>
+        <table class="specs-table">
+          <tr><td data-i18n="spec_engine">Engine</td><td>Godot 4 (Compatibility Renderer)</td></tr>
+          <tr><td data-i18n="spec_assets">Assets</td><td>Synty Studios + Blender</td></tr>
+          <tr><td data-i18n="spec_art">Art-Stil</td><td data-i18n="spec_art_val">Cel-Shading, stylisiert</td></tr>
+          <tr><td data-i18n="spec_lighting">Beleuchtung</td><td data-i18n="spec_lighting_val">Baked Lightmaps (Performance-optimiert)</td></tr>
+          <tr><td data-i18n="spec_hw">Ziel-Hardware</td><td>Intel UHD (Laptop-optimiert)</td></tr>
+          <tr><td data-i18n="spec_platform">Plattform</td><td>PC / Steam</td></tr>
+          <tr><td data-i18n="spec_lang">Sprachen</td><td data-i18n="spec_lang_val">Deutsch, Englisch (geplant)</td></tr>
+          <tr><td data-i18n="spec_timeline">Zeitplan</td><td data-i18n="spec_timeline_val">18–20 Monate bis Steam-Release</td></tr>
+        </table>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══ DEV INFO ══ -->
-<section id="devinfo">
-  <div class="container">
-    <div class="devinfo-grid">
-      <div class="reveal-left">
-        <div class="devinfo-logo">
-          <img src="images/logo.png" alt="Nordic Forge Studios"/>
-          <span class="devinfo-logo-text">Nordic Forge Studios</span>
-        </div>
-        <span class="sec-label sec-label-gold">Entwicklungs-Status</span>
-        <h2 class="sec-title" style="font-size:clamp(1.4rem,2.5vw,2rem);">In aktiver Entwicklung</h2>
-        <div class="sec-rule gold"></div>
-        <p class="devinfo-body">
-          Avadon: The Broken Sigils wird von einem leidenschaftlichen 3-köpfigen Team
-          entwickelt. Wir nutzen Godot 4 mit Compatibility Renderer, Synty Studios Asset Packs
-          und Blender für eigene 3D-Modelle. KI-gestützte Entwicklung mit Claude Code (GDScript).
-        </p>
-        <p class="devinfo-body">
-          Das Ziel ist ein optimiertes, stylized Open-World-RPG, das auf Laptop-Hardware
-          flüssig läuft — ohne Performance-Kompromisse bei der visuellen Qualität.
-        </p>
-        <div style="display:flex;gap:0.9rem;flex-wrap:wrap;margin-top:1.5rem;">
-          <a href="index.html" class="btn btn-primary">← Zum Studio</a>
-          <a href="mailto:elfinko13@gmail.com" class="btn btn-outline">Kontakt</a>
-        </div>
-      </div>
-      <div class="reveal-right">
-        <div class="devinfo-specs">
-          <div class="spec-row"><span class="spec-key">Engine</span><span class="spec-val"><strong>Godot 4</strong> · Compatibility Renderer</span></div>
-          <div class="spec-row"><span class="spec-key">Grafikstil</span><span class="spec-val"><strong>Cel-Shading</strong> · Stylized Fantasy</span></div>
-          <div class="spec-row"><span class="spec-key">Referenz</span><span class="spec-val">Zelda BotW · Kingdoms of Amalur</span></div>
-          <div class="spec-row"><span class="spec-key">Assets</span><span class="spec-val">Synty Studios + Blender (eigene Modelle)</span></div>
-          <div class="spec-row"><span class="spec-key">Vegetation</span><span class="spec-val">Statisch, keine Physik-Simulation</span></div>
-          <div class="spec-row"><span class="spec-key">Lighting</span><span class="spec-val">Baked Lightmaps · warm &amp; atmosphärisch</span></div>
-          <div class="spec-row"><span class="spec-key">Ziel-Hardware</span><span class="spec-val">Intel UHD Graphics · Laptop-optimiert</span></div>
-          <div class="spec-row"><span class="spec-key">Team</span><span class="spec-val"><strong>3 Personen</strong> · Deutschland</span></div>
-          <div class="spec-row"><span class="spec-key">Zeitplan</span><span class="spec-val"><strong>18–20 Monate</strong> bis Steam Release</span></div>
-          <div class="spec-row"><span class="spec-key">Plattform</span><span class="spec-val"><strong>PC</strong> · Steam</span></div>
-        </div>
-      </div>
-    </div>
+<!-- Support -->
+<section id="support">
+  <div class="support-inner">
+    <div class="sec-eyebrow" data-i18n="sup_eyebrow">Unterst&#252;tzung</div>
+    <h2 class="sec-title" style="text-align:center" data-i18n="sup_heading">Unterst&#252;tze Avadon</h2>
+    <p class="support-text" data-i18n="sup_t1">Wir entwickeln auf Consumer-Hardware — Render-Aufgaben und lange Compile-Zeiten kosten uns viel Zeit. Deine Spende hilft uns, besser zu werden.</p>
+    <p class="support-note" data-i18n="sup_note">Keine Gegenleistung — nur Liebe f&#252;r das Projekt.</p>
+    <a href="https://www.paypal.com/donate" class="paypal-btn" target="_blank" rel="noopener" data-i18n="sup_cta">Mit PayPal unterst&#252;tzen</a>
   </div>
 </section>
 
-<!-- ══ FOOTER ══ -->
 <footer>
-  <div class="container">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <img src="images/logo.png" alt="NFS" class="footer-brand-logo"/>
-        <span class="footer-logo">Nordic Forge Studios</span>
-      </div>
-      <div class="footer-links">
-        <a href="index.html">← Studio</a>
-        <a href="#story">Story</a>
-        <a href="#regions">Regionen</a>
-        <a href="#classes">Klassen</a>
-        <a href="#boss">Nerath</a>
-        <a href="crown-of-ashes.html">Crown of Ashes</a>
-      </div>
-      <div class="footer-copy">© 2025 Nordic Forge Studios. Alle Rechte vorbehalten.</div>
-    </div>
-  </div>
+  <div class="footer-logo">Nordic Forge Studios</div>
+  <div class="footer-rights">&copy; 2025 Nordic Forge Studios</div>
 </footer>
 
 <script>
-const cookieBanner = document.getElementById('cookie-banner');
-(function(){ if (!localStorage.getItem('nfs-cookies')) setTimeout(()=>cookieBanner.classList.add('visible'),1400); })();
-document.getElementById('cookie-accept').addEventListener('click',()=>{ localStorage.setItem('nfs-cookies','accepted'); cookieBanner.classList.remove('visible'); });
-document.getElementById('cookie-decline').addEventListener('click',()=>{ localStorage.setItem('nfs-cookies','declined'); cookieBanner.classList.remove('visible'); });
-
-const nav = document.getElementById('nav');
-window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>40),{passive:true});
-
-const mobileNav = document.getElementById('mobile-nav');
-const hamburger  = document.getElementById('hamburger');
-function toggleMobileNav(){ const o=mobileNav.classList.toggle('open'); hamburger.classList.toggle('open',o); document.body.style.overflow=o?'hidden':''; }
-function closeMobileNav(){ mobileNav.classList.remove('open'); hamburger.classList.remove('open'); document.body.style.overflow=''; }
-mobileNav.addEventListener('click',e=>{if(e.target===mobileNav)closeMobileNav();});
-
-const observer = new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      const el=entry.target, delay=parseFloat(el.style.transitionDelay||'0');
-      setTimeout(()=>el.classList.add('visible'),delay*1000);
-      observer.unobserve(el);
-    }
-  });
-},{threshold:0.08});
-document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>observer.observe(el));
-
-// Hero canvas — Sigil rune particles
-const canvas=document.getElementById('hero-canvas'), ctx=canvas.getContext('2d');
-function resize(){ canvas.width=innerWidth; canvas.height=innerHeight; }
-resize(); window.addEventListener('resize',resize);
-
-const colors=['rgba(94,184,255,','rgba(126,232,255,','rgba(109,232,138,','rgba(255,209,102,','rgba(192,132,252,'];
-class Rune {
-  reset(init){
-    this.x=Math.random()*canvas.width;
-    this.y=init?Math.random()*canvas.height:canvas.height+10;
-    this.r=Math.random()*2+0.4;
-    this.vy=-(Math.random()*0.5+0.12);
-    this.vx=(Math.random()-0.5)*0.3;
-    this.op=Math.random()*0.4+0.06;
-    this.wobble=Math.random()*Math.PI*2;
-    this.ws=Math.random()*0.015+0.004;
-    this.col=colors[Math.floor(Math.random()*colors.length)];
+const T = {
+  de: {
+    back: '&#8592; Studio',
+    hero_badge: 'In Entwicklung &middot; Godot 4',
+    hero_quote: '&bdquo;Before you were born, the world was already dying.&ldquo;',
+    strip_regions: 'Regionen', strip_classes: 'Klassen', strip_boss_phases: 'Boss-Phasen', strip_months: 'Monate Entwicklung',
+    story_eyebrow: 'Die Geschichte', story_title: 'Der Sigilborn',
+    story_p1: 'Kael erwacht ohne Erinnerungen — nur mit einer Gabe, die ihn zur Zielscheibe macht: Er kann die alten Siegel der Welt Avadon berühren und ihr Glühen spüren. Die Sigilborns sind selten, gefürchtet und politisch brisanter als jede Waffe.',
+    story_p2: 'Sein Mentor Valdric führt ihn durch die vier großen Regionen — Frostmark, Sylvaris, die Aldmere-Ebenen und die Gravemire-Gipfel — immer auf der Jagd nach Kaels gestohlenen Erinnerungen und den Scherben eines alten Pakts.',
+    story_p3: 'Was Kael nicht weiß: Avadon hat keinen Krieg gewonnen. Es hat einen Deal gemacht. Alle 1000 Jahre muss ein Sigilborn sich opfern, damit das Ungeboren nicht erwacht. Und dieser Zyklus endet jetzt.',
+    twists_eyebrow: 'Story-Twists', twists_title: 'Drei Wahrheiten, die alles verändern',
+    tw1_title: 'Die gestohlenen Erinnerungen', tw1_text: 'Kaels Erinnerungen wurden nicht gestohlen — sie wurden gelöscht. Von Valdric. Damit er willig in die Rolle des Opfers schlüpft, ohne zu fragen.',
+    tw2_title: 'Valdrics Verrat', tw2_text: 'Der Mentor ist kein Held. Er ist der Hüter des Zyklus — und hat schon frühere Sigilborns in den Tod geführt. Er glaubt, dass er die Welt rettet. Kael glaubt das nicht mehr.',
+    tw3_title: 'Der Pakt mit Avadon', tw3_text: 'Die Welt selbst ist nicht unschuldig. Avadon hat den Pakt unterzeichnet — ein ewiges Leben auf Kosten eines einzigen. Kael bricht den Zyklus, zerstört Nerath und schreibt eine neue Geschichte.',
+    regions_eyebrow: 'Die Welt', regions_title: 'Vier Regionen, vier Siegel',
+    r1_sigil: 'Siegel der Zeit', r1_text: 'Ewiger Winter, zerbrochene Burgen. Die Zeit selbst gefriert hier — manche Schlachten werden noch heute gekämpft, obwohl die Kämpfer längst tot sind.',
+    r2_sigil: 'Siegel des Lebens', r2_text: 'Ein Wald, der flüstert. Die Bäume erinnern sich an jeden, der sie berührt hat. Das Leben wuchert unkontrolliert — und das Siegel des Lebens hält die Welt davon ab, sich selbst zu verschlingen.',
+    r3_sigil: 'Siegel der Ordnung', r3_text: 'Das politische Herz Avadons. Goldene Stadtstaaten, rivalisierende Häuser, zerbrochene Gesetze. Das Siegel der Ordnung hält die Zivilisation vor ihrem eigenen Kollaps.',
+    r4_sigil: 'Siegel der Realität', r4_text: 'Nebel, der Lügen flüstert. In den Gravemire-Gipfeln verschwimmt die Realität — Tote sprechen, Festungen erscheinen und verschwinden, und das Siegel der Realität bricht langsam entzwei.',
+    meta_village: 'Siedlung:', meta_boss: 'Boss:',
+    classes_eyebrow: 'Spielsystem', classes_title: 'Wähle deine Klasse',
+    c1_sigil: 'Siegel der Ordnung', c1_text: 'Schwert und Schild, verstärkt durch Sigelmagie. Tank-Krieger für Spieler, die erst Schutz, dann Schaden bevorzugen.',
+    c2_sigil: 'Siegel der Realität', c2_text: 'Manipulation von Raum und Realität. Teleport, Zeitverlangsamung, Illusionen — eine Klasse für taktische Spieler.',
+    c3_sigil: 'Siegel des Lebens', c3_text: 'Natur und Heilung kombiniert mit giftigen Ranken und Fallen. Hybrid aus Support und Damage Dealer.',
+    c4_sigil: 'Siegel der Zeit', c4_text: 'Geschwindigkeit und Zeitmanipulation. Friert Gegner ein, dreht Momente zurück, trägt Klingen aus gefrorenem Moment.',
+    boss_eyebrow: 'Finaler Antagonist', boss_title: 'Nerath, das Ungeborene',
+    boss_p1: 'Nerath ist keine Person — es ist ein Konzept, das Fleisch geworden ist. Vor 1000 Jahren bei einem katastrophalen Ritual erzeugt, konnte es nicht vollständig manifestieren. Seitdem wartet es. Und sammelt.',
+    boss_p2: 'Wenn Kael es nicht stoppt, übernimmt Nerath jedes Siegel und zerstört die Trennung zwischen den Welten. Was folgt, lässt sich nicht in Worte fassen.',
+    ph: 'Phase 1', ph2: 'Phase 2', ph3: 'Phase 3', ph4: 'Phase 4',
+    p1_name: 'Frostform', p1_text: 'Reine Kraft. Nerath manifestiert als Eiskoloss — langsam, aber zerstörerisch.',
+    p2_name: 'Naturform', p2_text: 'Tentakel aus Wurzeln und Knochen. Der Boden selbst wird zur Waffe.',
+    p3_name: 'Kriegsform', p3_text: 'Nerath imitiert einen Ritter — alle Waffen, keine Gnade. Sein schnellster Zustand.',
+    p4_name: 'Realitätsform', p4_text: 'Die Welt bricht. Kael kämpft auf zerbrechendem Boden, während Nerath die Regeln neu schreibt.',
+    dev_eyebrow: 'Entwicklung', dev_title: 'Tech & Specs',
+    dev_desc: '4-köpfiges Indie-Team aus Deutschland. Wir bauen Avadon Schritt für Schritt — mit dem, was wir haben.',
+    spec_engine: 'Engine', spec_assets: 'Assets', spec_art: 'Art-Stil', spec_art_val: 'Cel-Shading, stylisiert',
+    spec_lighting: 'Beleuchtung', spec_lighting_val: 'Baked Lightmaps (Performance-optimiert)',
+    spec_hw: 'Ziel-Hardware', spec_platform: 'Plattform', spec_lang: 'Sprachen', spec_lang_val: 'Deutsch, Englisch (geplant)',
+    spec_timeline: 'Zeitplan', spec_timeline_val: '18–20 Monate bis Steam-Release',
+    sup_eyebrow: 'Unterstützung', sup_heading: 'Unterstütze Avadon',
+    sup_t1: 'Wir entwickeln auf Consumer-Hardware — Render-Aufgaben und lange Compile-Zeiten kosten uns viel Zeit. Deine Spende hilft uns, besser zu werden.',
+    sup_note: 'Keine Gegenleistung — nur Liebe für das Projekt.',
+    sup_cta: 'Mit PayPal unterstützen'
+  },
+  en: {
+    back: '&#8592; Studio',
+    hero_badge: 'In Development &middot; Godot 4',
+    hero_quote: '"Before you were born, the world was already dying."',
+    strip_regions: 'Regions', strip_classes: 'Classes', strip_boss_phases: 'Boss Phases', strip_months: 'Months of Dev',
+    story_eyebrow: 'The Story', story_title: 'The Sigilborn',
+    story_p1: 'Kael wakes without memories — only with a gift that makes him a target: he can touch the ancient seals of the world Avadon and feel their glow. Sigilborns are rare, feared, and politically explosive.',
+    story_p2: 'His mentor Valdric guides him through the four great regions — Frostmark, Sylvaris, the Aldmere Plains, and Gravemire Peaks — always hunting Kael\'s stolen memories and the shards of an ancient pact.',
+    story_p3: 'What Kael doesn\'t know: Avadon didn\'t win a war. It made a deal. Every 1000 years a Sigilborn must sacrifice themselves to keep the Unborn from awakening. That cycle ends now.',
+    twists_eyebrow: 'Story Twists', twists_title: 'Three truths that change everything',
+    tw1_title: 'The Stolen Memories', tw1_text: 'Kael\'s memories weren\'t stolen — they were erased. By Valdric. So he would willingly step into the role of the sacrifice without asking questions.',
+    tw2_title: 'Valdric\'s Betrayal', tw2_text: 'The mentor is no hero. He is the keeper of the cycle — and has guided earlier Sigilborns to their deaths before. He believes he saves the world. Kael no longer believes that.',
+    tw3_title: 'The Pact with Avadon', tw3_text: 'The world itself is not innocent. Avadon signed the pact — eternal life at the cost of one. Kael breaks the cycle, destroys Nerath, and writes a new story.',
+    regions_eyebrow: 'The World', regions_title: 'Four Regions, Four Seals',
+    r1_sigil: 'Seal of Time', r1_text: 'Eternal winter, shattered castles. Time itself freezes here — some battles are still fought today, though their warriors have long since died.',
+    r2_sigil: 'Seal of Life', r2_text: 'A forest that whispers. The trees remember everyone who has touched them. Life grows uncontrolled — and the Seal of Life keeps the world from consuming itself.',
+    r3_sigil: 'Seal of Order', r3_text: 'The political heart of Avadon. Golden city-states, rival houses, broken laws. The Seal of Order keeps civilization from its own collapse.',
+    r4_sigil: 'Seal of Reality', r4_text: 'Mist that whispers lies. In the Gravemire Peaks, reality blurs — the dead speak, fortresses appear and vanish, and the Seal of Reality slowly cracks.',
+    meta_village: 'Settlement:', meta_boss: 'Boss:',
+    classes_eyebrow: 'Game System', classes_title: 'Choose Your Class',
+    c1_sigil: 'Seal of Order', c1_text: 'Sword and shield enhanced by seal magic. Tank warrior for players who prefer defense before damage.',
+    c2_sigil: 'Seal of Reality', c2_text: 'Manipulation of space and reality. Teleport, time-slow, illusions — a class for tactical players.',
+    c3_sigil: 'Seal of Life', c3_text: 'Nature and healing combined with poison vines and traps. Hybrid of support and damage dealer.',
+    c4_sigil: 'Seal of Time', c4_text: 'Speed and time manipulation. Freezes enemies, rewinds moments, wields blades made of frozen time.',
+    boss_eyebrow: 'Final Antagonist', boss_title: 'Nerath, the Unborn',
+    boss_p1: 'Nerath is not a person — it is a concept made flesh. Created 1000 years ago in a catastrophic ritual, it could not fully manifest. Since then it waits. And gathers.',
+    boss_p2: 'If Kael doesn\'t stop it, Nerath will claim every seal and destroy the separation between worlds. What follows cannot be described.',
+    ph: 'Phase 1', ph2: 'Phase 2', ph3: 'Phase 3', ph4: 'Phase 4',
+    p1_name: 'Frost Form', p1_text: 'Raw power. Nerath manifests as an ice colossus — slow, but devastating.',
+    p2_name: 'Nature Form', p2_text: 'Tentacles of roots and bone. The ground itself becomes a weapon.',
+    p3_name: 'War Form', p3_text: 'Nerath imitates a knight — all weapons, no mercy. Its fastest state.',
+    p4_name: 'Reality Form', p4_text: 'The world breaks. Kael fights on crumbling ground as Nerath rewrites the rules.',
+    dev_eyebrow: 'Development', dev_title: 'Tech & Specs',
+    dev_desc: '4-person indie team from Germany. We build Avadon step by step — with what we have.',
+    spec_engine: 'Engine', spec_assets: 'Assets', spec_art: 'Art Style', spec_art_val: 'Cel-Shading, stylized',
+    spec_lighting: 'Lighting', spec_lighting_val: 'Baked Lightmaps (performance-optimized)',
+    spec_hw: 'Target Hardware', spec_platform: 'Platform', spec_lang: 'Languages', spec_lang_val: 'German, English (planned)',
+    spec_timeline: 'Timeline', spec_timeline_val: '18–20 months to Steam release',
+    sup_eyebrow: 'Support', sup_heading: 'Support Avadon',
+    sup_t1: 'We develop on consumer hardware — rendering and long compile times cost us a lot of time. Your donation helps us do better.',
+    sup_note: 'No strings attached — just love for the project.',
+    sup_cta: 'Support via PayPal'
   }
-  constructor(){ this.reset(true); }
-  tick(){ this.wobble+=this.ws; this.x+=this.vx+Math.sin(this.wobble)*0.25; this.y+=this.vy; if(this.y<-10)this.reset(false); }
-  draw(){ ctx.beginPath(); ctx.arc(this.x,this.y,this.r,0,Math.PI*2); ctx.fillStyle=this.col+this.op+')'; ctx.fill(); }
+};
+
+let currentLang = 'de';
+function setLang(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang;
+  localStorage.setItem('nfs-lang', lang);
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var k = el.getAttribute('data-i18n');
+    if (T[lang][k] !== undefined) el.textContent = T[lang][k];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
+    var k = el.getAttribute('data-i18n-html');
+    if (T[lang][k] !== undefined) el.innerHTML = T[lang][k];
+  });
+  document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.toggle('active', b.getAttribute('data-lang') === lang); });
 }
-const runes=Array.from({length:120},()=>new Rune());
-function animate(){ ctx.clearRect(0,0,canvas.width,canvas.height); runes.forEach(r=>{r.tick();r.draw();}); requestAnimationFrame(animate); }
-animate();
+
+window.addEventListener('DOMContentLoaded', function() {
+  var saved = localStorage.getItem('nfs-lang');
+  if (saved) setLang(saved);
+
+  var nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', function() { nav.classList.toggle('scrolled', window.scrollY > 60); }, { passive: true });
+
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(function(el) { obs.observe(el); });
+
+  var canvas = document.getElementById('hero-canvas');
+  var ctx = canvas.getContext('2d');
+  var W, H, pts = [];
+  function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
+  resize();
+  window.addEventListener('resize', resize, { passive: true });
+  var COLS = ['#a8d8ff','#6bd46b','#ffd166','#c77dff','rgba(94,184,255,.5)','rgba(168,216,255,.4)'];
+  function mkP(rand) {
+    return { x: Math.random()*(W||1), y: rand ? Math.random()*(H||1) : (H||1)+20, r: Math.random()*1.6+0.3, vy: Math.random()*0.65+0.2, vx: (Math.random()-.5)*.3, a: 0, life: 0, col: COLS[Math.floor(Math.random()*COLS.length)] };
+  }
+  for (var i = 0; i < 80; i++) { var p = mkP(true); p.life = Math.floor(Math.random()*((H+40)/p.vy)); pts.push(p); }
+  (function frame() {
+    ctx.clearRect(0,0,W,H);
+    for (var i=0;i<pts.length;i++) {
+      var p=pts[i]; p.y-=p.vy; p.x+=p.vx; p.life++;
+      var ml=(H+40)/p.vy; p.a=Math.sin((p.life/ml)*Math.PI)*0.6;
+      if(p.y<-20){pts[i]=mkP(false);continue;}
+      ctx.save();ctx.globalAlpha=p.a;ctx.fillStyle=p.col;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();ctx.restore();
+    }
+    requestAnimationFrame(frame);
+  })();
+});
 </script>
 </body>
 </html>
