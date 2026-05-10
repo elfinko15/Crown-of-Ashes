@@ -4,848 +4,234 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Nordic Forge Studios — Offizielle Website</title>
-  <meta name="description" content="Nordic Forge Studios — Unabhängiges Indie-Game-Studio. Entwickler von Crown of Ashes, einem Dark Fantasy Action-RPG."/>
+  <meta name="description" content="Nordic Forge Studios ist ein unabhängiges deutsches Indie-Game-Studio. Wir entwickeln Avadon: The Broken Sigils und Crown of Ashes."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Barlow+Condensed:wght@300;400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
   <style>
-
-/* ════════════════════════════════════════
-   RESET & BASE
-════════════════════════════════════════ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:            #0a0a0f;
-  --bg-alt:        #111119;
-  --bg-card:       #0e0e18;
-  --bg-card-hover: #16161f;
-  --bg-overlay:    rgba(10,10,15,0.96);
-  --border:        rgba(255,255,255,0.07);
-  --border-mid:    rgba(255,255,255,0.14);
-  --border-hover:  rgba(255,255,255,0.25);
-  --gold:          #c9a84c;
-  --gold-dim:      rgba(201,168,76,0.18);
-  --gold-border:   rgba(201,168,76,0.4);
-  --white:         #ffffff;
-  --text:          #dddbe8;
-  --text-mid:      #7e7c90;
-  --text-dim:      #3f3e4d;
-  --ice:           #7ee8ff;
-  --forest:        #5dba62;
-  --fire:          #ff6b35;
-  --storm:         #c084fc;
-  --font-brand:    'Cinzel', serif;
-  --font-ui:       'Barlow Condensed', sans-serif;
-  --font-body:     'Crimson Text', serif;
-  --r:             6px;
-  --r-lg:          10px;
-  --nav-h:         62px;
+  --bg:           #0a0a0f;
+  --bg-alt:       #111119;
+  --bg-card:      #0e0e18;
+  --border:       rgba(255,255,255,0.07);
+  --border-mid:   rgba(255,255,255,0.14);
+  --gold:         #c9a84c;
+  --gold-border:  rgba(201,168,76,0.4);
+  --white:        #ffffff;
+  --text:         #dddbe8;
+  --text-mid:     #7e7c90;
+  --text-dim:     #3f3e4d;
+  --avadon:       #5eb8ff;
+  --coa:          #ff6b35;
+  --font-brand:   'Cinzel', serif;
+  --font-ui:      'Barlow Condensed', sans-serif;
+  --font-body:    'Crimson Text', serif;
+  --r:            6px;
+  --r-lg:         10px;
+  --nav-h:        62px;
 }
 
 html { scroll-behavior: smooth; }
-
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-ui);
-  font-size: 16px;
-  line-height: 1.6;
-  overflow-x: hidden;
-}
-
-img  { display: block; max-width: 100%; }
-a    { text-decoration: none; color: inherit; }
+body { background: var(--bg); color: var(--text); font-family: var(--font-ui); font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+img { display: block; max-width: 100%; }
+a   { text-decoration: none; color: inherit; }
 button { cursor: pointer; border: none; background: none; font-family: inherit; }
 
-/* ════════════════════════════════════════
-   SCROLL REVEAL
-════════════════════════════════════════ */
-.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.75s ease, transform 0.75s ease; }
+.reveal       { opacity: 0; transform: translateY(28px); transition: opacity 0.75s ease, transform 0.75s ease; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
-.reveal-left { opacity: 0; transform: translateX(-36px); transition: opacity 0.75s ease, transform 0.75s ease; }
+.reveal-left  { opacity: 0; transform: translateX(-36px); transition: opacity 0.75s ease, transform 0.75s ease; }
 .reveal-left.visible { opacity: 1; transform: translateX(0); }
 .reveal-right { opacity: 0; transform: translateX(36px); transition: opacity 0.75s ease, transform 0.75s ease; }
 .reveal-right.visible { opacity: 1; transform: translateX(0); }
 
-/* ════════════════════════════════════════
-   BUTTONS
-════════════════════════════════════════ */
-.btn {
-  display: inline-flex; align-items: center; gap: 0.45rem;
-  font-family: var(--font-ui); font-size: 0.78rem;
-  font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
-  padding: 0.7rem 1.8rem; border-radius: var(--r);
-  transition: all 0.22s ease; white-space: nowrap;
-}
-.btn-primary {
-  background: var(--gold); color: #09090f;
-  border: 1px solid transparent;
-}
-.btn-primary:hover {
-  background: #d4b45a; transform: translateY(-1px);
-  box-shadow: 0 6px 24px rgba(201,168,76,0.30);
-}
-.btn-outline {
-  background: transparent; color: var(--white);
-  border: 1px solid rgba(255,255,255,0.28);
-}
-.btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-1px); }
-.btn-ghost {
-  background: transparent; color: var(--text-mid);
-  border: 1px solid var(--border);
-}
-.btn-ghost:hover { border-color: var(--border-mid); color: var(--text); }
+.btn { display: inline-flex; align-items: center; gap: 0.45rem; font-family: var(--font-ui); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.7rem 1.8rem; border-radius: var(--r); transition: all 0.22s ease; white-space: nowrap; }
+.btn-primary  { background: var(--gold); color: #09090f; border: 1px solid transparent; }
+.btn-primary:hover  { background: #d4b45a; transform: translateY(-1px); box-shadow: 0 6px 24px rgba(201,168,76,0.30); }
+.btn-outline  { background: transparent; color: var(--white); border: 1px solid rgba(255,255,255,0.28); }
+.btn-outline:hover  { border-color: var(--gold); color: var(--gold); transform: translateY(-1px); }
+.btn-ghost    { background: transparent; color: var(--text-mid); border: 1px solid var(--border); }
+.btn-ghost:hover    { border-color: var(--border-mid); color: var(--text); }
+.btn-avadon   { background: var(--avadon); color: #04080f; border: 1px solid transparent; }
+.btn-avadon:hover   { background: #7ecaff; transform: translateY(-1px); box-shadow: 0 6px 24px rgba(94,184,255,0.30); }
 
-/* ════════════════════════════════════════
-   SECTION UTILITIES
-════════════════════════════════════════ */
 section { padding: 90px 0; }
 .container { max-width: 1240px; margin: 0 auto; padding: 0 2.5rem; }
 @media (max-width: 480px) { .container { padding: 0 1.25rem; } }
 
-.sec-label {
-  font-family: var(--font-ui); font-size: 0.68rem;
-  font-weight: 600; letter-spacing: 0.28em; text-transform: uppercase;
-  color: var(--gold); margin-bottom: 0.6rem; display: block;
-}
-.sec-title {
-  font-family: var(--font-brand);
-  font-size: clamp(1.7rem, 3vw, 2.6rem);
-  font-weight: 700; color: var(--white);
-  letter-spacing: 0.05em; text-transform: uppercase;
-  line-height: 1.1; margin-bottom: 0.9rem;
-}
-.sec-sub {
-  font-family: var(--font-body); font-size: 1.05rem;
-  color: var(--text-mid); line-height: 1.75;
-}
-.sec-rule {
-  width: 44px; height: 2px;
-  background: var(--gold); margin: 1rem 0 2.2rem;
-}
+.sec-label { font-family: var(--font-ui); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; display: block; }
+.sec-title  { font-family: var(--font-brand); font-size: clamp(1.7rem,3vw,2.6rem); font-weight: 700; color: var(--white); letter-spacing: 0.05em; text-transform: uppercase; line-height: 1.1; margin-bottom: 0.9rem; }
+.sec-sub    { font-family: var(--font-body); font-size: 1.05rem; color: var(--text-mid); line-height: 1.75; }
+.sec-rule   { width: 44px; height: 2px; background: var(--gold); margin: 1rem 0 2.2rem; }
 .sec-rule.center { margin-left: auto; margin-right: auto; }
 
-/* ════════════════════════════════════════
-   COOKIE BANNER
-════════════════════════════════════════ */
-#cookie-banner {
-  position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
-  background: rgba(10,10,15,0.97); backdrop-filter: blur(24px);
-  border-top: 1px solid var(--border-mid);
-  padding: 1.1rem 2.5rem;
-  display: flex; align-items: center; gap: 2rem;
-  transform: translateY(100%);
-  transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
-}
+/* ── Cookie Banner ── */
+#cookie-banner { position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999; background: rgba(10,10,15,0.97); backdrop-filter: blur(24px); border-top: 1px solid var(--border-mid); padding: 1.1rem 2.5rem; display: flex; align-items: center; gap: 2rem; transform: translateY(100%); transition: transform 0.45s cubic-bezier(0.4,0,0.2,1); }
 #cookie-banner.visible { transform: translateY(0); }
 .cookie-text { flex: 1; }
-.cookie-text h3 {
-  font-family: var(--font-ui); font-size: 0.8rem;
-  font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--white); margin-bottom: 0.25rem;
-}
+.cookie-text h3 { font-family: var(--font-ui); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--white); margin-bottom: 0.25rem; }
 .cookie-text p { font-family: var(--font-body); font-size: 0.9rem; color: var(--text-mid); }
 .cookie-actions { display: flex; gap: 0.7rem; flex-shrink: 0; }
-@media (max-width: 720px) {
-  #cookie-banner { flex-direction: column; align-items: flex-start; gap: 0.9rem; padding: 1.1rem 1.25rem; }
-  .cookie-actions { width: 100%; }
-  .cookie-actions .btn { flex: 1; justify-content: center; }
-}
+@media (max-width: 720px) { #cookie-banner { flex-direction: column; align-items: flex-start; gap: 0.9rem; padding: 1.1rem 1.25rem; } .cookie-actions { width: 100%; } .cookie-actions .btn { flex: 1; justify-content: center; } }
 
-/* ════════════════════════════════════════
-   NAVIGATION
-════════════════════════════════════════ */
-#nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-  height: var(--nav-h);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 2.5rem;
-  transition: background 0.3s ease, border-bottom 0.3s ease;
-}
-#nav.scrolled {
-  background: rgba(10,10,15,0.96); backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-}
-
-/* Logo */
+/* ── Navigation ── */
+#nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; transition: background 0.3s ease, border-bottom 0.3s ease; }
+#nav.scrolled { background: rgba(10,10,15,0.96); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
 .nav-logo { display: flex; align-items: center; gap: 0.75rem; }
-.nav-logo-icon { width: 30px; height: 34px; flex-shrink: 0; }
-.nav-logo-wordmark {
-  font-family: var(--font-brand); font-size: 0.82rem;
-  font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--gold); line-height: 1.2;
-}
-.nav-logo-wordmark small {
-  display: block; font-size: 0.5rem; letter-spacing: 0.22em;
-  color: var(--text-dim); font-weight: 400;
-}
-
-/* Links */
-.nav-links { display: flex; align-items: center; list-style: none; gap: 0; }
-.nav-links a {
-  font-family: var(--font-ui); font-size: 0.73rem;
-  font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--text-mid); padding: 0.45rem 1.1rem; display: block;
-  transition: color 0.2s ease;
-}
+.nav-logo-icon { width: 30px; height: 34px; flex-shrink: 0; object-fit: contain; border-radius: 4px; }
+.nav-logo-wordmark { font-family: var(--font-brand); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); line-height: 1.2; }
+.nav-logo-wordmark small { display: block; font-size: 0.5rem; letter-spacing: 0.22em; color: var(--text-dim); font-weight: 400; }
+.nav-links { display: flex; align-items: center; list-style: none; }
+.nav-links a { font-family: var(--font-ui); font-size: 0.73rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-mid); padding: 0.45rem 1.1rem; display: block; transition: color 0.2s ease; }
 .nav-links a:hover { color: var(--white); }
-
-/* Right side */
 .nav-right { display: flex; align-items: center; gap: 0.9rem; }
-
-/* Hamburger */
-.hamburger {
-  display: none; flex-direction: column; gap: 5px;
-  padding: 7px; background: none; border: none;
-}
-.hamburger span {
-  width: 22px; height: 2px; background: var(--text);
-  display: block; transition: all 0.28s ease; transform-origin: center;
-}
+.hamburger { display: none; flex-direction: column; gap: 5px; padding: 7px; }
+.hamburger span { width: 22px; height: 2px; background: var(--text); display: block; transition: all 0.28s ease; transform-origin: center; }
 .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 .hamburger.open span:nth-child(2) { opacity: 0; }
 .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-/* Mobile overlay */
-#mobile-nav {
-  position: fixed; inset: 0; z-index: 998;
-  background: rgba(10,10,15,0.98); backdrop-filter: blur(20px);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 1.8rem;
-  opacity: 0; pointer-events: none;
-  transition: opacity 0.28s ease;
-}
+#mobile-nav { position: fixed; inset: 0; z-index: 998; background: rgba(10,10,15,0.98); backdrop-filter: blur(20px); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.8rem; opacity: 0; pointer-events: none; transition: opacity 0.28s ease; }
 #mobile-nav.open { opacity: 1; pointer-events: all; }
-#mobile-nav a {
-  font-family: var(--font-brand); font-size: 1.3rem;
-  letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--text-mid); transition: color 0.2s;
-}
+#mobile-nav a { font-family: var(--font-brand); font-size: 1.3rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-mid); transition: color 0.2s; }
 #mobile-nav a:hover { color: var(--gold); }
-
-@media (max-width: 900px) {
-  .nav-links, .nav-right .btn { display: none; }
-  .hamburger { display: flex; }
-}
+@media (max-width: 900px) { .nav-links, .nav-right .btn { display: none; } .hamburger { display: flex; } }
 @media (max-width: 480px) { #nav { padding: 0 1.25rem; } }
 
-/* ════════════════════════════════════════
-   HERO
-════════════════════════════════════════ */
-#hero {
-  position: relative; height: 100vh; min-height: 640px;
-  display: flex; align-items: flex-end; justify-content: center;
-  overflow: hidden; padding-bottom: 9vh;
-}
-.hero-img-wrap { position: absolute; inset: 0; z-index: 0; }
-#hero-img {
-  width: 100%; height: 100%; object-fit: cover; object-position: center top;
-  animation: hero-zoom 24s ease-in-out infinite alternate;
-}
-@keyframes hero-zoom {
-  from { transform: scale(1); }
-  to   { transform: scale(1.05); }
-}
-/* Placeholder wenn kein Bild */
-.hero-bg-placeholder {
-  position: absolute; inset: 0;
-  background: linear-gradient(160deg, #0a0510 0%, #14081a 30%, #200a08 60%, #0a0a0f 100%);
-}
-
-.hero-grad {
-  position: absolute; inset: 0; z-index: 1;
-  background:
-    linear-gradient(to bottom, rgba(10,10,15,0.65) 0%, transparent 28%),
-    linear-gradient(to top,    rgba(10,10,15,0.98) 0%, rgba(10,10,15,0.5) 40%, transparent 70%),
-    linear-gradient(to right,  rgba(10,10,15,0.45), transparent 40%, transparent 60%, rgba(10,10,15,0.45));
-}
-.hero-vignette {
-  position: absolute; inset: 0; z-index: 2;
-  background: radial-gradient(ellipse at center, transparent 38%, rgba(10,10,15,0.55) 100%);
-}
-#hero-canvas { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
-
-.hero-content {
-  position: relative; z-index: 4;
-  text-align: center; max-width: 880px; padding: 0 2rem;
-}
-.hero-eyebrow {
-  font-family: var(--font-ui); font-size: 0.68rem;
-  font-weight: 600; letter-spacing: 0.32em; text-transform: uppercase;
-  color: var(--gold); margin-bottom: 0.9rem; opacity: 0.9;
-}
-.hero-title {
-  font-family: var(--font-brand);
-  font-size: clamp(2.4rem, 6.5vw, 5.2rem);
-  font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--white); text-shadow: 0 0 80px rgba(0,0,0,0.7);
-  line-height: 1; margin-bottom: 1.1rem;
-}
-.hero-sub {
-  font-family: var(--font-body); font-size: clamp(0.95rem, 1.8vw, 1.15rem);
-  color: rgba(255,255,255,0.65); margin-bottom: 2.2rem; font-style: italic;
-}
+/* ── Hero ── */
+#hero { position: relative; height: 100vh; min-height: 640px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 25% 60%, rgba(94,184,255,0.05) 0%, transparent 55%), radial-gradient(ellipse at 75% 30%, rgba(201,168,76,0.07) 0%, transparent 50%), linear-gradient(180deg,#05050c 0%,#0a0a15 50%,#07070f 100%); }
+.hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.012) 1px,transparent 1px), linear-gradient(90deg,rgba(255,255,255,0.012) 1px,transparent 1px); background-size: 80px 80px; mask-image: radial-gradient(ellipse at center,rgba(0,0,0,0.7) 0%,transparent 68%); }
+#hero-canvas { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+.hero-content { position: relative; z-index: 2; text-align: center; padding: 0 2rem; }
+.hero-logo-wrap { margin: 0 auto 2.2rem; width: 110px; height: 110px; position: relative; }
+.hero-logo-wrap::before { content: ''; position: absolute; inset: -16px; border-radius: 50%; background: radial-gradient(circle,rgba(201,168,76,0.18) 0%,transparent 70%); animation: logo-pulse 3.5s ease-in-out infinite; }
+@keyframes logo-pulse { 0%,100%{opacity:0.5;transform:scale(1)} 50%{opacity:1;transform:scale(1.08)} }
+.hero-logo-wrap img { width: 100%; height: 100%; object-fit: contain; border-radius: 10px; filter: drop-shadow(0 0 28px rgba(201,168,76,0.45)); }
+.hero-eyebrow { font-family: var(--font-ui); font-size: 0.66rem; font-weight: 600; letter-spacing: 0.34em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; }
+.hero-title { font-family: var(--font-brand); font-size: clamp(2.2rem,6vw,5rem); font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase; color: var(--white); line-height: 1; margin-bottom: 0.55rem; text-shadow: 0 0 80px rgba(201,168,76,0.18); }
+.hero-divider { width: 55px; height: 1px; background: var(--gold); margin: 0.8rem auto 1rem; opacity: 0.45; }
+.hero-sub { font-family: var(--font-body); font-size: clamp(0.9rem,1.7vw,1.1rem); color: rgba(255,255,255,0.45); margin-bottom: 2.4rem; font-style: italic; }
 .hero-btns { display: flex; gap: 0.9rem; justify-content: center; flex-wrap: wrap; }
+.hero-scroll { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 0.45rem; }
+.hero-scroll-arrow { width: 18px; height: 18px; border-right: 1.5px solid var(--text-dim); border-bottom: 1.5px solid var(--text-dim); transform: rotate(45deg); animation: arrow-bounce 2s ease infinite; }
+@keyframes arrow-bounce { 0%,100%{transform:rotate(45deg) translateY(0);opacity:0.4} 50%{transform:rotate(45deg) translateY(4px);opacity:0.8} }
+.hero-scroll-label { font-family: var(--font-ui); font-size: 0.56rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--text-dim); }
 
-.hero-scroll {
-  position: absolute; bottom: 1.8rem; left: 50%;
-  transform: translateX(-50%); z-index: 4;
-  display: flex; flex-direction: column; align-items: center; gap: 0.45rem;
-}
-.hero-scroll-label {
-  font-family: var(--font-ui); font-size: 0.58rem;
-  letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-dim);
-}
-.hero-scroll-arrow {
-  width: 18px; height: 18px;
-  border-right: 1.5px solid var(--text-dim); border-bottom: 1.5px solid var(--text-dim);
-  transform: rotate(45deg); animation: arrow-bounce 2s ease infinite;
-}
-@keyframes arrow-bounce {
-  0%, 100% { transform: rotate(45deg) translateY(0); opacity: 0.4; }
-  50%       { transform: rotate(45deg) translateY(4px); opacity: 0.8; }
-}
+/* ── Featured Banner (Avadon) ── */
+#featured { background: var(--bg-alt); border-top: 1px solid var(--border); padding: 0; }
+.featured-banner { position: relative; overflow: hidden; min-height: 420px; display: flex; align-items: center; background: linear-gradient(135deg,#05090f 0%,#090f1a 45%,#0c1422 65%,#060a10 100%); cursor: pointer; }
+.featured-glow { position: absolute; inset: 0; background: radial-gradient(ellipse at 25% 55%,rgba(94,184,255,0.13) 0%,transparent 55%), radial-gradient(ellipse at 70% 20%,rgba(94,184,255,0.07) 0%,transparent 45%); transition: opacity 0.4s; }
+.featured-banner:hover .featured-glow { opacity: 1.4; }
+.featured-sigil-art { position: absolute; right: 5%; top: 50%; transform: translateY(-50%); opacity: 0.12; pointer-events: none; }
+.featured-content { position: relative; z-index: 1; padding: 4.5rem 5rem; max-width: 640px; }
+.featured-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(94,184,255,0.1); border: 1px solid rgba(94,184,255,0.28); color: var(--avadon); font-family: var(--font-ui); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.28rem 0.85rem; border-radius: 100px; margin-bottom: 1.6rem; }
+.featured-badge::before { content: '●'; font-size: 0.48rem; animation: blink 2s ease infinite; }
+@keyframes blink { 0%,100%{opacity:1}50%{opacity:0.15} }
+.featured-title { font-family: var(--font-brand); font-size: clamp(1.8rem,3.5vw,3.1rem); font-weight: 900; letter-spacing: 0.07em; text-transform: uppercase; color: var(--white); line-height: 1.08; margin-bottom: 0.5rem; }
+.featured-subtitle { font-family: var(--font-ui); font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--avadon); margin-bottom: 1.3rem; opacity: 0.85; }
+.featured-desc { font-family: var(--font-body); font-size: 1.05rem; color: var(--text-mid); line-height: 1.75; margin-bottom: 2rem; }
+.featured-tags { display: flex; gap: 0.45rem; flex-wrap: wrap; margin-bottom: 2rem; }
+.featured-tag { font-family: var(--font-ui); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-mid); padding: 0.22rem 0.65rem; border: 1px solid var(--border-mid); border-radius: 100px; }
+@media (max-width: 900px) { .featured-content { padding: 3rem 2.5rem; } .featured-sigil-art { display: none; } }
+@media (max-width: 480px) { .featured-content { padding: 2.5rem 1.5rem; } }
 
-/* ════════════════════════════════════════
-   GAMES SECTION
-════════════════════════════════════════ */
-#games { background: var(--bg-alt); padding: 70px 0 80px; }
-
-.games-top {
-  display: flex; align-items: flex-end;
-  justify-content: space-between; margin-bottom: 2.8rem;
-  flex-wrap: wrap; gap: 1rem;
-}
-
-.games-grid {
-  display: flex; flex-wrap: wrap; gap: 1.4rem;
-}
-
-/* ── Game Card (inspired by AC games page) ── */
-.game-card {
-  width: 220px; flex-shrink: 0;
-  transition: transform 0.3s ease;
-}
+/* ── Games Grid ── */
+#games { background: var(--bg); padding: 70px 0 80px; }
+.games-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 2.8rem; flex-wrap: wrap; gap: 1rem; }
+.games-grid { display: flex; flex-wrap: wrap; gap: 1.4rem; }
+.game-card { width: 220px; flex-shrink: 0; transition: transform 0.3s ease; }
 .game-card:hover { transform: translateY(-4px); }
-
-.game-card-cover {
-  width: 220px; height: 290px;
-  border-radius: var(--r-lg); overflow: hidden;
-  position: relative;
-  border: 1px solid var(--border);
-  background: var(--bg-card);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-.game-card:hover .game-card-cover {
-  border-color: var(--gold-border);
-  box-shadow: 0 10px 40px rgba(201,168,76,0.14);
-}
-.game-card-cover img {
-  width: 100%; height: 100%; object-fit: cover; object-position: center top;
-  transition: filter 0.3s ease;
-}
+.game-card-cover { width: 220px; height: 290px; border-radius: var(--r-lg); overflow: hidden; position: relative; border: 1px solid var(--border); background: var(--bg-card); transition: border-color 0.3s ease, box-shadow 0.3s ease; }
+.game-card:hover .game-card-cover { border-color: var(--gold-border); box-shadow: 0 10px 40px rgba(201,168,76,0.14); }
+.game-card-cover img { width: 100%; height: 100%; object-fit: cover; object-position: center top; transition: filter 0.3s ease; }
 .game-card:hover .game-card-cover img { filter: brightness(1.1); }
-
-/* Placeholder for TBA cards */
-.game-card-placeholder {
-  width: 100%; height: 100%;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 0.9rem;
-  background: linear-gradient(150deg, #0e0e18, #14141f);
-}
-.game-card-placeholder-icon {
-  font-size: 2.2rem; opacity: 0.1;
-}
-.game-card-placeholder-text {
-  font-family: var(--font-ui); font-size: 0.6rem;
-  letter-spacing: 0.28em; text-transform: uppercase; color: var(--text-dim);
-}
-
-/* Badge (top-left corner) */
-.game-card-badge {
-  position: absolute; top: 9px; left: 9px;
-  background: var(--gold); color: #09090f;
-  font-family: var(--font-ui); font-size: 0.58rem;
-  font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase;
-  padding: 0.22rem 0.55rem; border-radius: 4px;
-}
-
-/* Info below cover */
+.game-card-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.9rem; }
+.game-card-badge { position: absolute; top: 9px; left: 9px; font-family: var(--font-ui); font-size: 0.56rem; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; padding: 0.22rem 0.55rem; border-radius: 4px; }
+.badge-avadon { background: var(--avadon); color: #04080f; }
+.badge-coa    { background: rgba(255,107,53,0.9); color: #fff; }
+.badge-tba    { background: rgba(255,255,255,0.1); color: var(--text-mid); border: 1px solid var(--border-mid); }
 .game-card-info { padding: 0.8rem 0.15rem 0; }
-.game-card-title {
-  font-family: var(--font-brand); font-size: 0.88rem;
-  font-weight: 600; color: var(--white);
-  letter-spacing: 0.04em; margin-bottom: 0.3rem;
-}
-.game-card-tags {
-  display: flex; gap: 0; flex-wrap: wrap;
-}
-.game-card-tag {
-  font-family: var(--font-ui); font-size: 0.62rem;
-  letter-spacing: 0.09em; text-transform: uppercase; color: var(--text-dim);
-}
+.game-card-title { font-family: var(--font-brand); font-size: 0.88rem; font-weight: 600; color: var(--white); letter-spacing: 0.04em; margin-bottom: 0.3rem; }
+.game-card-tags { display: flex; flex-wrap: wrap; }
+.game-card-tag { font-family: var(--font-ui); font-size: 0.62rem; letter-spacing: 0.09em; text-transform: uppercase; color: var(--text-dim); }
 .game-card-tag + .game-card-tag::before { content: ' · '; margin: 0 0.2rem; }
+@media (max-width: 900px) { .games-grid { gap: 1rem; justify-content: center; } .game-card { width: calc(50% - 0.5rem); max-width: 240px; } .game-card-cover { width: 100%; height: 0; padding-bottom: 130%; position: relative; } .game-card-cover img, .game-card-placeholder { position: absolute; inset: 0; width: 100%; height: 100%; } }
+@media (max-width: 480px) { .game-card { width: calc(50% - 0.5rem); } }
 
-/* Platform icons row */
-.game-card-platforms {
-  display: flex; gap: 0.45rem; margin-top: 0.55rem;
-}
-.plat-icon {
-  width: 16px; height: 16px; fill: var(--text-dim); opacity: 0.6;
-}
-
-@media (max-width: 900px) {
-  .games-grid { gap: 1rem; justify-content: center; }
-  .game-card { width: calc(50% - 0.5rem); max-width: 240px; }
-  .game-card-cover { width: 100%; height: 0; padding-bottom: 130%; position: relative; }
-  .game-card-cover img { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .game-card-placeholder { position: absolute; inset: 0; }
-}
-@media (max-width: 480px) {
-  .game-card { width: calc(50% - 0.5rem); }
-}
-
-/* ════════════════════════════════════════
-   CROWN OF ASHES INTRO
-════════════════════════════════════════ */
-#coa-intro { background: var(--bg); }
-
-.coa-intro-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 5.5rem; align-items: center;
-}
-.coa-cover-wrap {
-  border-radius: var(--r-lg); overflow: hidden;
-  aspect-ratio: 4/3; border: 1px solid var(--border);
-  position: relative; background: var(--bg-card);
-}
-.coa-cover-wrap img { width: 100%; height: 100%; object-fit: cover; }
-/* Placeholder when no cover image */
-.coa-cover-placeholder {
-  width: 100%; height: 100%; min-height: 300px;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 1rem;
-  background: linear-gradient(150deg, #12121c, #1a1020);
-}
-.coa-cover-placeholder span {
-  font-family: var(--font-ui); font-size: 0.65rem;
-  letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim);
-}
-.coa-cover-placeholder svg { opacity: 0.12; }
-
-.coa-intro-text .sec-sub { margin-bottom: 1.8rem; }
-.coa-stats-row {
-  display: flex; gap: 2.2rem;
-  padding-top: 1.8rem; border-top: 1px solid var(--border);
-  margin-top: 2rem;
-}
-.coa-stat-n {
-  font-family: var(--font-brand); font-size: 1.7rem;
-  font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 0.15rem;
-}
-.coa-stat-l {
-  font-family: var(--font-ui); font-size: 0.62rem;
-  letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim);
-}
-.coa-intro-btns { display: flex; gap: 0.9rem; flex-wrap: wrap; margin-top: 2rem; }
-
-@media (max-width: 900px) {
-  .coa-intro-grid { grid-template-columns: 1fr; gap: 3rem; }
-  .coa-cover-wrap { max-width: 560px; }
-}
-
-/* ════════════════════════════════════════
-   LORE
-════════════════════════════════════════ */
-#lore {
-  background: var(--bg-alt);
-  border-top: 1px solid var(--border);
-}
-.lore-wrap {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 5rem; align-items: center;
-}
-.lore-body { font-family: var(--font-body); font-size: 1.05rem; color: var(--text-mid); line-height: 1.8; margin-bottom: 1.2rem; }
-.lore-quote {
-  font-family: var(--font-body); font-style: italic;
-  font-size: 1.15rem; color: var(--text-mid); line-height: 1.7;
-  border-left: 2px solid var(--gold); padding-left: 1.3rem; margin-top: 1.8rem;
-}
-.lore-list { list-style: none; margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.85rem; }
-.lore-list li {
-  display: flex; align-items: flex-start; gap: 0.9rem;
-  font-family: var(--font-body); font-size: 1.05rem; color: var(--text-mid);
-}
-.lore-list li::before {
-  content: ''; width: 5px; height: 5px; background: var(--gold);
-  flex-shrink: 0; margin-top: 0.58em; transform: rotate(45deg);
-}
-@media (max-width: 900px) { .lore-wrap { grid-template-columns: 1fr; gap: 3rem; } }
-
-/* ════════════════════════════════════════
-   REGIONS
-════════════════════════════════════════ */
-#regions { background: var(--bg); }
-
-.regions-grid {
-  display: grid; grid-template-columns: repeat(5, 1fr);
-  gap: 1.1rem; margin-top: 3rem;
-}
-.region-card {
-  border-radius: var(--r-lg); overflow: hidden;
-  aspect-ratio: 3/4; position: relative;
-  border: 1px solid var(--border);
-  transition: transform 0.3s ease, border-color 0.3s ease;
-}
-.region-card:hover { transform: translateY(-4px); border-color: var(--border-mid); }
-
-/* CSS art backgrounds */
-.r-frost    { background: linear-gradient(160deg, #061522 0%, #0a2038 35%, #0d2a48 60%, #07111e 100%); }
-.r-forest   { background: linear-gradient(160deg, #030d05 0%, #071505 30%, #0a1c08 60%, #030a04 100%); }
-.r-fire     { background: linear-gradient(160deg, #150402 0%, #280804 30%, #340b04 60%, #180404 100%); }
-.r-storm    { background: linear-gradient(160deg, #0c0716 0%, #160c28 30%, #1c0f30 60%, #0a0612 100%); }
-.r-moon     { background: linear-gradient(160deg, #080d14 0%, #0e1520 30%, #0a1228 60%, #060810 100%); }
-
-/* SVG art inside region */
-.region-art { position: absolute; inset: 0; }
-.region-grad { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,10,15,0.94) 0%, rgba(10,10,15,0.25) 55%, transparent 100%); }
-.region-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.3rem 1.1rem; }
-.region-icon { font-size: 1.6rem; margin-bottom: 0.6rem; display: block; }
-.region-name {
-  font-family: var(--font-brand); font-size: 0.95rem;
-  font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--white); margin-bottom: 0.28rem;
-}
-.region-desc { font-family: var(--font-body); font-size: 0.82rem; color: rgba(255,255,255,0.48); line-height: 1.4; }
-
-@media (max-width: 1100px) { .regions-grid { grid-template-columns: repeat(3, 1fr); } }
-@media (max-width: 720px)  { .regions-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 480px)  { .regions-grid { gap: 0.7rem; } }
-
-/* ════════════════════════════════════════
-   WORLD MAP
-════════════════════════════════════════ */
-#worldmap { background: var(--bg-alt); }
-
-.worldmap-frame {
-  margin-top: 2.8rem; border-radius: var(--r-lg); overflow: hidden;
-  border: 1px solid var(--border); background: #080812;
-}
-.worldmap-frame img { width: 100%; display: block; opacity: 0.9; transition: opacity 0.3s ease; }
-.worldmap-frame:hover img { opacity: 1; }
-.worldmap-placeholder {
-  height: 380px; display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 1rem;
-  background: linear-gradient(150deg, #0c0c18, #14141f);
-}
-.worldmap-placeholder svg { opacity: 0.08; }
-.worldmap-placeholder span {
-  font-family: var(--font-ui); font-size: 0.65rem;
-  letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-dim);
-}
-
-/* ════════════════════════════════════════
-   BOSSES
-════════════════════════════════════════ */
-#bosses { background: var(--bg); border-top: 1px solid var(--border); }
-
-.bosses-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: 1.1rem; margin-top: 3rem;
-}
-.boss-card {
-  background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: var(--r-lg); padding: 1.6rem 1.3rem;
-  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-}
-.boss-card:hover {
-  border-color: var(--border-mid);
-  transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.25);
-}
-.boss-element {
-  font-family: var(--font-ui); font-size: 0.6rem;
-  letter-spacing: 0.2em; text-transform: uppercase;
-  margin-bottom: 0.7rem; display: block;
-}
-.boss-name {
-  font-family: var(--font-brand); font-size: 0.95rem;
-  font-weight: 700; color: var(--white);
-  letter-spacing: 0.05em; text-transform: uppercase;
-  margin-bottom: 0.2rem; line-height: 1.2;
-}
-.boss-title {
-  font-family: var(--font-body); font-style: italic;
-  font-size: 0.85rem; color: var(--text-mid); margin-bottom: 0.9rem;
-}
-.boss-zone {
-  font-family: var(--font-ui); font-size: 0.62rem;
-  letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim);
-  border-top: 1px solid var(--border); padding-top: 0.7rem; margin-top: 0.8rem;
-}
-
-/* Final boss teaser */
-.boss-final {
-  grid-column: 1 / -1;
-  background: linear-gradient(135deg, #14080a, #1e0a0a);
-  border-color: rgba(192,57,43,0.3);
-  display: flex; align-items: center; gap: 2rem;
-  padding: 2rem 2rem;
-}
-.boss-final:hover { border-color: rgba(192,57,43,0.55); }
-.boss-final-icon { font-size: 2.5rem; flex-shrink: 0; }
-.boss-final .boss-name { font-size: 1.15rem; }
-.boss-final .boss-title { font-size: 1rem; }
-.boss-final .boss-zone { border: none; padding: 0; margin: 0; }
-
-@media (max-width: 900px) { .bosses-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 480px) { .bosses-grid { grid-template-columns: 1fr; } }
-
-/* ════════════════════════════════════════
-   JOURNEY / PATH
-════════════════════════════════════════ */
-#journey { background: var(--bg-alt); border-top: 1px solid var(--border); }
-
-.journey-steps {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem; margin-top: 3rem; position: relative;
-}
-.journey-steps::before {
-  content: ''; position: absolute;
-  top: 28px; left: calc(16.66% + 0.75rem); right: calc(16.66% + 0.75rem);
-  height: 1px; background: var(--border-mid);
-}
-.journey-step {
-  display: flex; flex-direction: column; align-items: center; text-align: center;
-  position: relative;
-}
-.journey-num {
-  width: 56px; height: 56px; border-radius: 50%;
-  border: 1px solid var(--border-mid);
-  background: var(--bg-card);
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-brand); font-size: 1rem; font-weight: 700;
-  color: var(--gold); margin-bottom: 1.2rem; position: relative; z-index: 1;
-}
-.journey-step-title {
-  font-family: var(--font-brand); font-size: 0.88rem;
-  font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--white); margin-bottom: 0.5rem;
-}
-.journey-step-desc {
-  font-family: var(--font-body); font-size: 0.95rem;
-  color: var(--text-mid); line-height: 1.6;
-}
-@media (max-width: 720px) {
-  .journey-steps { grid-template-columns: 1fr; gap: 2rem; }
-  .journey-steps::before { display: none; }
-}
-
-/* ════════════════════════════════════════
-   CLASSES
-════════════════════════════════════════ */
-#classes { background: var(--bg); }
-
-.classes-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: 1.1rem; margin-top: 3rem;
-}
-.class-card {
-  border-radius: var(--r-lg); overflow: hidden;
-  aspect-ratio: 2/3; position: relative;
-  border: 1px solid var(--border);
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-}
-.class-card:hover {
-  transform: translateY(-5px);
-  border-color: var(--gold-border);
-  box-shadow: 0 14px 50px rgba(201,168,76,0.1);
-}
-/* Image */
-.class-card img {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%; object-fit: cover; object-position: top center;
-  transition: transform 0.55s ease;
-}
-.class-card:hover img { transform: scale(1.04); }
-/* Placeholder when no image */
-.class-placeholder {
-  position: absolute; inset: 0;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 0.8rem;
-  background: linear-gradient(150deg, #12121c, #1a1525);
-}
-.class-placeholder span {
-  font-family: var(--font-ui); font-size: 0.6rem;
-  letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim);
-}
-/* Gradient overlay */
-.class-overlay {
-  position: absolute; inset: 0;
-  background: linear-gradient(to top, rgba(10,10,15,0.94) 0%, rgba(10,10,15,0.32) 55%, transparent 100%);
-  transition: background 0.3s ease;
-}
-.class-card:hover .class-overlay { background: linear-gradient(to top, rgba(10,10,15,0.97) 0%, rgba(10,10,15,0.45) 65%, transparent 100%); }
-/* Content */
-.class-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.4rem 1.1rem; }
-.class-icon { font-size: 1.1rem; margin-bottom: 0.4rem; display: block; }
-.class-name {
-  font-family: var(--font-brand); font-size: 0.95rem;
-  font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
-  color: var(--white); margin-bottom: 0.2rem;
-}
-.class-role {
-  font-family: var(--font-ui); font-size: 0.62rem;
-  letter-spacing: 0.15em; text-transform: uppercase;
-  color: var(--gold); margin-bottom: 0.55rem;
-}
-.class-desc {
-  font-family: var(--font-body); font-size: 0.82rem;
-  color: rgba(255,255,255,0.5); line-height: 1.5;
-  opacity: 0; transform: translateY(5px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-.class-card:hover .class-desc { opacity: 1; transform: translateY(0); }
-@media (max-width: 480px) { .class-desc { opacity: 1; transform: none; } }
-
-@media (max-width: 900px) { .classes-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 480px) { .classes-grid { gap: 0.7rem; } }
-
-/* ════════════════════════════════════════
-   FEATURES
-════════════════════════════════════════ */
-#features { background: var(--bg-alt); border-top: 1px solid var(--border); }
-
-.features-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 1.3rem; margin-top: 3rem;
-}
-.feat-card {
-  background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: var(--r-lg); padding: 1.8rem 1.6rem;
-  transition: border-color 0.3s ease, transform 0.3s ease;
-}
-.feat-card:hover { border-color: var(--border-mid); transform: translateY(-2px); }
-.feat-icon { font-size: 1.6rem; margin-bottom: 0.9rem; display: block; }
-.feat-name {
-  font-family: var(--font-brand); font-size: 0.85rem;
-  font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--white); margin-bottom: 0.6rem;
-}
-.feat-desc { font-family: var(--font-body); font-size: 0.98rem; color: var(--text-mid); line-height: 1.65; }
-
-@media (max-width: 900px) { .features-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 480px) { .features-grid { grid-template-columns: 1fr; } }
-
-/* ════════════════════════════════════════
-   STUDIO SECTION
-════════════════════════════════════════ */
-#studio { background: var(--bg); border-top: 1px solid var(--border); }
-
-.studio-wrap {
-  display: grid; grid-template-columns: auto 1fr;
-  gap: 5rem; align-items: center;
-}
-/* Logo placeholder */
-.studio-logo-box {
-  width: 180px; height: 180px; flex-shrink: 0;
-  border-radius: var(--r-lg); border: 1px solid var(--border);
-  background: var(--bg-card);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 0.7rem;
-  overflow: hidden;
-}
-.studio-logo-box img { width: 100%; height: 100%; object-fit: cover; }
-.studio-logo-mark {
-  width: 100%; height: 100%;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 0.8rem;
-}
+/* ── About ── */
+#about { background: var(--bg-alt); border-top: 1px solid var(--border); }
+.about-wrap { display: grid; grid-template-columns: auto 1fr; gap: 5rem; align-items: start; }
+.about-logo-box { width: 210px; height: 210px; border-radius: var(--r-lg); border: 1px solid var(--gold-border); background: var(--bg-card); overflow: hidden; box-shadow: 0 0 50px rgba(201,168,76,0.12), 0 0 0 1px rgba(201,168,76,0.08); flex-shrink: 0; }
+.about-logo-box img { width: 100%; height: 100%; object-fit: cover; }
+.about-body { font-family: var(--font-body); font-size: 1.05rem; color: var(--text-mid); line-height: 1.8; margin-bottom: 1.2rem; }
 .studio-tags { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 1.4rem; }
-.studio-tag {
-  font-family: var(--font-ui); font-size: 0.63rem;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--text-mid); padding: 0.28rem 0.75rem;
-  border: 1px solid var(--border-mid); border-radius: 100px;
-}
-@media (max-width: 900px) {
-  .studio-wrap { grid-template-columns: 1fr; gap: 2.5rem; }
-  .studio-logo-box { width: 130px; height: 130px; }
-}
+.studio-tag { font-family: var(--font-ui); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-mid); padding: 0.28rem 0.75rem; border: 1px solid var(--border-mid); border-radius: 100px; }
+.team-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.1rem; margin-top: 3.5rem; }
+.team-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 1.8rem 1.5rem; text-align: center; transition: border-color 0.3s, transform 0.3s; }
+.team-card:hover { border-color: var(--border-mid); transform: translateY(-2px); }
+.team-avatar { width: 68px; height: 68px; border-radius: 50%; background: linear-gradient(135deg,#191928,#251936); border: 1px solid var(--border-mid); display: flex; align-items: center; justify-content: center; font-size: 1.7rem; margin: 0 auto 1rem; }
+.team-name { font-family: var(--font-brand); font-size: 0.86rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--white); margin-bottom: 0.3rem; }
+.team-role { font-family: var(--font-ui); font-size: 0.63rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.7rem; }
+.team-desc { font-family: var(--font-body); font-size: 0.9rem; color: var(--text-mid); line-height: 1.55; }
+@media (max-width: 900px) { .about-wrap { grid-template-columns: 1fr; gap: 2.5rem; } .about-logo-box { width: 140px; height: 140px; } .team-grid { grid-template-columns: 1fr; } }
 
-/* ════════════════════════════════════════
-   FINAL CTA
-════════════════════════════════════════ */
-#cta {
-  background: linear-gradient(180deg, var(--bg) 0%, #110a0a 100%);
-  text-align: center; padding: 100px 0;
-  border-top: 1px solid var(--border);
-}
-.cta-inner { max-width: 580px; margin: 0 auto; }
-.cta-inner .sec-rule { margin: 1rem auto 2rem; }
-.cta-inner .sec-sub { margin: 0 auto 2.5rem; }
-.cta-btns { display: flex; gap: 0.9rem; justify-content: center; flex-wrap: wrap; }
+/* ── Values ── */
+#values { background: var(--bg); border-top: 1px solid var(--border); }
+.values-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.3rem; margin-top: 3rem; }
+.value-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 2rem 1.8rem; transition: border-color 0.3s, transform 0.3s; }
+.value-card:hover { border-color: var(--gold-border); transform: translateY(-2px); }
+.value-icon { font-size: 1.8rem; margin-bottom: 1rem; display: block; }
+.value-title { font-family: var(--font-brand); font-size: 0.95rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--white); margin-bottom: 0.6rem; }
+.value-desc { font-family: var(--font-body); font-size: 1rem; color: var(--text-mid); line-height: 1.65; }
+@media (max-width: 720px) { .values-grid { grid-template-columns: 1fr; } }
 
-/* ════════════════════════════════════════
-   SUPPORT
-════════════════════════════════════════ */
+/* ── Contact ── */
+#contact { background: var(--bg-alt); border-top: 1px solid var(--border); text-align: center; }
+.contact-inner { max-width: 580px; margin: 0 auto; }
+.contact-inner .sec-rule { margin: 1rem auto 2rem; }
+.contact-inner .sec-sub { margin: 0 auto 1.5rem; }
+.contact-email { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--font-brand); font-size: clamp(1rem,2vw,1.35rem); font-weight: 600; letter-spacing: 0.06em; color: var(--gold); border-bottom: 1px solid rgba(201,168,76,0.3); padding-bottom: 0.15rem; margin: 1.5rem 0; transition: color 0.2s, border-color 0.2s; }
+.contact-email:hover { color: #d4b45a; border-color: var(--gold); }
+.contact-note { font-family: var(--font-body); font-size: 0.9rem; color: var(--text-dim); font-style: italic; margin-top: 0.8rem; }
+
+/* ── Impressum ── */
+#impressum { background: var(--bg); border-top: 1px solid var(--border); }
+.impressum-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-top: 2.5rem; }
+.impressum-block h3 { font-family: var(--font-ui); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-mid); margin-bottom: 0.9rem; border-bottom: 1px solid var(--border); padding-bottom: 0.6rem; }
+.impressum-block p, .impressum-block address { font-family: var(--font-body); font-size: 0.95rem; color: var(--text-mid); line-height: 1.75; font-style: normal; }
+.impressum-block a { color: var(--gold); }
+.impressum-block a:hover { color: #d4b45a; }
+@media (max-width: 720px) { .impressum-grid { grid-template-columns: 1fr; } }
+
+/* ── Support ── */
 #support { background: var(--bg-alt); text-align: center; border-top: 1px solid var(--border); }
 .support-inner { max-width: 560px; margin: 0 auto; }
 .support-inner .sec-rule { margin: 1rem auto 2rem; }
 .support-inner .sec-sub { margin: 0 auto 2.2rem; }
-.paypal-btn {
-  display: inline-flex; align-items: center; gap: 0.7rem;
-  background: #003087; color: #fff;
-  font-family: var(--font-ui); font-size: 0.82rem;
-  font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
-  padding: 0.9rem 2rem; border-radius: var(--r);
-  transition: background 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease;
-}
+.paypal-btn { display: inline-flex; align-items: center; gap: 0.7rem; background: #003087; color: #fff; font-family: var(--font-ui); font-size: 0.82rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.9rem 2rem; border-radius: var(--r); transition: background 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease; }
 .paypal-btn:hover { background: #0044aa; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,48,135,0.3); }
 .paypal-btn svg { width: 22px; height: 22px; fill: currentColor; }
 
-/* ════════════════════════════════════════
-   FOOTER
-════════════════════════════════════════ */
-footer {
-  background: var(--bg); border-top: 1px solid var(--border);
-  padding: 2.5rem 0;
-}
-.footer-inner {
-  display: flex; align-items: center;
-  justify-content: space-between; flex-wrap: wrap; gap: 1.2rem;
-}
-.footer-logo {
-  font-family: var(--font-brand); font-size: 0.78rem;
-  font-weight: 700; letter-spacing: 0.18em;
-  text-transform: uppercase; color: var(--gold);
-}
-.footer-links { display: flex; gap: 1.8rem; }
-.footer-links a {
-  font-family: var(--font-ui); font-size: 0.68rem;
-  letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--text-dim); transition: color 0.2s;
-}
+/* ── Footer ── */
+footer { background: var(--bg); border-top: 1px solid var(--border); padding: 2.8rem 0; }
+.footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.4rem; }
+.footer-brand { display: flex; align-items: center; gap: 0.75rem; }
+.footer-brand-logo { width: 26px; height: 26px; object-fit: contain; border-radius: 4px; }
+.footer-logo { font-family: var(--font-brand); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); }
+.footer-links { display: flex; gap: 1.6rem; flex-wrap: wrap; }
+.footer-links a { font-family: var(--font-ui); font-size: 0.67rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); transition: color 0.2s; }
 .footer-links a:hover { color: var(--text-mid); }
-.footer-copy {
-  font-family: var(--font-ui); font-size: 0.68rem;
-  letter-spacing: 0.07em; color: var(--text-dim);
-}
-@media (max-width: 720px) {
-  .footer-inner { flex-direction: column; align-items: flex-start; gap: 1rem; }
-}
-
+.footer-copy { font-family: var(--font-ui); font-size: 0.67rem; letter-spacing: 0.07em; color: var(--text-dim); }
+@media (max-width: 720px) { .footer-inner { flex-direction: column; align-items: flex-start; gap: 1rem; } }
   </style>
 </head>
 <body>
 
-<!-- ══════════════════════════════════════════
-     COOKIE BANNER
-══════════════════════════════════════════ -->
 <div id="cookie-banner">
   <div class="cookie-text">
     <h3>Cookies &amp; Datenschutz</h3>
-    <p>Wir verwenden Cookies, um dir das beste Erlebnis auf unserer Website zu bieten. Du kannst alle akzeptieren oder nur notwendige zulassen.</p>
+    <p>Wir verwenden Cookies zur Speicherung deiner Einstellungen. Keine Tracking-Cookies ohne deine Zustimmung.</p>
   </div>
   <div class="cookie-actions">
     <button class="btn btn-ghost" id="cookie-decline">Nur notwendige</button>
@@ -853,103 +239,135 @@ footer {
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     MOBILE NAV OVERLAY
-══════════════════════════════════════════ -->
 <div id="mobile-nav">
-  <a href="#games"       onclick="closeMobileNav()">Spiele</a>
-  <a href="#coa-intro"   onclick="closeMobileNav()">Crown of Ashes</a>
-  <a href="#classes"     onclick="closeMobileNav()">Klassen</a>
-  <a href="#studio"      onclick="closeMobileNav()">Studio</a>
-  <a href="#support"     onclick="closeMobileNav()">Support</a>
+  <a href="index.html"><img src="images/logo.png" style="width:52px;height:52px;object-fit:contain;margin-bottom:0.5rem;border-radius:8px;filter:drop-shadow(0 0 12px rgba(201,168,76,0.4));" alt="NFS"/></a>
+  <a href="#games"     onclick="closeMobileNav()">Spiele</a>
+  <a href="#about"     onclick="closeMobileNav()">Über uns</a>
+  <a href="#contact"   onclick="closeMobileNav()">Kontakt</a>
+  <a href="#impressum" onclick="closeMobileNav()">Impressum</a>
+  <a href="#support"   onclick="closeMobileNav()">Support</a>
 </div>
 
-<!-- ══════════════════════════════════════════
-     NAVIGATION
-══════════════════════════════════════════ -->
 <nav id="nav">
-  <!-- Logo -->
-  <a href="#" class="nav-logo">
-    <!-- Hexagon shield icon -->
-    <img src="images/logo.png" alt="Nordic Forge Studios" class="nav-logo-icon" style="object-fit:contain;border-radius:4px;"/>
-    <div class="nav-logo-wordmark">
-      Nordic Forge Studios
-      <small>Official Website</small>
-    </div>
+  <a href="index.html" class="nav-logo">
+    <img src="images/logo.png" alt="Nordic Forge Studios" class="nav-logo-icon"/>
+    <div class="nav-logo-wordmark">Nordic Forge Studios<small>Official Website</small></div>
   </a>
-
-  <!-- Desktop links -->
   <ul class="nav-links">
     <li><a href="#games">Spiele</a></li>
-    <li><a href="#coa-intro">Crown of Ashes</a></li>
-    <li><a href="#classes">Klassen</a></li>
-    <li><a href="#studio">Studio</a></li>
+    <li><a href="#about">Über uns</a></li>
+    <li><a href="#contact">Kontakt</a></li>
+    <li><a href="#impressum">Impressum</a></li>
     <li><a href="#support">Support</a></li>
   </ul>
-
-  <!-- Right side -->
   <div class="nav-right">
     <a href="#games" class="btn btn-outline" style="font-size:0.68rem;padding:0.58rem 1.2rem;">Spiele entdecken</a>
-    <button class="hamburger" id="hamburger" onclick="toggleMobileNav()" aria-label="Menü">
-      <span></span><span></span><span></span>
-    </button>
+    <button class="hamburger" id="hamburger" onclick="toggleMobileNav()" aria-label="Menü"><span></span><span></span><span></span></button>
   </div>
 </nav>
 
-<!-- ══════════════════════════════════════════
-     HERO
-══════════════════════════════════════════ -->
+<!-- ══ HERO ══ -->
 <section id="hero">
-  <div class="hero-img-wrap">
-    <!-- Placeholder gradient shown until hero.jpg loads -->
-    <div class="hero-bg-placeholder"></div>
-    <img id="hero-img" src="images/hero.jpg" alt="Crown of Ashes Hero"
-         style="position:absolute;inset:0;"
-         onerror="this.style.display='none'"/>
-  </div>
-  <div class="hero-grad"></div>
-  <div class="hero-vignette"></div>
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
   <canvas id="hero-canvas"></canvas>
-
   <div class="hero-content">
-    <p class="hero-eyebrow">Nordic Forge Studios präsentiert</p>
-    <h1 class="hero-title">Crown of Ashes</h1>
-    <p class="hero-sub">Stell dich der Asche. Fordere das Feuer heraus.</p>
+    <div class="hero-logo-wrap">
+      <img src="images/logo.png" alt="Nordic Forge Studios"/>
+    </div>
+    <p class="hero-eyebrow">Offizieller Auftritt · Deutschland</p>
+    <h1 class="hero-title">Nordic Forge Studios</h1>
+    <div class="hero-divider"></div>
+    <p class="hero-sub">Unabhängiges Indie-Game-Studio · Godot 4 · Leidenschaft für Welten</p>
     <div class="hero-btns">
-      <a href="#coa-intro" class="btn btn-primary">Mehr erfahren</a>
-      <a href="#games"     class="btn btn-outline">Alle Spiele</a>
+      <a href="#games" class="btn btn-primary">Unsere Spiele</a>
+      <a href="#about" class="btn btn-outline">Über uns</a>
     </div>
   </div>
-
-  <div class="hero-scroll">
-    <div class="hero-scroll-arrow"></div>
-    <span class="hero-scroll-label">Scroll</span>
-  </div>
+  <div class="hero-scroll"><div class="hero-scroll-arrow"></div><span class="hero-scroll-label">Entdecken</span></div>
 </section>
 
-<!-- ══════════════════════════════════════════
-     GAMES — like the AC Games page
-══════════════════════════════════════════ -->
+<!-- ══ FEATURED: AVADON ══ -->
+<section id="featured">
+  <a href="avadon.html" class="featured-banner reveal">
+    <div class="featured-glow"></div>
+    <div class="featured-sigil-art">
+      <svg width="380" height="380" viewBox="0 0 380 380" fill="none">
+        <circle cx="190" cy="190" r="150" stroke="rgba(94,184,255,0.35)" stroke-width="1" stroke-dasharray="10 5"/>
+        <circle cx="190" cy="190" r="115" stroke="rgba(94,184,255,0.25)" stroke-width="1"/>
+        <circle cx="190" cy="190" r="80"  stroke="rgba(94,184,255,0.4)"  stroke-width="1.5" stroke-dasharray="5 5"/>
+        <polygon points="190,55 305,127 305,253 190,325 75,253 75,127" fill="none" stroke="rgba(94,184,255,0.3)" stroke-width="1.5"/>
+        <polygon points="190,90 270,138 270,238 190,286 110,238 110,138" fill="none" stroke="rgba(94,184,255,0.2)" stroke-width="1"/>
+        <circle cx="190" cy="190" r="28" fill="rgba(94,184,255,0.06)" stroke="rgba(94,184,255,0.5)" stroke-width="2"/>
+        <circle cx="190" cy="190" r="10" fill="rgba(94,184,255,0.25)"/>
+        <line x1="190" y1="40"  x2="190" y2="162" stroke="rgba(94,184,255,0.15)" stroke-width="1"/>
+        <line x1="190" y1="218" x2="190" y2="340" stroke="rgba(94,184,255,0.15)" stroke-width="1"/>
+        <line x1="40"  y1="190" x2="162" y2="190" stroke="rgba(94,184,255,0.15)" stroke-width="1"/>
+        <line x1="218" y1="190" x2="340" y2="190" stroke="rgba(94,184,255,0.15)" stroke-width="1"/>
+      </svg>
+    </div>
+    <div class="featured-content">
+      <div class="featured-badge">Aktuelles Projekt · In Entwicklung</div>
+      <div class="featured-title">Avadon:<br/>The Broken Sigils</div>
+      <div class="featured-subtitle">Open World Fantasy Action-RPG · Godot 4</div>
+      <p class="featured-desc">
+        Vier zerbrochene Siegel. Ein uralter Vertrag. Ein junger Söldner namens Kael —
+        der letzte Sigilborn — steht zwischen dem Aufwachen von Nerath und dem Ende aller Dinge.
+        Doch das Größte Geheimnis ist nicht der Feind. Es ist die Wahrheit über das System, das er beschützt.
+      </p>
+      <div class="featured-tags">
+        <span class="featured-tag">Godot 4</span>
+        <span class="featured-tag">Open World</span>
+        <span class="featured-tag">Cel-Shading</span>
+        <span class="featured-tag">Action-RPG</span>
+        <span class="featured-tag">Steam · PC</span>
+        <span class="featured-tag">18–20 Monate</span>
+      </div>
+      <span class="btn btn-avadon">Zur Spielseite →</span>
+    </div>
+  </a>
+</section>
+
+<!-- ══ GAMES ══ -->
 <section id="games">
   <div class="container">
-    <div class="games-top reveal">
+    <div class="games-header reveal">
       <div>
         <span class="sec-label">Nordic Forge Studios</span>
         <h2 class="sec-title">Unsere Spiele</h2>
       </div>
     </div>
-
     <div class="games-grid">
-      <!-- ── Crown of Ashes ── -->
-      <a href="#coa-intro" class="game-card reveal" style="transition-delay:0s;">
-        <div class="game-card-cover">
-          <img src="images/hero.jpg" alt="Crown of Ashes"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-          <div class="game-card-placeholder" style="display:none;">
-            <div class="game-card-placeholder-icon">🔥</div>
-            <span class="game-card-placeholder-text">Crown of Ashes</span>
+
+      <a href="avadon.html" class="game-card reveal" style="transition-delay:0s;">
+        <div class="game-card-cover" style="background:linear-gradient(160deg,#060c18,#0c1830);">
+          <div class="game-card-placeholder">
+            <svg width="48" height="48" viewBox="0 0 380 380" fill="none" style="opacity:0.12;">
+              <circle cx="190" cy="190" r="140" stroke="#5eb8ff" stroke-width="2" stroke-dasharray="8 4"/>
+              <polygon points="190,60 300,125 300,255 190,320 80,255 80,125" fill="none" stroke="#5eb8ff" stroke-width="2"/>
+              <circle cx="190" cy="190" r="30" fill="rgba(94,184,255,0.3)" stroke="#5eb8ff" stroke-width="2"/>
+            </svg>
+            <span style="font-family:var(--font-ui);font-size:0.58rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--text-dim);">Avadon</span>
           </div>
-          <span class="game-card-badge">Aktuell</span>
+          <span class="game-card-badge badge-avadon">In Entwicklung</span>
+        </div>
+        <div class="game-card-info">
+          <div class="game-card-title">Avadon: The Broken Sigils</div>
+          <div class="game-card-tags">
+            <span class="game-card-tag">Action-RPG</span>
+            <span class="game-card-tag">Open World</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="crown-of-ashes.html" class="game-card reveal" style="transition-delay:0.08s;">
+        <div class="game-card-cover" style="background:linear-gradient(160deg,#160502,#2c0904);">
+          <img src="images/hero.jpg" alt="Crown of Ashes" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <div class="game-card-placeholder" style="display:none;">
+            <span style="font-size:2.2rem;opacity:0.1;">🔥</span>
+            <span style="font-family:var(--font-ui);font-size:0.58rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--text-dim);">Crown of Ashes</span>
+          </div>
+          <span class="game-card-badge badge-coa">Demnächst</span>
         </div>
         <div class="game-card-info">
           <div class="game-card-title">Crown of Ashes</div>
@@ -957,644 +375,204 @@ footer {
             <span class="game-card-tag">Action-RPG</span>
             <span class="game-card-tag">Dark Fantasy</span>
           </div>
-          <div class="game-card-platforms">
-            <!-- PC monitor icon -->
-            <svg class="plat-icon" viewBox="0 0 24 24"><path d="M21 2H3a1 1 0 00-1 1v14a1 1 0 001 1h8v2H7v2h10v-2h-4v-2h8a1 1 0 001-1V3a1 1 0 00-1-1zm-1 14H4V4h16v12z"/></svg>
-          </div>
         </div>
       </a>
 
-      <!-- ── TBA: Projekt Nordlicht ── -->
-      <div class="game-card reveal" style="transition-delay:0.08s;">
-        <div class="game-card-cover">
-          <div class="game-card-placeholder">
-            <div class="game-card-placeholder-icon" style="font-size:2.5rem;opacity:0.07;">⚔</div>
-            <span class="game-card-placeholder-text">In Entwicklung</span>
-          </div>
-        </div>
-        <div class="game-card-info">
-          <div class="game-card-title" style="color:var(--text-dim);">Projekt Nordlicht</div>
-          <div class="game-card-tags">
-            <span class="game-card-tag">TBA · 2026</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- ── TBA: ??? ── -->
       <div class="game-card reveal" style="transition-delay:0.16s;">
-        <div class="game-card-cover">
+        <div class="game-card-cover" style="background:linear-gradient(160deg,#0d0d18,#13131f);">
           <div class="game-card-placeholder">
-            <div class="game-card-placeholder-icon" style="font-size:2.5rem;opacity:0.07;">🛡</div>
-            <span class="game-card-placeholder-text">Noch unbekannt</span>
+            <span style="font-size:2.2rem;opacity:0.07;">🛡</span>
+            <span style="font-family:var(--font-ui);font-size:0.58rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--text-dim);">Unbekannt</span>
           </div>
+          <span class="game-card-badge badge-tba">TBA</span>
         </div>
         <div class="game-card-info">
-          <div class="game-card-title" style="color:var(--text-dim);">???</div>
-          <div class="game-card-tags">
-            <span class="game-card-tag">Demnächst</span>
-          </div>
+          <div class="game-card-title" style="color:var(--text-dim);">??? · Projekt 3</div>
+          <div class="game-card-tags"><span class="game-card-tag">Noch unbekannt</span></div>
         </div>
       </div>
+
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════
-     CROWN OF ASHES — INTRO
-══════════════════════════════════════════ -->
-<section id="coa-intro">
+<!-- ══ ABOUT ══ -->
+<section id="about">
   <div class="container">
-    <div class="coa-intro-grid">
-      <!-- Cover / visual -->
-      <div class="coa-cover-wrap reveal-left">
-        <img src="images/hero.jpg" alt="Crown of Ashes"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-        <div class="coa-cover-placeholder" style="display:none;">
-          <!-- Placeholder icon -->
-          <svg width="80" height="80" viewBox="0 0 32 36" fill="none">
-            <polygon points="16,2 30,10 30,26 16,34 2,26 2,10" fill="none" stroke="#c9a84c" stroke-width="1.5"/>
-            <path d="M16 10 L20 14 L18 20 L16 22 L14 20 L12 14 Z" fill="rgba(201,168,76,0.2)" stroke="#c9a84c" stroke-width="1"/>
-          </svg>
-          <span>Cover-Bild · images/hero.jpg</span>
-        </div>
+    <div class="about-wrap">
+      <div class="about-logo-box reveal-left">
+        <img src="images/logo.png" alt="Nordic Forge Studios Logo"/>
       </div>
-
-      <!-- Text -->
-      <div class="coa-intro-text reveal-right">
-        <span class="sec-label">Dark Fantasy Action-RPG</span>
-        <h2 class="sec-title">Crown of Ashes</h2>
-        <div class="sec-rule"></div>
-        <p class="sec-sub">
-          In der zerbrochenen Welt Eldharyns kämpfst du als Auserwählter gegen die ewige Asche.
-          Erkunde vier verfeindete Zonen, meistere eine von vier Klassen, und stelle dich
-          mächtigen Bossen — bis du vor dem Aschekönig selbst stehst.
-        </p>
-        <div class="coa-stats-row">
-          <div><div class="coa-stat-n">4</div><div class="coa-stat-l">Klassen</div></div>
-          <div><div class="coa-stat-n">4</div><div class="coa-stat-l">Regionen</div></div>
-          <div><div class="coa-stat-n">13+</div><div class="coa-stat-l">Bosse</div></div>
-          <div><div class="coa-stat-n">∞</div><div class="coa-stat-l">Builds</div></div>
-        </div>
-        <div class="coa-intro-btns">
-          <a href="#classes" class="btn btn-primary">Klassen entdecken</a>
-          <a href="#features" class="btn btn-outline">Features</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════════
-     LORE
-══════════════════════════════════════════ -->
-<section id="lore">
-  <div class="container">
-    <div class="lore-wrap">
-      <div class="reveal-left">
-        <span class="sec-label">Die Geschichte</span>
-        <h2 class="sec-title">Die Welt von Eldharyn</h2>
-        <div class="sec-rule"></div>
-        <p class="lore-body">
-          Einst war Eldharyn ein blühendes Reich, vereint unter einem uralten Bund der vier Regionen.
-          Dann kam die Große Asche — ein katastrophales Ereignis, das die Welt zerriss und vier
-          verfeindete Zonen hinterließ. Nun steigt eine finstere Macht aus den Ruinen auf.
-        </p>
-        <blockquote class="lore-quote">
-          „Die Krone trägt nicht, wer sie findet — sondern wer die Asche überlebt."
-        </blockquote>
-      </div>
-      <div class="reveal-right">
-        <span class="sec-label">Deine Mission</span>
-        <h2 class="sec-title">Der Auserwählte</h2>
-        <div class="sec-rule"></div>
-        <ul class="lore-list">
-          <li>Als einziger Überlebender trägst du die Last der letzten Hoffnung Eldharyns</li>
-          <li>Vier zerstrittene Fraktionen fordern deine Loyalität — doch nur eine Wahrheit zählt</li>
-          <li>Jede Region birgt ein Stück des zerbrochenen Bundes und die Schlüssel zum Finale</li>
-          <li>Am Ende wartet der Aschekönig — und eine Entscheidung, die alles verändert</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════════
-     REGIONS
-══════════════════════════════════════════ -->
-<section id="regions">
-  <div class="container">
-    <div class="reveal" style="text-align:center;max-width:580px;margin:0 auto;">
-      <span class="sec-label">Die Welt</span>
-      <h2 class="sec-title">Vier Regionen</h2>
-      <div class="sec-rule center"></div>
-      <p class="sec-sub">Jede Zone hat ihr eigenes Klima, ihre eigene Fraktion und ihre eigenen Geheimnisse.</p>
-    </div>
-
-    <div class="regions-grid">
-      <!-- FROSTFALL -->
-      <div class="region-card r-frost reveal" style="transition-delay:0s;">
-        <div class="region-art">
-          <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.18;" viewBox="0 0 160 220" preserveAspectRatio="xMidYMid meet">
-            <!-- Castle silhouette -->
-            <rect x="58" y="90" width="44" height="70" fill="none" stroke="#7ee8ff" stroke-width="1.2"/>
-            <rect x="66" y="72" width="28" height="24" fill="none" stroke="#7ee8ff" stroke-width="1"/>
-            <polygon points="80,55 68,74 92,74" fill="rgba(126,232,255,0.18)" stroke="#7ee8ff" stroke-width="1"/>
-            <rect x="72" y="108" width="16" height="20" fill="none" stroke="#7ee8ff" stroke-width="0.8"/>
-            <!-- Mountains -->
-            <polyline points="0,160 30,110 55,145 80,100 105,145 130,110 160,160" fill="none" stroke="rgba(126,232,255,0.3)" stroke-width="1.5"/>
-            <!-- Stars -->
-            <circle cx="20" cy="22" r="1.2" fill="#7ee8ff" opacity="0.7"/>
-            <circle cx="55" cy="14" r="0.8" fill="#7ee8ff" opacity="0.5"/>
-            <circle cx="110" cy="20" r="1.4" fill="#7ee8ff" opacity="0.8"/>
-            <circle cx="140" cy="10" r="0.9" fill="#7ee8ff" opacity="0.6"/>
-            <circle cx="78" cy="8" r="1" fill="#7ee8ff" opacity="0.6"/>
-          </svg>
-        </div>
-        <div class="region-grad"></div>
-        <div class="region-info">
-          <span class="region-icon">❄</span>
-          <div class="region-name">Frostfall</div>
-          <div class="region-desc">Eisige Ruinen, ewig gefrorene Wälder, Burg Kaltkrone</div>
-        </div>
-      </div>
-
-      <!-- DUNKELHAIN -->
-      <div class="region-card r-forest reveal" style="transition-delay:0.08s;">
-        <div class="region-art">
-          <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.18;" viewBox="0 0 160 220" preserveAspectRatio="xMidYMid meet">
-            <!-- Tree canopy -->
-            <ellipse cx="80" cy="80" rx="55" ry="40" fill="rgba(93,186,98,0.12)" stroke="#5dba62" stroke-width="1"/>
-            <ellipse cx="80" cy="65" rx="40" ry="28" fill="rgba(93,186,98,0.1)" stroke="#5dba62" stroke-width="0.8"/>
-            <!-- Tree trunk -->
-            <rect x="73" y="108" width="14" height="60" fill="none" stroke="#5dba62" stroke-width="1.2"/>
-            <!-- Roots -->
-            <path d="M73 165 Q55 175 45 200" fill="none" stroke="rgba(93,186,98,0.5)" stroke-width="1"/>
-            <path d="M87 165 Q105 175 115 200" fill="none" stroke="rgba(93,186,98,0.5)" stroke-width="1"/>
-            <path d="M73 160 Q60 165 40 180" fill="none" stroke="rgba(93,186,98,0.3)" stroke-width="0.8"/>
-            <!-- Magic circle -->
-            <circle cx="80" cy="80" r="62" fill="none" stroke="rgba(93,186,98,0.15)" stroke-width="1" stroke-dasharray="5 5"/>
-            <!-- Fireflies -->
-            <circle cx="30" cy="100" r="1.5" fill="#5dba62" opacity="0.6"/>
-            <circle cx="120" cy="90" r="1.2" fill="#5dba62" opacity="0.5"/>
-            <circle cx="50" cy="130" r="1" fill="#5dba62" opacity="0.4"/>
-          </svg>
-        </div>
-        <div class="region-grad"></div>
-        <div class="region-info">
-          <span class="region-icon">🌿</span>
-          <div class="region-name">Dunkelhain</div>
-          <div class="region-desc">Lebender Wald, grüner Nebel, organische Burgen aus Wurzeln</div>
-        </div>
-      </div>
-
-      <!-- GLUTMARK -->
-      <div class="region-card r-fire reveal" style="transition-delay:0.16s;">
-        <div class="region-art">
-          <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.18;" viewBox="0 0 160 220" preserveAspectRatio="xMidYMid meet">
-            <!-- Citadel -->
-            <polygon points="80,40 120,100 115,175 80,185 45,175 40,100" fill="none" stroke="#ff6b35" stroke-width="1.4"/>
-            <polygon points="80,55 108,100 105,165 80,173 55,165 52,100" fill="none" stroke="rgba(255,107,53,0.35)" stroke-width="1"/>
-            <!-- Tower spires -->
-            <line x1="80" y1="40" x2="80" y2="18" stroke="#ff6b35" stroke-width="1.5"/>
-            <line x1="50" y1="108" x2="30" y2="90" stroke="rgba(255,107,53,0.5)" stroke-width="1"/>
-            <line x1="110" y1="108" x2="130" y2="90" stroke="rgba(255,107,53,0.5)" stroke-width="1"/>
-            <!-- Lava cracks -->
-            <path d="M0,200 Q40,180 80,190 Q120,180 160,200" fill="none" stroke="rgba(255,107,53,0.4)" stroke-width="1.5"/>
-            <!-- Embers -->
-            <circle cx="25" cy="60" r="1.5" fill="#ff6b35" opacity="0.7"/>
-            <circle cx="130" cy="45" r="1.2" fill="#ff6b35" opacity="0.6"/>
-            <circle cx="100" cy="30" r="1" fill="#ff6b35" opacity="0.5"/>
-          </svg>
-        </div>
-        <div class="region-grad"></div>
-        <div class="region-info">
-          <span class="region-icon">🔥</span>
-          <div class="region-name">Glutmark</div>
-          <div class="region-desc">Aschenzitadelle, Lavaflüsse, roter Himmel, ewiger Ascheregen</div>
-        </div>
-      </div>
-
-      <!-- MONDWIESE -->
-      <div class="region-card r-moon reveal" style="transition-delay:0.24s;">
-        <div class="region-art">
-          <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.20;" viewBox="0 0 160 220" preserveAspectRatio="xMidYMid meet">
-            <!-- Full moon -->
-            <circle cx="80" cy="60" r="32" fill="none" stroke="#e8d8ff" stroke-width="1.2"/>
-            <circle cx="80" cy="60" r="26" fill="rgba(232,216,255,0.06)" stroke="rgba(232,216,255,0.25)" stroke-width="0.8"/>
-            <!-- Moon glow -->
-            <circle cx="80" cy="60" r="44" fill="none" stroke="rgba(200,180,255,0.08)" stroke-width="8"/>
-            <!-- Meadow grass -->
-            <path d="M0,190 Q10,165 15,190" fill="none" stroke="rgba(180,220,160,0.5)" stroke-width="1.2"/>
-            <path d="M20,195 Q28,168 33,195" fill="none" stroke="rgba(180,220,160,0.45)" stroke-width="1.2"/>
-            <path d="M40,188 Q47,162 52,188" fill="none" stroke="rgba(180,220,160,0.5)" stroke-width="1.2"/>
-            <path d="M60,193 Q66,168 71,193" fill="none" stroke="rgba(180,220,160,0.4)" stroke-width="1.2"/>
-            <path d="M88,190 Q95,165 100,190" fill="none" stroke="rgba(180,220,160,0.5)" stroke-width="1.2"/>
-            <path d="M108,194 Q114,170 119,194" fill="none" stroke="rgba(180,220,160,0.45)" stroke-width="1.2"/>
-            <path d="M128,188 Q134,163 139,188" fill="none" stroke="rgba(180,220,160,0.5)" stroke-width="1.2"/>
-            <path d="M148,192 Q154,168 159,192" fill="none" stroke="rgba(180,220,160,0.4)" stroke-width="1.2"/>
-            <!-- Ground line -->
-            <line x1="0" y1="196" x2="160" y2="196" stroke="rgba(180,220,160,0.18)" stroke-width="1"/>
-            <!-- Floating wisps -->
-            <ellipse cx="35" cy="150" rx="12" ry="5" fill="rgba(220,200,255,0.07)" stroke="rgba(220,200,255,0.2)" stroke-width="0.8"/>
-            <ellipse cx="115" cy="140" rx="10" ry="4" fill="rgba(220,200,255,0.07)" stroke="rgba(220,200,255,0.2)" stroke-width="0.8"/>
-            <!-- Stars -->
-            <circle cx="25" cy="22" r="1.2" fill="#e8d8ff" opacity="0.7"/>
-            <circle cx="55" cy="12" r="0.8" fill="#e8d8ff" opacity="0.5"/>
-            <circle cx="120" cy="18" r="1.3" fill="#e8d8ff" opacity="0.8"/>
-            <circle cx="145" cy="30" r="0.9" fill="#e8d8ff" opacity="0.6"/>
-            <circle cx="105" cy="8" r="1" fill="#e8d8ff" opacity="0.5"/>
-          </svg>
-        </div>
-        <div class="region-grad"></div>
-        <div class="region-info">
-          <span class="region-icon">🌙</span>
-          <div class="region-name">Mondwiese</div>
-          <div class="region-desc">Silberne Wiesen unter ewigem Mondlicht, geisterhafte Irrlichter</div>
-        </div>
-      </div>
-
-      <!-- NEBELKLIPPEN -->
-      <div class="region-card r-storm reveal" style="transition-delay:0.32s;">
-        <div class="region-art">
-          <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.18;" viewBox="0 0 160 220" preserveAspectRatio="xMidYMid meet">
-            <!-- Clifftop fortress -->
-            <rect x="88" y="80" width="36" height="55" fill="none" stroke="#c084fc" stroke-width="1.2"/>
-            <rect x="94" y="64" width="24" height="22" fill="none" stroke="#c084fc" stroke-width="1"/>
-            <polygon points="106,48 94,66 118,66" fill="rgba(192,132,252,0.16)" stroke="#c084fc" stroke-width="1"/>
-            <!-- Cliff -->
-            <path d="M0,220 L0,170 L20,140 L40,155 L60,120 L85,140 L108,135 L124,135 L160,170 L160,220Z" fill="rgba(30,15,50,0.6)" stroke="#c084fc" stroke-width="1"/>
-            <!-- Lightning bolts -->
-            <polyline points="30,20 22,50 32,50 24,80" fill="none" stroke="rgba(192,132,252,0.6)" stroke-width="1.5"/>
-            <polyline points="60,10 54,35 62,35 56,60" fill="none" stroke="rgba(192,132,252,0.4)" stroke-width="1"/>
-            <!-- Stars -->
-            <circle cx="130" cy="20" r="1.3" fill="#c084fc" opacity="0.7"/>
-            <circle cx="100" cy="12" r="1" fill="#c084fc" opacity="0.5"/>
-          </svg>
-        </div>
-        <div class="region-grad"></div>
-        <div class="region-info">
-          <span class="region-icon">⚡</span>
-          <div class="region-name">Nebelklippen</div>
-          <div class="region-desc">Sturmwacht, ewige Blitze, instabile Klippen</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════════
-     WORLD MAP
-══════════════════════════════════════════ -->
-<section id="worldmap">
-  <div class="container">
-    <div class="reveal" style="text-align:center;">
-      <span class="sec-label">Karte</span>
-      <h2 class="sec-title">Die Welt von Eldharyn</h2>
-      <div class="sec-rule center"></div>
-    </div>
-    <div class="worldmap-frame reveal">
-      <img src="images/worldmap.png" alt="Weltkarte Eldharyn"
-           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-      <div class="worldmap-placeholder" style="display:none;">
-        <svg width="64" height="64" viewBox="0 0 24 24" fill="#c9a84c">
-          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-        </svg>
-        <span>Weltkarte · images/worldmap.png</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════════
-     BOSSES
-══════════════════════════════════════════ -->
-<section id="bosses">
-  <div class="container">
-    <div class="reveal">
-      <span class="sec-label">Feinde</span>
-      <h2 class="sec-title">Bosse &amp; Legenden</h2>
-      <div class="sec-rule"></div>
-    </div>
-
-    <div class="bosses-grid">
-      <div class="boss-card reveal" style="transition-delay:0s;">
-        <span class="boss-element" style="color:#7ee8ff;">❄ Frostfall</span>
-        <div class="boss-name">Eiskönigin Vaelindra</div>
-        <div class="boss-title">„Die Gefrorene Ewigkeit"</div>
-        <div class="boss-zone">Region · Burg Kaltkrone</div>
-      </div>
-      <div class="boss-card reveal" style="transition-delay:0.07s;">
-        <span class="boss-element" style="color:#5dba62;">🌿 Dunkelhain</span>
-        <div class="boss-name">Wächter des Hains</div>
-        <div class="boss-title">„Herz der Wurzeln"</div>
-        <div class="boss-zone">Region · Herzbaum</div>
-      </div>
-      <div class="boss-card reveal" style="transition-delay:0.14s;">
-        <span class="boss-element" style="color:#ff6b35;">🔥 Glutmark</span>
-        <div class="boss-name">Pyrion der Ascheherr</div>
-        <div class="boss-title">„Fürst der Glut"</div>
-        <div class="boss-zone">Region · Aschenzitadelle</div>
-      </div>
-      <div class="boss-card reveal" style="transition-delay:0.21s;">
-        <span class="boss-element" style="color:#c084fc;">⚡ Nebelklippen</span>
-        <div class="boss-name">Sturmgeist Korrax</div>
-        <div class="boss-title">„Stimme des Orkans"</div>
-        <div class="boss-zone">Region · Sturmwacht</div>
-      </div>
-
-      <!-- Final boss -->
-      <div class="boss-card boss-final reveal">
-        <div class="boss-final-icon">👑</div>
-        <div>
-          <span class="boss-element" style="color:rgba(192,57,43,0.8);">⚠ Finaler Boss</span>
-          <div class="boss-name">Der Aschekönig</div>
-          <div class="boss-title">„Er, dem die Krone gehört"</div>
-          <div class="boss-zone">Herz von Eldharyn · Endboss</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════════
-     JOURNEY / PATH
-══════════════════════════════════════════ -->
-<section id="journey">
-  <div class="container">
-    <div class="reveal" style="text-align:center;max-width:520px;margin:0 auto;">
-      <span class="sec-label">Dein Weg</span>
-      <h2 class="sec-title">Die Reise</h2>
-      <div class="sec-rule center"></div>
-    </div>
-
-    <div class="journey-steps">
-      <div class="journey-step reveal" style="transition-delay:0s;">
-        <div class="journey-num">I</div>
-        <div class="journey-step-title">Erwache in der Asche</div>
-        <p class="journey-step-desc">Du erwachst als einziger Überlebender einer vernichteten Zivilisation — die Welt liegt in Trümmern.</p>
-      </div>
-      <div class="journey-step reveal" style="transition-delay:0.1s;">
-        <div class="journey-num">II</div>
-        <div class="journey-step-title">Erforsche &amp; Verbünde dich</div>
-        <p class="journey-step-desc">Durchquere vier zerstrittene Regionen, schließe Allianzen und decke die Geheimnisse Eldharyns auf.</p>
-      </div>
-      <div class="journey-step reveal" style="transition-delay:0.2s;">
-        <div class="journey-num">III</div>
-        <div class="journey-step-title">Bezwinge den Aschekönig</div>
-        <p class="journey-step-desc">Stelle dich dem Aschekönig und entscheide das Schicksal der gesamten Welt.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════════
-     CLASSES
-══════════════════════════════════════════ -->
-<section id="classes">
-  <div class="container">
-    <div class="reveal" style="text-align:center;max-width:560px;margin:0 auto;">
-      <span class="sec-label">Charakterklassen</span>
-      <h2 class="sec-title">Wähle deine Klasse</h2>
-      <div class="sec-rule center"></div>
-      <p class="sec-sub">Vier einzigartige Spielstile — von brutaler Nahkampfmacht bis zu arkaner Fernkampfmagie.</p>
-    </div>
-
-    <div class="classes-grid">
-      <!-- Dunkler Ritter -->
-      <div class="class-card reveal" style="transition-delay:0s;">
-        <img src="images/class-knight.png" alt="Dunkler Ritter"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-        <div class="class-placeholder" style="display:none;">
-          <span style="font-size:2rem;opacity:0.12;">⚔</span>
-          <span>class-knight.png</span>
-        </div>
-        <div class="class-overlay"></div>
-        <div class="class-info">
-          <span class="class-icon">⚔</span>
-          <div class="class-name">Dunkler Ritter</div>
-          <div class="class-role">Tank · Nahkampf</div>
-          <div class="class-desc">Meister des Schildes und schwerer Rüstung. Unerschütterlich in der Defensive, vernichtend im Gegenschlag.</div>
-        </div>
-      </div>
-
-      <!-- Wikinger -->
-      <div class="class-card reveal" style="transition-delay:0.08s;">
-        <img src="images/class-barbarian.png" alt="Wikinger"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-        <div class="class-placeholder" style="display:none;">
-          <span style="font-size:2rem;opacity:0.12;">🪓</span>
-          <span>class-barbarian.png</span>
-        </div>
-        <div class="class-overlay"></div>
-        <div class="class-info">
-          <span class="class-icon">🪓</span>
-          <div class="class-name">Wikinger</div>
-          <div class="class-role">Berserker · Sturmangriff</div>
-          <div class="class-desc">Doppelte Äxte, ungezügelter Zorn. Je mehr Schaden, desto stärker wird der Wikinger.</div>
-        </div>
-      </div>
-
-      <!-- Jäger -->
-      <div class="class-card reveal" style="transition-delay:0.16s;">
-        <img src="images/class-hunter.png" alt="Jäger"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-        <div class="class-placeholder" style="display:none;">
-          <span style="font-size:2rem;opacity:0.12;">🏹</span>
-          <span>class-hunter.png</span>
-        </div>
-        <div class="class-overlay"></div>
-        <div class="class-info">
-          <span class="class-icon">🏹</span>
-          <div class="class-name">Jäger</div>
-          <div class="class-role">Fernkampf · Schurke</div>
-          <div class="class-desc">Schnell, lautlos, tödlich. Nutzt Fallen, Schüsse und Schatten um Feinde zu eliminieren.</div>
-        </div>
-      </div>
-
-      <!-- Magier -->
-      <div class="class-card reveal" style="transition-delay:0.24s;">
-        <img src="images/class-mage.png" alt="Magier"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-        <div class="class-placeholder" style="display:none;">
-          <span style="font-size:2rem;opacity:0.12;">✨</span>
-          <span>class-mage.png</span>
-        </div>
-        <div class="class-overlay"></div>
-        <div class="class-info">
-          <span class="class-icon">✨</span>
-          <div class="class-name">Magier</div>
-          <div class="class-role">Arkan · Fernkampf</div>
-          <div class="class-desc">Runenstab und uralte Zauberkraft. Entfesselt Zauberkreise und arkane Explosionen.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════════
-     FEATURES
-══════════════════════════════════════════ -->
-<section id="features">
-  <div class="container">
-    <div class="reveal">
-      <span class="sec-label">Gameplay</span>
-      <h2 class="sec-title">Features</h2>
-      <div class="sec-rule"></div>
-    </div>
-
-    <div class="features-grid">
-      <div class="feat-card reveal" style="transition-delay:0s;">
-        <span class="feat-icon">⚔</span>
-        <div class="feat-name">Präziser Nahkampf</div>
-        <p class="feat-desc">Timing-basiertes System mit Parieren, Ausweichen und mächtigen Konterangriffen.</p>
-      </div>
-      <div class="feat-card reveal" style="transition-delay:0.05s;">
-        <span class="feat-icon">🌍</span>
-        <div class="feat-name">Offene Welt</div>
-        <p class="feat-desc">Vier riesige, nahtlos verbundene Regionen mit Geheimnissen und versteckten Bossen.</p>
-      </div>
-      <div class="feat-card reveal" style="transition-delay:0.1s;">
-        <span class="feat-icon">🔮</span>
-        <div class="feat-name">Deep Build System</div>
-        <p class="feat-desc">Hunderte von Waffen, Rüstungen und Runen. Jede Klasse mit endlosen Builds.</p>
-      </div>
-      <div class="feat-card reveal" style="transition-delay:0.15s;">
-        <span class="feat-icon">👹</span>
-        <div class="feat-name">Epische Bosse</div>
-        <p class="feat-desc">13+ einzigartige Bosskämpfe mit Phasen, Mechaniken und unvergesslichen Momenten.</p>
-      </div>
-      <div class="feat-card reveal" style="transition-delay:0.2s;">
-        <span class="feat-icon">📖</span>
-        <div class="feat-name">Reiches Lore</div>
-        <p class="feat-desc">Tausende von Lore-Texten und Inschriften enthüllen die Geschichte Eldharyns.</p>
-      </div>
-      <div class="feat-card reveal" style="transition-delay:0.25s;">
-        <span class="feat-icon">🎮</span>
-        <div class="feat-name">Godot 4 Engine</div>
-        <p class="feat-desc">Gebaut auf der Godot 4 Engine — leistungsstark, open-source und indie-freundlich.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════════
-     STUDIO
-══════════════════════════════════════════ -->
-<section id="studio">
-  <div class="container">
-    <div class="studio-wrap">
-      <!-- Studio logo — replace img tag below with your real logo file -->
-      <div class="studio-logo-box reveal-left">
-        <img src="images/logo.png" alt="Nordic Forge Studios Logo"
-             style="width:100%;height:100%;object-fit:cover;border-radius:var(--r-lg);"/>
-        <!-- Fallback (nur wenn logo.png fehlt) -->
-        <div class="studio-logo-mark" style="display:none;">
-          <svg width="90" height="100" viewBox="0 0 60 68" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- Outer hexagon -->
-            <polygon points="30,3 56,18 56,50 30,65 4,50 4,18"
-                     fill="rgba(201,168,76,0.06)" stroke="#c9a84c" stroke-width="1.8"/>
-            <!-- Inner hexagon -->
-            <polygon points="30,10 49,21 49,47 30,58 11,47 11,21"
-                     fill="none" stroke="rgba(201,168,76,0.28)" stroke-width="1"/>
-            <!-- Crossed hammers / forge symbol -->
-            <!-- Hammer 1 (left diagonal) -->
-            <rect x="19" y="28" width="8" height="3.5" rx="1"
-                  fill="#c9a84c" transform="rotate(-40 23 29.75)"/>
-            <rect x="22" y="31" width="3" height="10" rx="1"
-                  fill="rgba(201,168,76,0.7)" transform="rotate(-40 23.5 36)"/>
-            <!-- Hammer 2 (right diagonal) -->
-            <rect x="33" y="28" width="8" height="3.5" rx="1"
-                  fill="#c9a84c" transform="rotate(40 37 29.75)"/>
-            <rect x="35" y="31" width="3" height="10" rx="1"
-                  fill="rgba(201,168,76,0.7)" transform="rotate(40 36.5 36)"/>
-            <!-- Center flame / spark -->
-            <circle cx="30" cy="30" r="2.5" fill="#c9a84c" opacity="0.9"/>
-            <circle cx="30" cy="30" r="4.5" fill="none" stroke="rgba(201,168,76,0.3)" stroke-width="1"/>
-          </svg>
-          <div style="font-family:'Cinzel',serif;font-size:0.58rem;font-weight:700;
-                      letter-spacing:0.18em;text-transform:uppercase;
-                      color:var(--gold);text-align:center;line-height:1.5;">
-            Nordic Forge<br/>Studios
-          </div>
-        </div>
-      </div>
-
-      <!-- Text -->
       <div class="reveal-right">
         <span class="sec-label">Das Team</span>
-        <h2 class="sec-title">Nordic Forge Studios</h2>
+        <h2 class="sec-title">Über uns</h2>
         <div class="sec-rule"></div>
-        <p class="sec-sub">
-          Nordic Forge Studios ist ein unabhängiges Indie-Game-Studio mit einer Leidenschaft für
-          düstere, atmosphärische Welten und tiefgründige Geschichten. Unser erstes Projekt,
-          Crown of Ashes, vereint episches Worldbuilding mit anspruchsvollen Gameplay-Mechaniken.
+        <p class="about-body">
+          Nordic Forge Studios ist ein leidenschaftliches 3-köpfiges Indie-Game-Studio aus Deutschland.
+          Wir erschaffen Spielwelten, die man nicht vergisst — von düsteren Dark-Fantasy-Universen bis hin
+          zu bunten Open-World-Abenteuern mit tiefgründigen Geschichten und echten Momenten.
+        </p>
+        <p class="about-body">
+          Unsere Engine: Godot 4. Unser Werkzeug: Leidenschaft, Ehrgeiz und die Überzeugung,
+          dass kleine Teams die besten Geschichten erzählen können. Jedes Spiel, das wir bauen,
+          entsteht mit vollem Herzen — und dem Anspruch, etwas Bleibendes zu schaffen.
         </p>
         <div class="studio-tags">
           <span class="studio-tag">Indie Studio</span>
-          <span class="studio-tag">Dark Fantasy</span>
+          <span class="studio-tag">3-köpfiges Team</span>
           <span class="studio-tag">Godot 4</span>
-          <span class="studio-tag">Action-RPG</span>
+          <span class="studio-tag">Open World RPG</span>
+          <span class="studio-tag">Dark Fantasy</span>
           <span class="studio-tag">Deutschland</span>
+          <span class="studio-tag">Steam</span>
         </div>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- ══════════════════════════════════════════
-     FINAL CTA
-══════════════════════════════════════════ -->
-<section id="cta">
-  <div class="container">
-    <div class="cta-inner reveal">
-      <span class="sec-label">Bist du bereit?</span>
-      <h2 class="sec-title">Beritt die Asche</h2>
-      <div class="sec-rule"></div>
-      <p class="sec-sub">
-        Eldharyn wartet. Die Krone der Asche liegt in Trümmern — und nur du kannst die Welt retten oder opfern.
-      </p>
-      <div class="cta-btns">
-        <a href="#classes"  class="btn btn-primary">Klasse wählen</a>
-        <a href="#worldmap" class="btn btn-outline">Welt erkunden</a>
+    <div class="team-grid">
+      <div class="team-card reveal" style="transition-delay:0s;">
+        <div class="team-avatar">⚔</div>
+        <div class="team-name">Game Director</div>
+        <div class="team-role">Design · Story · Vision</div>
+        <p class="team-desc">Konzept, Spieldesign und Narrative. Die kreative Triebfeder hinter unseren Welten und Charakteren.</p>
+      </div>
+      <div class="team-card reveal" style="transition-delay:0.1s;">
+        <div class="team-avatar">🛠</div>
+        <div class="team-name">Lead Developer</div>
+        <div class="team-role">GDScript · Godot 4 · Systems</div>
+        <p class="team-desc">Gameplay-Systeme, Engine-Architektur und technische Umsetzung. Baut die Welten zum Laufen.</p>
+      </div>
+      <div class="team-card reveal" style="transition-delay:0.2s;">
+        <div class="team-avatar">🎨</div>
+        <div class="team-name">Art Director</div>
+        <div class="team-role">3D Art · UI · Assets</div>
+        <p class="team-desc">Visuelle Ästhetik, 3D-Modelle, Texturen und die unverwechselbare Grafiksprache unserer Spiele.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════
-     SUPPORT / PAYPAL
-══════════════════════════════════════════ -->
+<!-- ══ VALUES ══ -->
+<section id="values">
+  <div class="container">
+    <div class="reveal" style="text-align:center;max-width:560px;margin:0 auto;">
+      <span class="sec-label">Unsere Philosophie</span>
+      <h2 class="sec-title">Was uns antreibt</h2>
+      <div class="sec-rule center"></div>
+    </div>
+    <div class="values-grid">
+      <div class="value-card reveal" style="transition-delay:0s;">
+        <span class="value-icon">🔥</span>
+        <div class="value-title">Leidenschaft</div>
+        <p class="value-desc">Jedes Spiel entsteht aus echter Begeisterung. Wir spielen selbst — und das merkt man in jedem System, jedem Charakter, jeder Zeile Story.</p>
+      </div>
+      <div class="value-card reveal" style="transition-delay:0.1s;">
+        <span class="value-icon">⚒</span>
+        <div class="value-title">Handwerk</div>
+        <p class="value-desc">Sorgfalt bei jedem Detail. Indie bedeutet für uns nicht weniger — sondern fokussierter. Qualität vor Quantität, immer.</p>
+      </div>
+      <div class="value-card reveal" style="transition-delay:0.2s;">
+        <span class="value-icon">🌍</span>
+        <div class="value-title">Welten</div>
+        <p class="value-desc">Wir erschaffen Orte, in die man eintauchen will. Lebendige Universen mit Geschichte, Tiefe und der Kraft, echte Emotionen auszulösen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTACT ══ -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-inner reveal">
+      <span class="sec-label">Schreib uns</span>
+      <h2 class="sec-title">Kontakt</h2>
+      <div class="sec-rule center"></div>
+      <p class="sec-sub">Fragen, Feedback, Presseanfragen oder einfach Hallo? Wir freuen uns über jede Nachricht aus der Community.</p>
+      <a href="mailto:elfinko13@gmail.com" class="contact-email">✉ elfinko13@gmail.com</a>
+      <p class="contact-note">Antwort in der Regel innerhalb von 1–3 Werktagen. Für Presse & Kooperationen bitte im Betreff angeben.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ IMPRESSUM ══ -->
+<section id="impressum">
+  <div class="container">
+    <div class="reveal">
+      <span class="sec-label">Rechtliches</span>
+      <h2 class="sec-title">Impressum</h2>
+      <div class="sec-rule"></div>
+    </div>
+    <div class="impressum-grid">
+      <div class="impressum-block reveal" style="transition-delay:0s;">
+        <h3>Angaben gemäß § 5 TMG</h3>
+        <address>
+          Nordic Forge Studios<br/>
+          Unabhängiges Indie-Game-Studio<br/>
+          Deutschland<br/><br/>
+          E-Mail: <a href="mailto:elfinko13@gmail.com">elfinko13@gmail.com</a>
+        </address>
+      </div>
+      <div class="impressum-block reveal" style="transition-delay:0.1s;">
+        <h3>Verantwortlich für den Inhalt</h3>
+        <p>
+          Nordic Forge Studios<br/>
+          (Privatperson / Indie-Hobbyprojekt)<br/><br/>
+          Diese Website ist der offizielle Auftritt von Nordic Forge Studios.
+          Alle hier vorgestellten Spiele befinden sich in aktiver Entwicklung.
+          Die gezeigten Spielinhalte sind vorläufig und können sich ändern.
+        </p>
+      </div>
+      <div class="impressum-block reveal" style="transition-delay:0.2s;">
+        <h3>Datenschutzerklärung</h3>
+        <p>
+          Diese Website verwendet ausschließlich technisch notwendige Cookies
+          (localStorage) zur Speicherung deiner Cookie-Präferenzen. Es werden keine
+          persönlichen Daten ohne deine Zustimmung gespeichert oder an Dritte weitergegeben.
+          Google Fonts wird über Googles CDN geladen und unterliegt Googles Datenschutzbedingungen.
+        </p>
+      </div>
+      <div class="impressum-block reveal" style="transition-delay:0.3s;">
+        <h3>Urheberrecht</h3>
+        <p>
+          Alle Inhalte dieser Website — Spielkonzepte, Story, Charakternamen,
+          Weltbeschreibungen, Lore und Grafiken — sind urheberrechtlich geschütztes
+          geistiges Eigentum von Nordic Forge Studios. Unbefugte Vervielfältigung,
+          Bearbeitung oder Verbreitung ist ausdrücklich untersagt.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SUPPORT ══ -->
 <section id="support">
   <div class="container">
     <div class="support-inner reveal">
       <span class="sec-label">Unterstütze uns</span>
       <h2 class="sec-title">Hilf uns beim Träumen</h2>
       <div class="sec-rule"></div>
-      <p class="sec-sub">
-        Crown of Ashes entsteht mit voller Leidenschaft — jede Unterstützung hilft uns,
-        die Welt Eldharyns größer und reicher zu machen.
-      </p>
+      <p class="sec-sub">Als kleines Indie-Studio leben wir von Leidenschaft — und eurer Unterstützung. Jede Spende hilft uns, unsere Spiele größer und besser zu machen.</p>
       <a href="https://paypal.me/nordicforgestudios" target="_blank" rel="noopener" class="paypal-btn">
-        <svg viewBox="0 0 24 24">
-          <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.59 3.025-2.566 6.082-8.558 6.082H9.828l-1.17 7.408h3.716c.461 0 .851-.332.924-.786l.038-.196.733-4.647.047-.256a.932.932 0 0 1 .923-.786h.581c3.764 0 6.712-1.528 7.571-5.948.361-1.855.174-3.404-.969-4.584z"/>
-        </svg>
+        <svg viewBox="0 0 24 24"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.59 3.025-2.566 6.082-8.558 6.082H9.828l-1.17 7.408h3.716c.461 0 .851-.332.924-.786l.038-.196.733-4.647.047-.256a.932.932 0 0 1 .923-.786h.581c3.764 0 6.712-1.528 7.571-5.948.361-1.855.174-3.404-.969-4.584z"/></svg>
         Per PayPal unterstützen
       </a>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════
-     FOOTER
-══════════════════════════════════════════ -->
+<!-- ══ FOOTER ══ -->
 <footer>
   <div class="container">
     <div class="footer-inner">
-      <div class="footer-logo">Nordic Forge Studios</div>
+      <div class="footer-brand">
+        <img src="images/logo.png" alt="NFS" class="footer-brand-logo"/>
+        <span class="footer-logo">Nordic Forge Studios</span>
+      </div>
       <div class="footer-links">
         <a href="#games">Spiele</a>
-        <a href="#studio">Studio</a>
-        <a href="#support">Support</a>
+        <a href="#about">Über uns</a>
+        <a href="#contact">Kontakt</a>
+        <a href="#impressum">Impressum</a>
         <a href="#" id="footer-cookie-btn">Datenschutz</a>
       </div>
       <div class="footer-copy">© 2025 Nordic Forge Studios. Alle Rechte vorbehalten.</div>
@@ -1602,132 +580,57 @@ footer {
   </div>
 </footer>
 
-<!-- ══════════════════════════════════════════
-     JAVASCRIPT
-══════════════════════════════════════════ -->
 <script>
-/* ── Cookie Banner ────────────────────────────────────────── */
-const cookieBanner  = document.getElementById('cookie-banner');
-const cookieAccept  = document.getElementById('cookie-accept');
-const cookieDecline = document.getElementById('cookie-decline');
+const cookieBanner   = document.getElementById('cookie-banner');
 const footerCookieBtn = document.getElementById('footer-cookie-btn');
+(function(){ if (!localStorage.getItem('nfs-cookies')) setTimeout(()=>cookieBanner.classList.add('visible'),1400); })();
+document.getElementById('cookie-accept').addEventListener('click',()=>{ localStorage.setItem('nfs-cookies','accepted'); cookieBanner.classList.remove('visible'); });
+document.getElementById('cookie-decline').addEventListener('click',()=>{ localStorage.setItem('nfs-cookies','declined'); cookieBanner.classList.remove('visible'); });
+footerCookieBtn.addEventListener('click',e=>{ e.preventDefault(); localStorage.removeItem('nfs-cookies'); setTimeout(()=>cookieBanner.classList.add('visible'),100); });
 
-(function initCookie(){
-  if (!localStorage.getItem('nfs-cookies')) {
-    setTimeout(() => cookieBanner.classList.add('visible'), 1400);
-  }
-})();
-
-cookieAccept.addEventListener('click', () => {
-  localStorage.setItem('nfs-cookies', 'accepted');
-  cookieBanner.classList.remove('visible');
-});
-cookieDecline.addEventListener('click', () => {
-  localStorage.setItem('nfs-cookies', 'declined');
-  cookieBanner.classList.remove('visible');
-});
-footerCookieBtn.addEventListener('click', e => {
-  e.preventDefault();
-  localStorage.removeItem('nfs-cookies');
-  setTimeout(() => cookieBanner.classList.add('visible'), 100);
-});
-
-/* ── Navigation scroll effect ───────────────────────────────── */
 const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 40);
-}, { passive: true });
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>40),{passive:true});
 
-/* ── Mobile nav ─────────────────────────────────────────────── */
-const mobileNav  = document.getElementById('mobile-nav');
-const hamburger  = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobile-nav');
+const hamburger = document.getElementById('hamburger');
+function toggleMobileNav(){ const o=mobileNav.classList.toggle('open'); hamburger.classList.toggle('open',o); document.body.style.overflow=o?'hidden':''; }
+function closeMobileNav(){ mobileNav.classList.remove('open'); hamburger.classList.remove('open'); document.body.style.overflow=''; }
+mobileNav.addEventListener('click',e=>{if(e.target===mobileNav)closeMobileNav();});
 
-function toggleMobileNav() {
-  const open = mobileNav.classList.toggle('open');
-  hamburger.classList.toggle('open', open);
-  document.body.style.overflow = open ? 'hidden' : '';
-}
-function closeMobileNav() {
-  mobileNav.classList.remove('open');
-  hamburger.classList.remove('open');
-  document.body.style.overflow = '';
-}
-mobileNav.addEventListener('click', e => { if (e.target === mobileNav) closeMobileNav(); });
-
-/* ── Scroll Reveal ───────────────────────────────────────────── */
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const el = entry.target;
-      const delay = parseFloat(el.style.transitionDelay || '0');
-      setTimeout(() => el.classList.add('visible'), delay * 1000);
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      const el=entry.target, delay=parseFloat(el.style.transitionDelay||'0');
+      setTimeout(()=>el.classList.add('visible'),delay*1000);
       observer.unobserve(el);
     }
   });
-}, { threshold: 0.10 });
+},{threshold:0.10});
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>observer.observe(el));
 
-document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
+const canvas=document.getElementById('hero-canvas'), ctx=canvas.getContext('2d');
+function resize(){ canvas.width=innerWidth; canvas.height=innerHeight; }
+resize(); window.addEventListener('resize',resize);
 
-/* ── Hero Canvas — Ash particles ─────────────────────────────── */
-const canvas = document.getElementById('hero-canvas');
-const ctx    = canvas.getContext('2d');
-
-function resizeCanvas() {
-  canvas.width  = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
-
-class Ash {
-  constructor() { this.reset(true); }
-  reset(init) {
-    this.x  = Math.random() * canvas.width;
-    this.y  = init ? Math.random() * canvas.height : canvas.height + 8;
-    this.r  = Math.random() * 2.2 + 0.4;
-    this.vy = -(Math.random() * 0.45 + 0.18);
-    this.vx = (Math.random() - 0.5) * 0.35;
-    this.op = Math.random() * 0.45 + 0.08;
-    this.wobble = Math.random() * Math.PI * 2;
-    this.ws = Math.random() * 0.018 + 0.005;
+class Spark {
+  reset(init){
+    this.x=Math.random()*canvas.width;
+    this.y=init?Math.random()*canvas.height:canvas.height+8;
+    this.r=Math.random()*1.8+0.3;
+    this.vy=-(Math.random()*0.55+0.15);
+    this.vx=(Math.random()-0.5)*0.4;
+    this.op=Math.random()*0.45+0.08;
+    this.wobble=Math.random()*Math.PI*2;
+    this.ws=Math.random()*0.018+0.006;
+    this.blue=Math.random()>0.6;
   }
-  tick() {
-    this.wobble += this.ws;
-    this.x += this.vx + Math.sin(this.wobble) * 0.28;
-    this.y += this.vy;
-    if (this.y < -8) this.reset(false);
-  }
-  draw() {
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(175,155,135,${this.op})`;
-    ctx.fill();
-  }
+  constructor(){ this.reset(true); }
+  tick(){ this.wobble+=this.ws; this.x+=this.vx+Math.sin(this.wobble)*0.28; this.y+=this.vy; if(this.y<-8)this.reset(false); }
+  draw(){ ctx.beginPath(); ctx.arc(this.x,this.y,this.r,0,Math.PI*2); ctx.fillStyle=this.blue?`rgba(94,184,255,${this.op*0.7})`:`rgba(201,168,76,${this.op})`; ctx.fill(); }
 }
-
-const particles = Array.from({ length: 75 }, () => new Ash());
-function loop() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  particles.forEach(p => { p.tick(); p.draw(); });
-  requestAnimationFrame(loop);
-}
-loop();
-
-/* ── Cursor glow (desktop only) ─────────────────────────────── */
-if (window.matchMedia('(pointer: fine)').matches) {
-  const glow = document.createElement('div');
-  Object.assign(glow.style, {
-    position: 'fixed', width: '280px', height: '280px',
-    borderRadius: '50%', pointerEvents: 'none', zIndex: '9996',
-    background: 'radial-gradient(circle,rgba(201,168,76,0.055) 0%,transparent 70%)',
-    transform: 'translate(-50%,-50%)', transition: 'opacity .3s'
-  });
-  document.body.appendChild(glow);
-  document.addEventListener('mousemove', e => {
-    glow.style.left = e.clientX + 'px';
-    glow.style.top  = e.clientY + 'px';
-  });
-}
+const sparks=Array.from({length:110},()=>new Spark());
+function animate(){ ctx.clearRect(0,0,canvas.width,canvas.height); sparks.forEach(s=>{s.tick();s.draw();}); requestAnimationFrame(animate); }
+animate();
 </script>
 </body>
 </html>
