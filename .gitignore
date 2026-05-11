@@ -7,7 +7,12 @@ desktop.ini
 .vscode/
 .idea/
 
-# Node (falls später genutzt)
+# Node
 node_modules/
+
+# Next.js
+.next/
+*.tsbuildinfo
+out/
 
 .vercel
