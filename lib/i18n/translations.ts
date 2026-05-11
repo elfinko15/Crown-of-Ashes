@@ -1,4 +1,4 @@
-export type Lang = 'de' | 'en' | 'fr'
+export type Lang = 'de' | 'en' | 'fr' | 'es'
 
 export const translations = {
   de: {
@@ -52,6 +52,9 @@ export const translations = {
     contact_email_label: 'E-Mail',
     contact_social_label: 'Soziale Netzwerke',
     contact_social_soon: 'Bald verfügbar',
+    contact_donate_label: 'Unterstütze uns',
+    contact_donate_text: 'Wir sind ein kleines unabhängiges Studio ohne Publisher. Jede Spende hilft uns, Avadon fertigzustellen und unsere Träume am Leben zu halten.',
+    contact_donate_btn: 'Via PayPal spenden',
 
     // Footer
     footer_tagline: 'Made with passion in Germany · 2026',
@@ -120,6 +123,9 @@ export const translations = {
     contact_email_label: 'Email',
     contact_social_label: 'Social Media',
     contact_social_soon: 'Coming soon',
+    contact_donate_label: 'Support Us',
+    contact_donate_text: 'We are a small independent studio without a publisher. Every donation helps us finish Avadon and keep our dreams alive.',
+    contact_donate_btn: 'Donate via PayPal',
 
     footer_tagline: 'Made with passion in Germany · 2026',
     footer_copy: '© 2026 Nordic Forge Studios. All rights reserved.',
@@ -186,6 +192,9 @@ export const translations = {
     contact_email_label: 'E-mail',
     contact_social_label: 'Réseaux Sociaux',
     contact_social_soon: 'Bientôt disponible',
+    contact_donate_label: 'Soutenez-nous',
+    contact_donate_text: 'Nous sommes un petit studio indépendant sans éditeur. Chaque don nous aide à terminer Avadon et à garder nos rêves en vie.',
+    contact_donate_btn: 'Faire un don via PayPal',
 
     footer_tagline: 'Fait avec passion en Allemagne · 2026',
     footer_copy: '© 2026 Nordic Forge Studios. Tous droits réservés.',
@@ -206,6 +215,74 @@ export const translations = {
     avadon_regions_title: 'Régions',
     avadon_classes_title: 'Classes',
     avadon_screenshots_title: 'Aperçus',
+  },
+  es: {
+    nav_games: 'Nuestros Juegos',
+    nav_about: 'Sobre nosotros',
+    nav_team: 'Equipo',
+    nav_contact: 'Contacto',
+
+    hero_tag: 'Estudio Indie · Alemania',
+    hero_title: 'Nordic Forge Studios',
+    hero_subtitle: 'Forjamos mundos que perduran.',
+    hero_cta_games: 'Nuestros Juegos',
+    hero_cta_about: 'Saber más',
+
+    games_title: 'Nuestros Juegos',
+    games_subtitle: 'Mundos artesanales llenos de misterio',
+    games_status_dev: 'En Desarrollo',
+    games_status_soon: 'Próximamente',
+    games_avadon_desc: 'Un RPG de fantasía oscura sobre sellos rotos, dioses olvidados y el precio de la supervivencia.',
+    games_coming_soon: 'Algo grande se está forjando…',
+    games_cta: 'Saber más',
+
+    about_title: 'Sobre Nordic Forge Studios',
+    about_text: 'Somos un pequeño estudio indie apasionado de Alemania. Con Godot 4 creamos mundos de juego artesanales — sin concesiones en calidad, honestos en la narrativa.',
+    about_v1_title: 'Pasión',
+    about_v1_text: 'Cada píxel, cada línea de lore creada con corazón.',
+    about_v2_title: 'Calidad',
+    about_v2_text: 'Sin presión de lanzamiento — publicamos cuando está listo.',
+    about_v3_title: 'Comunidad',
+    about_v3_text: 'Vuestros comentarios dan forma a los juegos que construimos.',
+
+    team_title: 'Nuestro Equipo',
+    team_subtitle: 'Los forjadores detrás de los mundos',
+
+    team_jonah_role: 'Desarrollador & Game Designer',
+    team_andor_role: 'Escritor, Desarrollador, Game Designer & Co-Líder',
+    team_tobias_role: 'Escritor, Game Designer & Artista 3D',
+    team_moritz_role: 'Escritor & Game Designer',
+    team_adrian_role: 'Desarrollador',
+    team_mia_role: 'Game Designer, Ilustradora & Artista 3D',
+
+    contact_title: 'Contacto',
+    contact_subtitle: '¿Preguntas, comentarios o simplemente hola?',
+    contact_email_label: 'Correo electrónico',
+    contact_social_label: 'Redes Sociales',
+    contact_social_soon: 'Próximamente',
+    contact_donate_label: 'Apóyanos',
+    contact_donate_text: 'Somos un pequeño estudio independiente sin editor. Cada donación nos ayuda a terminar Avadon y a mantener nuestros sueños vivos.',
+    contact_donate_btn: 'Donar vía PayPal',
+
+    footer_tagline: 'Hecho con pasión en Alemania · 2026',
+    footer_copy: '© 2026 Nordic Forge Studios. Todos los derechos reservados.',
+
+    avadon_back: '← Volver',
+    avadon_tag: 'RPG · Godot 4',
+    avadon_title: 'Avadon: The Broken Sigils',
+    avadon_status: 'En Desarrollo',
+    avadon_desc: 'Un RPG de fantasía oscura donde sellos rotos mantienen un mundo al borde del abismo. Explora cinco regiones, elige una de cuatro clases y soporta el peso de la supervivencia.',
+    avadon_story_title: 'La Historia',
+    avadon_story: 'Los sellos de los dioses antiguos se están rompiendo. Lo que antes contenía el mal en las profundidades comienza a desvanecerse — y con él, la última esperanza de los mortales.',
+    avadon_features_title: 'Características',
+    avadon_f1: '5 regiones únicas',
+    avadon_f2: '4 clases jugables',
+    avadon_f3: 'Decisiones ramificadas',
+    avadon_f4: 'Mundo de lore artesanal',
+    avadon_f5: 'Jefes épicos',
+    avadon_regions_title: 'Regiones',
+    avadon_classes_title: 'Clases',
+    avadon_screenshots_title: 'Vistas previas',
   },
 } satisfies Record<Lang, Record<string, string>>
 

@@ -10,6 +10,7 @@ const LANGS: { code: Lang; flag: string; label: string }[] = [
   { code: 'de', flag: '🇩🇪', label: 'Deutsch' },
   { code: 'en', flag: '🇬🇧', label: 'English' },
   { code: 'fr', flag: '🇫🇷', label: 'Français' },
+  { code: 'es', flag: '🇪🇸', label: 'Español' },
 ]
 
 export default function Navbar() {
