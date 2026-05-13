@@ -156,6 +156,8 @@ export const translations = {
     footer_col_info: 'Info',
     footer_col_account: 'Konto',
     footer_all_games: 'Alle Spiele',
+    footer_donate_title: 'Unterstütze Nordic Forge Studios',
+    footer_donate_text: 'Kein Abo nötig — einmalige oder regelmäßige Spende per PayPal.',
   },
 
   en: {
@@ -301,6 +303,8 @@ export const translations = {
     footer_col_info: 'Info',
     footer_col_account: 'Account',
     footer_all_games: 'All Games',
+    footer_donate_title: 'Support Nordic Forge Studios',
+    footer_donate_text: 'No subscription needed — donate once or regularly via PayPal.',
   },
 
   fr: {
@@ -446,6 +450,8 @@ export const translations = {
     footer_col_info: 'Info',
     footer_col_account: 'Compte',
     footer_all_games: 'Tous les jeux',
+    footer_donate_title: 'Soutenir Nordic Forge Studios',
+    footer_donate_text: 'Pas d\'abonnement nécessaire — faites un don unique ou régulier via PayPal.',
   },
 
   es: {
@@ -591,6 +597,8 @@ export const translations = {
     footer_col_info: 'Info',
     footer_col_account: 'Cuenta',
     footer_all_games: 'Todos los juegos',
+    footer_donate_title: 'Apoya a Nordic Forge Studios',
+    footer_donate_text: 'Sin suscripción — dona una vez o regularmente vía PayPal.',
   },
 } satisfies Record<Lang, Record<string, string>>
 
