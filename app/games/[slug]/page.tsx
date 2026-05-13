@@ -1,14 +1,13 @@
 'use client'
 
-import { use } from 'react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { useLang } from '@/lib/i18n/LanguageContext'
 import { GAMES } from '@/lib/data/games'
 import NFFooter from '@/components/NFFooter'
 
-export default function GameDetailPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = use(params)
+export default function GameDetailPage({ params }: { params: { slug: string } }) {
+  const { slug } = params
   const { t, lang } = useLang()
 
   const game = GAMES.find(g => g.slug === slug)

@@ -153,6 +153,11 @@ export default function NFNavbar() {
                   <Link href="/account" className="block px-4 py-2.5 text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors">{t('nav_account')}</Link>
                   <Link href="/account/membership" className="block px-4 py-2.5 text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors">NF Studios+</Link>
                   <Link href="/account/redeem" className="block px-4 py-2.5 text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors">{t('nav_redeem')}</Link>
+                  {(session.user as any)?.role === 'admin' && (
+                    <Link href="/admin" className="block px-4 py-2.5 text-sm font-bold text-white hover:bg-white/5 transition-colors border-t border-white/10">
+                      Admin Panel
+                    </Link>
+                  )}
                   <div className="border-t border-white/10">
                     <button
                       onClick={() => signOut({ callbackUrl: '/' })}
