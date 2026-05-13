@@ -48,11 +48,11 @@ export default function HeroSlider() {
               {game.title}
             </h1>
 
-            {/* Subtitle */}
-            <p className="text-white/70 text-lg mb-2">
-              {game.subtitle[lang as Lang] ?? game.subtitle.de}
+            {/* Tagline / Subtitle */}
+            <p className="text-white/80 text-xl font-barlow italic mb-2">
+              {game.tagline[lang as Lang] ?? game.tagline.de}
             </p>
-            <p className="text-white/50 text-sm mb-8">
+            <p className="text-white/40 text-sm mb-8">
               {game.genre} · {game.engine}
             </p>
 

@@ -15,6 +15,8 @@ export default function GameDetailPage({ params }: { params: Promise<{ slug: str
   if (!game) notFound()
 
   const isSoon = game.status === 'soon'
+  const regions = game.regions?.[lang]
+  const bosses = game.bosses?.[lang]
 
   return (
     <>
@@ -32,7 +34,9 @@ export default function GameDetailPage({ params }: { params: Promise<{ slug: str
               {game.status === 'dev' ? t('games_status_dev') : t('games_status_soon')}
             </span>
             <h1 className="font-barlow font-bold text-5xl md:text-7xl text-white mb-3">{game.title}</h1>
-            <p className="text-white/60 text-lg">{game.subtitle[lang]}</p>
+            {!isSoon && (
+              <p className="text-white/80 text-lg italic">{game.tagline[lang]}</p>
+            )}
           </div>
         </section>
 
@@ -70,6 +74,43 @@ export default function GameDetailPage({ params }: { params: Promise<{ slug: str
                 </div>
               )}
 
+              {/* Regions */}
+              {!isSoon && regions && regions.length > 0 && (
+                <div className="nf-card p-6">
+                  <h2 className="font-barlow font-bold text-xl text-white mb-5">
+                    {lang === 'de' ? 'Die vier Regionen' : lang === 'fr' ? 'Les quatre régions' : lang === 'es' ? 'Las cuatro regiones' : 'The Four Regions'}
+                  </h2>
+                  <div className="space-y-4">
+                    {regions.map(region => (
+                      <div key={region.name} className="border border-white/10 rounded-lg p-4 bg-white/[0.03]">
+                        <div className="flex items-baseline gap-2 mb-2">
+                          <h3 className="font-barlow font-bold text-white">{region.name}</h3>
+                          <span className="text-white/40 text-xs">— {region.subtitle}</span>
+                        </div>
+                        <p className="text-white/60 text-sm leading-relaxed">{region.description}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Bosses */}
+              {!isSoon && bosses && bosses.length > 0 && (
+                <div className="nf-card p-6">
+                  <h2 className="font-barlow font-bold text-xl text-white mb-5">
+                    {lang === 'de' ? 'Die fünf Bosse' : lang === 'fr' ? 'Les cinq boss' : lang === 'es' ? 'Los cinco jefes' : 'The Five Bosses'}
+                  </h2>
+                  <div className="space-y-4">
+                    {bosses.map(boss => (
+                      <div key={boss.name} className="border border-white/10 rounded-lg p-4 bg-white/[0.03]">
+                        <h3 className="font-barlow font-bold text-white mb-2">{boss.name}</h3>
+                        <p className="text-white/60 text-sm leading-relaxed">{boss.description}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* Media placeholder */}
               <div className="nf-card p-6">
                 <h2 className="font-barlow font-bold text-xl text-white mb-4">{t('game_detail_media')}</h2>
@@ -98,6 +139,14 @@ export default function GameDetailPage({ params }: { params: Promise<{ slug: str
                     <p className="text-faint text-xs mb-1">{t('game_detail_engine')}</p>
                     <p className="text-white text-sm">{game.engine}</p>
                   </div>
+                  {!isSoon && (
+                    <div>
+                      <p className="text-faint text-xs mb-1">
+                        {lang === 'de' ? 'Plattformen' : lang === 'fr' ? 'Plateformes' : lang === 'es' ? 'Plataformas' : 'Platforms'}
+                      </p>
+                      <p className="text-white text-sm">PC (Steam) — 2027/2028</p>
+                    </div>
+                  )}
                 </div>
               </div>
 
