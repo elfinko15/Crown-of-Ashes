@@ -1,19 +1,19 @@
-import Hero from '@/components/Hero'
-import GamesSection from '@/components/GamesSection'
-import AboutSection from '@/components/AboutSection'
-import TeamSection from '@/components/TeamSection'
-import ContactSection from '@/components/ContactSection'
-import Footer from '@/components/Footer'
+import HeroSlider from '@/components/HeroSlider'
+import GameGrid from '@/components/GameGrid'
+import NFPlusBanner from '@/components/NFPlusBanner'
+import NewsRow from '@/components/NewsRow'
+import SupportTeaser from '@/components/SupportTeaser'
+import NFFooter from '@/components/NFFooter'
 
 export default function Home() {
   return (
     <main>
-      <Hero />
-      <GamesSection />
-      <AboutSection />
-      <TeamSection />
-      <ContactSection />
-      <Footer />
+      <HeroSlider />
+      <GameGrid limit={4} />
+      <NFPlusBanner />
+      <NewsRow limit={3} />
+      <SupportTeaser />
+      <NFFooter />
     </main>
   )
 }

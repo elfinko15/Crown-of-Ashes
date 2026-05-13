@@ -1,12 +1,13 @@
 import type { Metadata } from 'next'
-import { Cinzel, Inter } from 'next/font/google'
+import { Barlow_Condensed, Inter } from 'next/font/google'
 import './globals.css'
 import { Providers } from './providers'
-import Navbar from '@/components/Navbar'
+import NFNavbar from '@/components/NFNavbar'
 
-const cinzel = Cinzel({
+const barlow = Barlow_Condensed({
   subsets: ['latin'],
-  variable: '--font-cinzel',
+  weight: ['400', '600', '700', '800'],
+  variable: '--font-barlow',
   display: 'swap',
 })
 
@@ -17,18 +18,18 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Nordic Forge Studios',
-  description: 'Indie Game Studio aus Deutschland — Wir schmieden Welten, die bleiben.',
+  title: 'NF Studios',
+  description: 'Nordic Forge Studios — Indie Game Studio aus Deutschland.',
   icons: { icon: '/logo.png' },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="de" className={`${cinzel.variable} ${inter.variable}`}>
-      <body>
+    <html lang="de" className={`${barlow.variable} ${inter.variable}`}>
+      <body className="bg-nf-bg min-h-screen">
         <Providers>
-          <Navbar />
-          {children}
+          <NFNavbar />
+          <div className="pt-14">{children}</div>
         </Providers>
       </body>
     </html>

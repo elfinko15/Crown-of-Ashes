@@ -16,3 +16,21 @@ node_modules/
 out/
 
 .vercel
+
+.vercel
+
+# Environment / secrets
+.env
+.env.local
+.env*.local
+
+# Database files
+*.db
+*.db-journal
+
+# Personal files
+"text story"
+"images/hero - Kopie.jpg"
+Avadon_The_Broken_Sigils_Story.pdf
+
+/lib/generated/prisma
