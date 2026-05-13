@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import { notFound } from 'next/navigation'
 import { useLang } from '@/lib/i18n/LanguageContext'
 import { GAMES } from '@/lib/data/games'
 import NFFooter from '@/components/NFFooter'
@@ -11,7 +10,22 @@ export default function GameDetailPage({ params }: { params: { slug: string } })
   const { t, lang } = useLang()
 
   const game = GAMES.find(g => g.slug === slug)
-  if (!game) notFound()
+
+  if (!game) {
+    return (
+      <>
+        <main className="min-h-screen flex items-center justify-center">
+          <div className="text-center px-4">
+            <p className="font-barlow font-bold text-6xl text-white/10 mb-4">404</p>
+            <h1 className="font-barlow font-bold text-2xl text-white mb-2">Spiel nicht gefunden</h1>
+            <p className="text-white/40 text-sm mb-6">Das gesuchte Spiel existiert nicht.</p>
+            <Link href="/games" className="btn-primary text-sm">Zur Spieleübersicht</Link>
+          </div>
+        </main>
+        <NFFooter />
+      </>
+    )
+  }
 
   const isSoon = game.status === 'soon'
   const regions = game.regions?.[lang]
