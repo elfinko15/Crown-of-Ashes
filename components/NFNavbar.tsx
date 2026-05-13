@@ -44,6 +44,7 @@ export default function NFNavbar() {
   const navLinks = [
     { href: '/games', label: t('nav_games') },
     { href: '/nf-plus', label: 'NF Studios+' },
+    { href: '/about', label: 'Über uns' },
     { href: '/news', label: t('nav_news') },
     { href: '/support', label: t('nav_support') },
   ]
@@ -64,7 +65,7 @@ export default function NFNavbar() {
             <Image src="/logo.png" alt="NF Studios" fill className="object-contain" priority />
           </div>
           <span className="font-barlow font-bold text-white text-lg tracking-tight hidden sm:block">
-            NF Studios
+            Nordic Forge Studios
           </span>
         </Link>
 

@@ -73,6 +73,28 @@
     @apply w-full bg-[#111] border border-white/20 rounded px-4 py-3 text-white text-sm placeholder-white/30 focus:outline-none focus:border-white/60 transition-colors;
   }
 
+  /* Liquid Glass */
+  .glass {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+  }
+  .glass:hover {
+    background: rgba(255,255,255,0.08);
+  }
+
+  /* Gold + Purple accents */
+  .text-gold { color: #c9a84c; }
+  .border-gold { border-color: #c9a84c; }
+  .bg-gold { background-color: #c9a84c; }
+  .text-purple { color: #534ab7; }
+  .bg-purple { background-color: #534ab7; }
+
+  /* Cinzel headline variant */
+  .cinzel { font-family: var(--font-cinzel), serif; }
+
   /* Divider */
   .nf-divider { border-color: rgba(255,255,255,0.08); }
 

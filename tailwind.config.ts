@@ -17,10 +17,13 @@ const config: Config = {
           elevated: '#222222',
           border: 'rgba(255,255,255,0.08)',
         },
+        gold: '#c9a84c',
+        purple: '#534ab7',
       },
       fontFamily: {
         barlow: ['var(--font-barlow)', 'sans-serif'],
         inter: ['var(--font-inter)', 'sans-serif'],
+        cinzel: ['var(--font-cinzel)', 'serif'],
       },
       animation: {
         'fade-in': 'fadeIn 0.4s ease-out forwards',

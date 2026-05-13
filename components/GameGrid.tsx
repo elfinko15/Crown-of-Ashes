@@ -74,9 +74,21 @@ export default function GameGrid({ limit, showFilters = false }: Props) {
                 <h3 className="font-barlow font-bold text-white text-base leading-tight mb-1 group-hover:text-white/80 transition-colors">
                   {game.title}
                 </h3>
-                <p className="text-muted text-xs">{game.subtitle[lang as Lang] ?? game.subtitle.de}</p>
+                {game.descriptionShort ? (
+                  <p className="text-white/55 text-xs leading-relaxed line-clamp-3">
+                    {game.descriptionShort[lang as Lang] ?? game.descriptionShort.de}
+                  </p>
+                ) : (
+                  <p className="text-muted text-xs">{game.subtitle[lang as Lang] ?? game.subtitle.de}</p>
+                )}
                 {!game.slug.startsWith('coming') && (
-                  <p className="text-white/30 text-xs mt-2">{game.genre} · {game.engine}</p>
+                  <div className="flex flex-wrap gap-1 mt-3">
+                    {game.genre.split(' | ').map(tag => (
+                      <span key={tag} className="px-1.5 py-0.5 text-[10px] font-medium rounded bg-white/8 text-white/50 border border-white/10">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 )}
               </div>
             </Link>
