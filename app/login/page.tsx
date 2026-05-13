@@ -35,7 +35,7 @@ export default function LoginPage() {
         <div className="flex justify-center mb-8">
           <Link href="/" className="flex items-center gap-2">
             <div className="w-10 h-10 relative"><Image src="/logo.png" alt="NF Studios" fill className="object-contain" /></div>
-            <span className="font-barlow font-bold text-white text-xl">NF Studios</span>
+            <span className="font-barlow font-bold text-white text-xl">Nordic Forge Studios</span>
           </Link>
         </div>
 

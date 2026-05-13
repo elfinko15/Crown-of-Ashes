@@ -5,7 +5,7 @@ import Link from 'next/link'
 import NFFooter from '@/components/NFFooter'
 
 const Check = () => (
-  <svg className="w-4 h-4 flex-shrink-0 text-gold" fill="currentColor" viewBox="0 0 20 20">
+  <svg className="w-4 h-4 flex-shrink-0 text-white" fill="currentColor" viewBox="0 0 20 20">
     <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
   </svg>
 )
@@ -60,139 +60,131 @@ export default function NFPlusPage() {
     <>
       <main className="min-h-screen bg-nf-bg">
         {/* Hero */}
-        <section className="relative py-28 px-4 text-center overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-purple/10 via-transparent to-transparent pointer-events-none" />
-          <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
-            style={{ backgroundImage: 'repeating-linear-gradient(0deg,#fff 0,#fff 1px,transparent 1px,transparent 80px),repeating-linear-gradient(90deg,#fff 0,#fff 1px,transparent 1px,transparent 80px)' }}
-          />
-          <div className="relative z-10 max-w-3xl mx-auto">
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gold/40 text-gold text-xs font-semibold tracking-widest uppercase mb-6">
-              <span className="w-1.5 h-1.5 rounded-full bg-gold inline-block" />
+        <section className="border-b border-white/10 py-20 px-4 text-center">
+          <div className="max-w-3xl mx-auto">
+            <span className="inline-block px-3 py-1 bg-white text-black text-xs font-bold font-barlow uppercase tracking-widest mb-6">
               Mitgliedschaft
             </span>
-            <h1 className="font-cinzel font-bold text-5xl md:text-6xl text-white mb-5 leading-tight">
-              NF Studios<span className="text-gold">+</span>
+            <h1 className="font-barlow font-extrabold text-6xl md:text-7xl text-white mb-4 uppercase tracking-tight leading-none">
+              NF Studios+
             </h1>
-            <p className="text-white/60 text-lg leading-relaxed max-w-xl mx-auto">
+            <p className="text-white/50 text-lg max-w-xl mx-auto leading-relaxed">
               Unterstütze Nordic Forge Studios und erhalte exklusive Vorteile — direkt von einem leidenschaftlichen Indie-Team aus Deutschland.
             </p>
           </div>
         </section>
 
         {/* Pricing */}
-        <section className="max-w-5xl mx-auto px-4 pb-20">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <section className="max-w-5xl mx-auto px-4 py-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
             {/* Basic */}
-            <div className="glass p-8 flex flex-col">
-              <div className="mb-6">
-                <p className="text-white/40 text-xs font-semibold uppercase tracking-widest mb-2">Basic</p>
-                <div className="flex items-end gap-1 mb-1">
-                  <span className="font-cinzel font-bold text-5xl text-white">2,99</span>
-                  <span className="text-white/40 text-sm mb-2">€ / Monat</span>
+            <div className="nf-card p-8 flex flex-col">
+              <div className="mb-7">
+                <p className="text-white/35 text-xs font-barlow font-bold uppercase tracking-widest mb-3">Basic</p>
+                <div className="flex items-end gap-1.5 mb-1">
+                  <span className="font-barlow font-bold text-5xl text-white leading-none">€2,99</span>
+                  <span className="text-white/35 text-sm mb-1">/ Monat</span>
                 </div>
-                <p className="text-white/40 text-sm">Perfekter Einstieg für Community-Mitglieder</p>
+                <p className="text-white/35 text-xs mt-2">Perfekter Einstieg für Community-Mitglieder</p>
               </div>
 
               <ul className="space-y-3 mb-8 flex-1">
                 {BASIC_FEATURES.map(f => (
-                  <li key={f} className="flex items-start gap-3 text-white/70 text-sm">
+                  <li key={f} className="flex items-start gap-3 text-white/60 text-sm">
                     <Check />
                     <span>{f}</span>
                   </li>
                 ))}
               </ul>
 
-              <button
-                disabled
-                className="w-full py-3 rounded-lg border border-white/20 text-white/50 text-sm font-semibold cursor-not-allowed"
-              >
+              <button disabled className="btn-secondary w-full py-3 text-sm opacity-50 cursor-not-allowed">
                 Bald verfügbar
               </button>
             </div>
 
             {/* Pro */}
-            <div className="relative glass p-8 flex flex-col border-gold/30" style={{ borderColor: 'rgba(201,168,76,0.3)' }}>
-              {/* Beliebtesten badge */}
-              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
-                <span className="px-4 py-1 rounded-full bg-gold text-black text-xs font-bold font-barlow uppercase tracking-wider">
+            <div className="nf-card border-white/20 p-8 flex flex-col relative overflow-hidden">
+              {/* Top white accent line */}
+              <div className="absolute top-0 left-0 right-0 h-0.5 bg-white" />
+
+              <div className="absolute -top-px right-6">
+                <span className="bg-white text-black text-[10px] font-bold font-barlow px-3 py-1 uppercase tracking-widest">
                   Am beliebtesten
                 </span>
               </div>
 
-              <div className="mb-6">
-                <p className="text-gold text-xs font-semibold uppercase tracking-widest mb-2">Pro</p>
-                <div className="flex items-end gap-1 mb-1">
-                  <span className="font-cinzel font-bold text-5xl text-white">6,99</span>
-                  <span className="text-white/40 text-sm mb-2">€ / Monat</span>
+              <div className="mb-7 mt-4">
+                <p className="text-white/35 text-xs font-barlow font-bold uppercase tracking-widest mb-3">Pro</p>
+                <div className="flex items-end gap-1.5 mb-1">
+                  <span className="font-barlow font-bold text-5xl text-white leading-none">€6,99</span>
+                  <span className="text-white/35 text-sm mb-1">/ Monat</span>
                 </div>
-                <p className="text-white/40 text-sm">Für echte Unterstützer mit maximalen Vorteilen</p>
+                <p className="text-white/35 text-xs mt-2">Für echte Unterstützer mit maximalen Vorteilen</p>
               </div>
 
               <ul className="space-y-3 mb-8 flex-1">
                 {PRO_FEATURES.map((f, i) => (
-                  <li key={f} className={`flex items-start gap-3 text-sm ${i === 0 ? 'text-gold/80' : 'text-white/70'}`}>
+                  <li key={f} className={`flex items-start gap-3 text-sm ${i === 0 ? 'text-white/80 font-medium' : 'text-white/60'}`}>
                     <Check />
                     <span>{f}</span>
                   </li>
                 ))}
               </ul>
 
-              <button
-                disabled
-                className="w-full py-3 rounded-lg bg-gold/90 text-black text-sm font-bold cursor-not-allowed opacity-60"
-              >
+              <button disabled className="btn-primary w-full py-3 text-sm opacity-50 cursor-not-allowed">
                 Bald verfügbar
               </button>
             </div>
           </div>
 
-          {/* Stripe note */}
-          <p className="text-center text-white/25 text-xs mt-6">
-            Zahlungsabwicklung via Stripe — kommt bald. Bei Fragen: support@nordicforgestudios.de
+          <p className="text-center text-white/20 text-xs mt-5">
+            Zahlungsabwicklung via Stripe — kommt bald. Fragen: support@nordicforgestudios.de
           </p>
         </section>
 
         {/* What is NF Studios+ */}
-        <section className="max-w-3xl mx-auto px-4 pb-20 text-center">
-          <h2 className="font-cinzel font-bold text-3xl text-white mb-4">
-            Was ist <span className="text-gold">NF Studios+</span>?
-          </h2>
-          <p className="text-white/55 leading-relaxed mb-8">
-            Nordic Forge Studios ist ein kleines, leidenschaftliches Indie-Team aus Deutschland. Wir entwickeln Avadon: The Broken Sigils — ein episches Open World Fantasy RPG — mit Herzblut und ohne großes Publisher-Budget. NF Studios+ ist unsere Art, dir echte Vorteile für deine Unterstützung zu geben. Jeder Cent fließt direkt in die Entwicklung.
-          </p>
-          <Link href="/games/avadon" className="btn-secondary inline-block">
-            Mehr über Avadon erfahren
-          </Link>
+        <section className="border-t border-white/8 py-16 px-4">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="font-barlow font-bold text-3xl text-white uppercase tracking-wide mb-4">
+              Was ist NF Studios+?
+            </h2>
+            <p className="text-white/50 leading-relaxed mb-4">
+              Nordic Forge Studios ist ein kleines, leidenschaftliches Indie-Team aus Deutschland. Wir entwickeln Avadon: The Broken Sigils — ein episches Open World Fantasy RPG — mit Herzblut und ohne großes Publisher-Budget.
+            </p>
+            <p className="text-white/50 leading-relaxed mb-8">
+              NF Studios+ ist unsere Art, dir echte Vorteile für deine Unterstützung zu geben. Jeder Cent fließt direkt in die Entwicklung.
+            </p>
+            <Link href="/games/avadon" className="btn-secondary inline-block text-sm">
+              Mehr über Avadon erfahren
+            </Link>
+          </div>
         </section>
 
         {/* FAQ */}
-        <section className="max-w-2xl mx-auto px-4 pb-24">
-          <h2 className="font-cinzel font-bold text-3xl text-white text-center mb-10">
-            Häufige Fragen
-          </h2>
-          <div className="space-y-3">
-            {FAQS.map((faq, i) => (
-              <div key={i} className="glass overflow-hidden">
-                <button
-                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="w-full flex items-center justify-between px-6 py-4 text-left"
-                >
-                  <span className="text-white text-sm font-medium pr-4">{faq.q}</span>
-                  <svg
-                    className={`w-4 h-4 text-white/40 flex-shrink-0 transition-transform duration-200 ${openFaq === i ? 'rotate-180' : ''}`}
-                    fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
+        <section className="border-t border-white/8 py-16 px-4">
+          <div className="max-w-2xl mx-auto">
+            <h2 className="font-barlow font-bold text-3xl text-white uppercase tracking-wide text-center mb-10">
+              Häufige Fragen
+            </h2>
+            <div className="divide-y divide-white/8">
+              {FAQS.map((faq, i) => (
+                <div key={i}>
+                  <button
+                    onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                    className="w-full flex items-center justify-between py-5 text-left"
                   >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-                {openFaq === i && (
-                  <div className="px-6 pb-5 text-white/55 text-sm leading-relaxed border-t border-white/8">
-                    <div className="pt-4">{faq.a}</div>
-                  </div>
-                )}
-              </div>
-            ))}
+                    <span className="font-barlow font-bold text-white text-base pr-6">{faq.q}</span>
+                    <span className="text-white/40 flex-shrink-0 text-xl leading-none">{openFaq === i ? '−' : '+'}</span>
+                  </button>
+                  {openFaq === i && (
+                    <div className="pb-5">
+                      <p className="text-white/50 text-sm leading-relaxed">{faq.a}</p>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </section>
       </main>

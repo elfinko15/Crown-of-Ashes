@@ -1,18 +1,31 @@
 'use client'
 
-import { use } from 'react'
 import Link from 'next/link'
-import { notFound } from 'next/navigation'
 import { useLang } from '@/lib/i18n/LanguageContext'
 import { NEWS } from '@/lib/data/news'
 import NFFooter from '@/components/NFFooter'
 
-export default function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = use(params)
+export default function ArticlePage({ params }: { params: { slug: string } }) {
+  const { slug } = params
   const { t, lang } = useLang()
 
   const article = NEWS.find(a => a.slug === slug)
-  if (!article) notFound()
+
+  if (!article) {
+    return (
+      <>
+        <main className="min-h-screen flex items-center justify-center">
+          <div className="text-center px-4">
+            <p className="font-barlow font-bold text-6xl text-white/10 mb-4">404</p>
+            <h1 className="font-barlow font-bold text-2xl text-white mb-2">Artikel nicht gefunden</h1>
+            <p className="text-white/40 text-sm mb-6">Der gesuchte Artikel existiert nicht.</p>
+            <Link href="/news" className="btn-primary text-sm">Zurück zu News</Link>
+          </div>
+        </main>
+        <NFFooter />
+      </>
+    )
+  }
 
   const others = NEWS.filter(a => a.slug !== slug).slice(0, 2)
 
